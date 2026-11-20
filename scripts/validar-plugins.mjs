@@ -33,12 +33,19 @@ async function inspect(directory) {
     );
     assert.ok(!['node_modules', 'prior-work', '.git'].includes(entry.name));
     assert.ok(
-      !/^\.env(?:\.|$)/.test(entry.name),
+      !/^\.env(?:\.|$)/.test(entry.name) || entry.name === '.env.example',
       'No distribuir archivos de entorno',
     );
     if (entry.isDirectory()) await inspect(path);
     else {
       const contents = await readFile(path, 'utf8');
+      if (entry.name === '.env.example') {
+        assert.ok(
+          contents
+            .split('\n')
+            .every((line) => !line.trim() || /^[A-Z_]+=$/.test(line)),
+        );
+      }
       assert.ok(
         !/onvo_(?:test|live)_(?:secret|publishable)_key_[A-Za-z0-9_-]{12,}/.test(
           contents,

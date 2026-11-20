@@ -193,6 +193,9 @@ original de facturación.
 
 ## Verificación y procedencia
 
+Guías de integración: [ONVO](docs/onvo.md), [Tilopay](docs/tilopay.md),
+[seguridad y persistencia](docs/seguridad.md) y [tarifas](docs/tarifas.md).
+
 ```sh
 npm run check
 npm run hooks:install

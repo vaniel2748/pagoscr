@@ -51,11 +51,12 @@ const copy = async (from, to) => {
   await mkdir(dirname(target), { recursive: true });
   await cp(join(root, from), target, { recursive: true, dereference: false });
 };
-// Lista explícita: nunca copiar el checkout entero, .env ni prior-work.
+// Lista explícita: nunca copiar el checkout entero, .env con valores ni prior-work.
 for (const directory of ['dist', 'data', 'docs'])
   await copy(directory, directory);
 await copy('skill', 'skills/pagoscr');
 await copy('LICENSE', 'LICENSE');
+await copy('.env.example', '.env.example');
 await writeFile(
   join(plugin, 'README.md'),
   `# PagosCR\n\nPlugin local de cobros de prueba en Costa Rica. Requiere Node.js 22.12 o superior.\nIncluye cuatro herramientas MCP, tarifas con fuentes y la [skill de integración](skills/pagoscr/SKILL.md).\n\nEl modo inicial es demo, sin credenciales ni dinero real. No configures llaves de producción.\nLos registros del MCP se guardan en memoria y se pierden al reiniciar.\n\nLos manifiestos para ambos clientes están incluidos. La compilación ya contiene\nlas dependencias JS; no ejecutes npm install en este directorio generado.\nConsulta la [especificación del plugin](docs/specs/plugin.md), [LICENSE](LICENSE)\ny [avisos de terceros](THIRD-PARTY-NOTICES.txt).\n`,

@@ -109,3 +109,10 @@
 - Qué decidió o corrigió Vaniel: sin nuevas decisiones; no se instaló el plugin en la configuración personal ni se publicó. Se conserva el requisito de autorización de AGENTS.md para instalar componentes propios.
 - Pruebas: ambos paquetes completan diagnóstico, comparación, cobro demo, confirmación y deduplicación por stdio desde una copia temporal aislada con espacios en la ruta y sin node_modules. El conversor de la skill resuelve el paquete desde esa copia. Claude Code 2.1.150 valida manifiesto y catálogo con --strict y configuración temporal sin credenciales; se corrigió una descripción de catálogo ausente. Los planes dry-run de ambos instaladores coinciden con la ayuda nativa. npm pack --dry-run revisado: 38 archivos, avisos incluidos, sin credenciales ni prior-work. El hook ejecuta los 227 casos y controles completos antes del commit.
 - Commits: skill `ac2a893`; empaquetado en este commit, hash en el siguiente bloque.
+
+## 2026-11-20 16:49 · Guías de integración y seguridad
+
+- Qué hizo Codex: redactó guías de ONVO, Tilopay, seguridad/persistencia y tarifas. Incluyen creación pendiente desde el backend, autorización de órdenes, bytes crudos, firma más consulta, recuperación de Tilopay y transacción de deduplicación. Explican las unidades exactas y la procedencia/limitaciones de las seis tarifas, sin declarar una nueva fecha de verificación. Incorporó las guías y el ejemplo de entorno vacío al plugin generado.
+- Qué decidió o corrigió Vaniel: sin nuevas decisiones; se mantienen los alcances de prueba y la instalación personal pendiente.
+- Pruebas: los ejemplos TypeScript de ONVO, Tilopay y calculadora pasan el compilador con tipos estrictos; siete enlaces locales de las guías resueltos. El validador del paquete exige que cada variable del .env.example distribuido esté vacía. El hook ejecuta las 227 pruebas y controles completos antes del commit. No se utilizaron credenciales ni se repitió una transacción remota.
+- Commits: plugins `0b91785`; guías en este commit, hash en el siguiente bloque. P1.10–13 implementados localmente; instalación real del plugin y CI remoto pendientes de autorización.
