@@ -175,7 +175,7 @@ paquete que el CI ya compiló).
 
 Hay **227 pruebas sin red** y una prueba de API ONVO autorizada aprobada. Demo,
 ONVO y Tilopay pasan la misma batería de 17 casos (51 de contrato). En Tilopay se
-prueba el retorno documentado con consult, no su webhook privado. Skill, empaquetado
+prueba el retorno documentado con consult, no su webhook privado. La [skill de agentes](skill/SKILL.md) está incluida; empaquetado
 y plantilla siguen pendientes. GitHub, npm y despliegue todavía no se han autorizado:
 los controles están en verde localmente, y el CI remoto aún no se ha ejecutado.
 
