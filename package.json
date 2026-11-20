@@ -39,7 +39,9 @@
     "format:check": "prettier --check .",
     "secrets": "secretlint '**/*' && node scripts/check-secrets.mjs",
     "tarifas:check": "node scripts/validar-tarifas.mjs",
-    "check": "npm run format:check && npm run typecheck && npm test && npm run secrets && npm run build && npm run tarifas:check",
+    "quickstart": "bash scripts/quickstart.sh",
+    "quickstart:check": "bash scripts/quickstart.sh --check",
+    "check": "npm run format:check && npm run typecheck && npm test && npm run secrets && npm run build && npm run tarifas:check && npm run quickstart:check",
     "hooks:install": "git config core.hooksPath .githooks"
   },
   "devDependencies": {

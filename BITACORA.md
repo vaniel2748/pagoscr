@@ -76,3 +76,15 @@
 - Qué decidió o corrigió Vaniel: sin nuevas decisiones. Se usa el SDK oficial `@modelcontextprotocol/sdk` 1.32.2 solicitado en AGENTS.md; su línea v1 sigue mantenida con correcciones y seguridad, mientras v2 tiene otros nombres de paquete. No se instaló ningún plugin ni MCP externo.
 - Pruebas: 17 casos MCP pasan, más los 157 previos; tipos y compilación pasan. Se verificaron diagnóstico sin red ni valores, demo completo, ONVO con fixtures de extremo a extremo del protocolo, rechazo de producción antes de red y ocultación de secretos incluso en referencias/errores. npm reporta 0 vulnerabilidades en las dependencias instaladas.
 - Commits: tarifas `c8d70f1`; MCP en este commit, hash en el siguiente bloque.
+
+## 2026-11-20 15:13 · Inicio rápido de un comando y P0 completo localmente
+
+- Qué hizo Codex: escribió especificación y guion que instala, compila y usa el ejecutable MCP por stdio con entorno sin credenciales de pasarelas. El recorrido descubre cuatro herramientas, diagnostica, exige tipo explícito para CRC, compara USD, crea un cobro demo, verifica firma/confirmación y detecta repetición. Añadió la ejecución del mismo guion a `npm run check` y, por tanto, al CI y al hook. Reescribió README con comando ejecutable, ejemplos, unidades y límites reales.
+- Qué decidió o corrigió Vaniel: sin nuevas decisiones. GitHub, npm, despliegue y credenciales Tilopay siguen sin autorizarse.
+- Pruebas: inicio rápido completo aprobado en una copia limpia con espacio en la ruta, sin node_modules/dist y con caché npm vacía: 5 segundos totales, tramo MCP 0,15 segundos. La prueba usó registro público de npm de forma anónima y modo demo sin red hacia pasarelas. 174 pruebas sin red aprobadas en el bloque anterior y 1 E2E ONVO autorizada aprobada; el hook vuelve a comprobarlos controles locales antes del commit.
+- Commits: MCP `d3d0c39`; inicio rápido en este commit, hash en el siguiente bloque.
+
+### Estado tras P0
+
+- P0.1–9 implementados y verificados localmente. El CI remoto/insignia espera autorización para crear GitHub.
+- Para P1.10 se releyeron login, processPayment, consult/OpenAPI, tarjetas de prueba y webhooks de Tilopay. El portal publica el retorno GET pero entrega los campos del webhook de processPayment únicamente por Soporte. Antes de escribir el adaptador se consultará a Vaniel si usar el retorno documentado + consult o aportar el contrato oficial del webhook. No se inventarán campos.
