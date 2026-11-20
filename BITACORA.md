@@ -20,3 +20,10 @@
 - Qué decidió o corrigió Vaniel: sin cambios adicionales.
 - Pruebas: 45 pasan, 0 fallan; se verificó previamente la fase roja por ausencia de implementación. Incluye productos intermedios mayores al rango seguro, desbordamientos, fracciones, NaN y monedas no admitidas. Tipos pasan.
 - Commits: harness `806c727`; núcleo en este commit, hash en el próximo bloque.
+
+## 2026-11-20 14:27 · Batería de contrato y procesamiento de webhooks
+
+- Qué hizo Codex: preparó una única suite de 17 casos por adaptador y escribió primero las pruebas del procesador. Implementó carga del contexto del servidor, deduplicación atómica dentro del proceso y estados que no revierten un pago confirmado. El almacén en memoria se limita a demo y pruebas; se documentó la exigencia de transacción persistente para aplicaciones reales.
+- Qué decidió o corrigió Vaniel: sin cambios adicionales.
+- Pruebas: 53 pasan, 0 fallan. Ocho casos nuevos comprueban contexto, concurrencia, reintento, integridad de monto, cambios de estado y unicidad. La suite compartida está preparada y tipada; todavía no está ejecutada contra ningún adaptador.
+- Commits: núcleo `c80b4fe`; batería en este commit, hash en el siguiente bloque.
