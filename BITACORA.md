@@ -81,8 +81,8 @@
 
 - Qué hizo Codex: escribió especificación y guion que instala, compila y usa el ejecutable MCP por stdio con entorno sin credenciales de pasarelas. El recorrido descubre cuatro herramientas, diagnostica, exige tipo explícito para CRC, compara USD, crea un cobro demo, verifica firma/confirmación y detecta repetición. Añadió la ejecución del mismo guion a `npm run check` y, por tanto, al CI y al hook. Reescribió README con comando ejecutable, ejemplos, unidades y límites reales.
 - Qué decidió o corrigió Vaniel: sin nuevas decisiones. GitHub, npm, despliegue y credenciales Tilopay siguen sin autorizarse.
-- Pruebas: inicio rápido completo aprobado en una copia limpia con espacio en la ruta, sin node_modules/dist y con caché npm vacía: 5 segundos totales, tramo MCP 0,15 segundos. La prueba usó registro público de npm de forma anónima y modo demo sin red hacia pasarelas. 174 pruebas sin red aprobadas en el bloque anterior y 1 E2E ONVO autorizada aprobada; el hook vuelve a comprobarlos controles locales antes del commit.
-- Commits: MCP `d3d0c39`; inicio rápido en este commit, hash en el siguiente bloque.
+- Pruebas: inicio rápido completo aprobado en una copia limpia con espacio en la ruta, sin node_modules/dist y con caché npm vacía: 5 segundos totales, tramo MCP 0,15 segundos. La prueba usó registro público de npm de forma anónima y modo demo sin red hacia pasarelas. 174 pruebas sin red aprobadas en el bloque anterior y 1 E2E ONVO autorizada aprobada; el hook vuelve a comprobar los controles locales antes del commit.
+- Commits: MCP `d3d0c39`; inicio rápido `ab776a1`. La revisión posterior de npm pack --dry-run confirma 20 archivos, CLI y tarifas incluidos, sin prior-work ni archivos de credenciales y sin publicar nada.
 
 ### Estado tras P0
 
