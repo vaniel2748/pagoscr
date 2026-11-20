@@ -55,3 +55,10 @@
 - Qué decidió o corrigió Vaniel: pendiente de autorización explícita para cargar `../.env.onvo` y ejecutar la prueba ficticia de ONVO. No se inició P0.7 para conservar el orden de piezas.
 - Pruebas: 115 pasan, 0 fallan; una E2E omitida, no ejecutada con credenciales. Formato, tipos, Secretlint, control adicional de llaves y compilación ESM/declaraciones pasan. El demo compilado confirma y deduplica sin red.
 - Commits: `adff5d9` (importación), `806c727` (harness), `c80b4fe` (núcleo), `ba374e9` (batería), `1ff7e37` (demo), `2471bd7` (ONVO con fixtures). Este commit documental cierra el registro del bloque.
+
+## 2026-11-20 14:52 · ONVO: prueba de API autorizada y aprobada
+
+- Qué hizo Codex: cargó las variables desde el archivo externo con el mecanismo nativo de Node, sin copiar ni mostrar su contenido. Ejecutó la prueba separada: método ficticio oficial, creación de intención por ₡20000, confirmación y consulta del resultado con referencia, importe y moneda coincidentes. El modo de prueba se validó antes de llamar a ONVO.
+- Qué decidió o corrigió Vaniel: autorizó explícitamente usar las llaves de prueba para esta operación. La autorización queda registrada y no se vuelve a pedir para el mismo alcance. GitHub, npm y despliegue siguen sin autorizarse.
+- Pruebas: E2E de API 1 pasa, 0 fallan, 0 omitidas; duración 2,33 segundos. Se conservan 115 pruebas locales aprobadas. La recepción de un webhook real no forma parte de esta prueba.
+- Commits: `2471bd7` implementó ONVO; `508c8ea` registró el cierre anterior. Este bloque cierra P0.6; sigue P0.7 (tarifas y calculadora).

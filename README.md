@@ -9,7 +9,8 @@ En construcción. El inicio rápido ejecutable se incorpora en P0.9.
 Todavía no se ha publicado el paquete ni creado un repositorio remoto.
 
 Estado: importación, harness, núcleo y demo terminados (P0.1–5). ONVO pasa
-el contrato con fixtures; su prueba de API real requiere autorización (P0.6).
+el contrato con fixtures y su prueba de API en modo test fue autorizada y aprobada
+el 20 de noviembre de 2026 (P0.6).
 La calculadora y el servidor MCP siguen pendientes.
 
 Requiere Node.js 22.12 o superior; se desarrolla y verifica con Node.js 24.
@@ -32,6 +33,10 @@ El adaptador usa payment intents. Crear un cobro devuelve una intención pendien
 sin checkout hospedado. `confirmTestCharge` recibe un método tokenizado y
 `getTestPayment` consulta el resultado. El estado de una orden se actualiza mediante
 `processWebhook`, que verifica firma y confirma el pago con ONVO.
+
+Prueba de API autorizada el 20 de noviembre de 2026: **1 aprobada**, creación,
+confirmación y consulta de ₡20000 ficticios. La recepción de un webhook real
+sigue sin probarse.
 
 Los tests normales usan respuestas sintéticas basadas en la documentación oficial;
 no acceden a variables ni a la red de ONVO. La prueba E2E está separada, exige una
