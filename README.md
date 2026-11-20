@@ -11,7 +11,8 @@ Todavía no se ha publicado el paquete ni creado un repositorio remoto.
 Estado: importación, harness, núcleo y demo terminados (P0.1–5). ONVO pasa
 el contrato con fixtures y su prueba de API en modo test fue autorizada y aprobada
 el 20 de noviembre de 2026 (P0.6).
-La calculadora y el servidor MCP siguen pendientes.
+La calculadora y las cuatro herramientas MCP están implementadas (P0.7–8).
+El inicio rápido ejecutable sigue pendiente (P0.9).
 
 Requiere Node.js 22.12 o superior; se desarrolla y verifica con Node.js 24.
 
