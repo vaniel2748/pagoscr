@@ -7,6 +7,12 @@ import {
 } from '../../src/mcp/server.js';
 import { InMemoryPaymentStore } from '../../src/core/memory-store.js';
 import {
+  signedTilopayReturn,
+  tilopayConfig,
+  tilopayLoginFixture,
+  tilopayConsultFixture,
+} from '../helpers/tilopay.js';
+import {
   createdFixture,
   eventFixture,
   fakeSecretKey,
@@ -298,4 +304,83 @@ it('redacta un valor sensible incluso si se cuela como referencia interna', asyn
   });
   expect(data(verified).pago.referencia).toBe('[OCULTO]');
   expect(JSON.stringify(verified)).not.toContain(fakeSecretKey);
+});
+
+it('verifica un retorno Tilopay con contexto persistente, hash y consult', async () => {
+  await client.close();
+  await server.close();
+  const store = new InMemoryPaymentStore();
+  await store.savePayment({
+    paymentId: 'order_contract',
+    provider: 'tilopay',
+    providerPaymentId: 'order_contract',
+    amountCents: 2_000_000,
+    currency: 'CRC',
+    status: 'pending',
+  });
+  const network = vi.fn<typeof fetch>(async (url) =>
+    Response.json(
+      String(url).endsWith('/login')
+        ? tilopayLoginFixture
+        : tilopayConsultFixture,
+    ),
+  );
+  await connect({
+    store,
+    fetchImpl: network,
+    env: {
+      TILOPAY_API_USER: tilopayConfig.apiUser,
+      TILOPAY_API_PASSWORD: tilopayConfig.apiPassword,
+      TILOPAY_API_KEY: tilopayConfig.apiKey,
+      TILOPAY_TEST_MODE: 'true',
+      TILOPAY_BILL_TO_EMAIL: tilopayConfig.billing.email,
+    },
+  });
+  const request = signedTilopayReturn();
+  const result = await client.callTool({
+    name: 'verificar_webhook',
+    arguments: {
+      pasarela: 'tilopay',
+      cuerpo: request.rawBody.toString('utf8'),
+      encabezados: {},
+    },
+  });
+  expect(data(result)).toMatchObject({
+    valido: true,
+    pago: { estado: 'succeeded', duplicado: false },
+  });
+  expect(network).toHaveBeenCalledTimes(2);
+  for (const secret of [
+    tilopayConfig.apiUser,
+    tilopayConfig.apiPassword,
+    tilopayConfig.apiKey,
+  ])
+    expect(JSON.stringify(result)).not.toContain(secret);
+});
+
+it('exige activar y confirmar el modo de prueba Tilopay antes de consultar', async () => {
+  await client.close();
+  await server.close();
+  const network = vi.fn<typeof fetch>();
+  await connect({
+    fetchImpl: network,
+    env: {
+      TILOPAY_API_USER: tilopayConfig.apiUser,
+      TILOPAY_API_PASSWORD: tilopayConfig.apiPassword,
+      TILOPAY_API_KEY: tilopayConfig.apiKey,
+      TILOPAY_BILL_TO_EMAIL: tilopayConfig.billing.email,
+    },
+  });
+  const request = signedTilopayReturn();
+  const result = await client.callTool({
+    name: 'verificar_webhook',
+    arguments: {
+      pasarela: 'tilopay',
+      cuerpo: request.rawBody.toString('utf8'),
+      encabezados: {},
+    },
+  });
+  expect(data(result).error.codigo).toBe('TEST_MODE_REQUIRED');
+  expect(JSON.stringify(result)).toContain('TILOPAY_TEST_MODE');
+  expect(network).not.toHaveBeenCalled();
 });

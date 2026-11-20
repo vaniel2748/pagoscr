@@ -21,6 +21,7 @@ export interface WebhookOptions {
 export interface ContractHarness {
   provider: PaymentProvider;
   webhook(payment: PaymentRecord, options?: WebhookOptions): WebhookRequest;
+  withoutAuthentication?(request: WebhookRequest): WebhookRequest;
   setConfirmation(change: {
     amountCents?: number;
     currency?: Currency;
@@ -98,7 +99,11 @@ export function paymentProviderContract(
     it('rechaza la ausencia de autenticación', async () => {
       const valid = harness.webhook(payment);
       await expect(
-        processWebhook(harness.provider, { ...valid, headers: {} }, store),
+        processWebhook(
+          harness.provider,
+          harness.withoutAuthentication?.(valid) ?? { ...valid, headers: {} },
+          store,
+        ),
       ).rejects.toMatchObject({ code: 'INVALID_SIGNATURE' });
     });
     it('deduplica un evento repetido', async () => {
@@ -118,23 +123,27 @@ export function paymentProviderContract(
       ]);
       expect(results.filter((result) => !result.duplicate)).toHaveLength(1);
     });
-    it('rechaza un monto alterado aun con firma válida', async () => {
+    it('rechaza un monto alterado mediante firma o contexto del servidor', async () => {
       await expect(
         processWebhook(
           harness.provider,
           harness.webhook(payment, { amountCents: 1 }),
           store,
         ),
-      ).rejects.toMatchObject({ code: 'PAYMENT_MISMATCH' });
+      ).rejects.toMatchObject({
+        code: expect.stringMatching(/^(PAYMENT_MISMATCH|INVALID_SIGNATURE)$/),
+      });
     });
-    it('rechaza una moneda alterada aun con firma válida', async () => {
+    it('rechaza una moneda alterada mediante firma o contexto del servidor', async () => {
       await expect(
         processWebhook(
           harness.provider,
           harness.webhook(payment, { currency: 'USD' }),
           store,
         ),
-      ).rejects.toMatchObject({ code: 'PAYMENT_MISMATCH' });
+      ).rejects.toMatchObject({
+        code: expect.stringMatching(/^(PAYMENT_MISMATCH|INVALID_SIGNATURE)$/),
+      });
     });
     it('rechaza un cuerpo mal formado', async () => {
       await expect(

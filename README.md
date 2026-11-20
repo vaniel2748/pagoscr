@@ -136,6 +136,31 @@ PAGOSCR_RUN_ONVO_E2E=1 node --env-file=../.env.onvo ./node_modules/vitest/vitest
 El archivo externo permanece fuera del repositorio. Las llaves nunca se copian,
 devuelven ni registran. No pegues sus valores en el chat.
 
+## Tilopay: retorno documentado y consulta autenticada
+
+El adaptador usa login con `apiuser`, formulario alojado y retorno GET. El backend
+convierte los parámetros mediante `normalizeTilopayReturn` y procesa la notificación
+con el mismo `processWebhook` del paquete. Se exige confirmación por `consult`,
+con referencia, monto, moneda, autorización, captura y entorno Test coincidentes.
+El esquema del webhook privado de processPayment no se presupone ni se simula.
+
+El hash V2 del plugin oficial WooCommerce se verifica por defecto; su origen y
+opción de solo consulta están en la [especificación Tilopay](docs/specs/tilopay.md).
+Los datos de facturación y el correo original provienen del servidor. No hay datos
+ficticios ocultos que se envíen como si fueran del comprador.
+
+`lookupCapturedPayment` permite recuperar una captura desde el servidor si el
+comprador cierra el navegador antes del retorno; usa el mismo identificador de
+evento para evitar duplicar la aplicación del pago. Las pruebas usan fixtures;
+no se han usado credenciales reales ni se ha hecho una E2E Tilopay.
+
+Las credenciales de Tilopay no distinguen prueba/producción. El adaptador exige
+`testMode: true` y la consulta debe devolver Test; ese indicador local no comprueba
+el panel antes de generar una URL. Por eso `crear_cobro_de_prueba` del MCP sigue
+limitado a demo/ONVO. La herramienta de verificar puede usar Tilopay si conectas
+el registro persistente del backend y configuras sus variables, incluido el correo
+original de facturación.
+
 ## Verificación y procedencia
 
 ```sh
@@ -148,9 +173,10 @@ pruebas sin red, Secretlint, control de prefijos de llaves, compilación, valida
 de tarifas e inicio rápido por stdio (`quickstart.sh --check`, reutilizando el
 paquete que el CI ya compiló).
 
-Hay **174 pruebas sin red** y una prueba de API autorizada aprobada. Demo y ONVO
-pasan la misma batería de 17 casos de contrato. Tilopay, skill, empaquetado y
-plantilla siguen pendientes. GitHub, npm y despliegue todavía no se han autorizado:
+Hay **227 pruebas sin red** y una prueba de API ONVO autorizada aprobada. Demo,
+ONVO y Tilopay pasan la misma batería de 17 casos (51 de contrato). En Tilopay se
+prueba el retorno documentado con consult, no su webhook privado. Skill, empaquetado
+y plantilla siguen pendientes. GitHub, npm y despliegue todavía no se han autorizado:
 los controles están en verde localmente, y el CI remoto aún no se ha ejecutado.
 
 `prior-work/` conserva tres archivos importados sin cambios desde RestaurantPay;

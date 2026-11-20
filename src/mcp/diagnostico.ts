@@ -39,14 +39,25 @@ export function diagnosticarIntegracion(env: Environment) {
     },
     tilopay: {
       crearCobroDePruebaPermitido: false,
+      configuracionLocalParaVerificarValida: Boolean(
+        env.TILOPAY_API_USER?.trim() &&
+        env.TILOPAY_API_PASSWORD?.trim() &&
+        env.TILOPAY_API_KEY?.trim() &&
+        env.TILOPAY_BILL_TO_EMAIL?.trim() &&
+        env.TILOPAY_TEST_MODE === 'true',
+      ),
+      notificacionAdmitida:
+        'Retorno GET documentado normalizado; no el webhook privado de processPayment.',
       variablesConfiguradas: {
         TILOPAY_API_USER: Boolean(env.TILOPAY_API_USER),
         TILOPAY_API_PASSWORD: Boolean(env.TILOPAY_API_PASSWORD),
         TILOPAY_API_KEY: Boolean(env.TILOPAY_API_KEY),
         TILOPAY_TEST_MODE: env.TILOPAY_TEST_MODE === 'true',
+        TILOPAY_BILL_TO_EMAIL: Boolean(env.TILOPAY_BILL_TO_EMAIL),
       },
       acciones: [
         'Tilopay usa las mismas credenciales en prueba y producción. La herramienta de crear cobros permite únicamente demo u ONVO con prefijo test.',
+        'Para verificar retornos, configura las variables indicadas y el correo original de facturación del servidor. Activa prueba en el panel y TILOPAY_TEST_MODE=true; consult debe corroborar environment Test.',
       ],
     },
   };

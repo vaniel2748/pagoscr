@@ -4,6 +4,7 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod/v4';
 import { DemoAdapter } from '../adapters/demo.js';
 import { OnvoAdapter, assertOnvoTestSecretKey } from '../adapters/onvo.js';
+import { TilopayAdapter } from '../adapters/tilopay.js';
 import { PaymentError, type PaymentErrorCode } from '../core/errors.js';
 import { InMemoryPaymentStore } from '../core/memory-store.js';
 import type { PaymentProvider } from '../core/payment-provider.js';
@@ -44,11 +45,11 @@ const messages: Record<PaymentErrorCode, string> = {
   GATEWAY_ERROR:
     'La pasarela no pudo confirmar la operación. Revisa conexión, permisos y modo de prueba; consulta la orden antes de crear otro cobro.',
   TEST_MODE_REQUIRED:
-    'Se requiere una llave secreta de prueba en ONVO_TEST_SECRET_KEY. Las llaves live, publicables y los eventos de producción se rechazan.',
+    'Se requiere modo de prueba. ONVO usa ONVO_TEST_SECRET_KEY con prefijo test. Tilopay exige prueba activada en el panel, TILOPAY_TEST_MODE=true y una transacción consultada con environment Test. Se rechaza producción.',
   DUPLICATE_PAYMENT:
     'La referencia del pago ya está registrada. Reutiliza el cobro existente.',
   UNSUPPORTED_EVENT:
-    'El proveedor o evento no está disponible. Usa demo u ONVO; ONVO admite payment_intent.succeeded y payment_intent.failed.',
+    'El proveedor o evento no está disponible. ONVO admite payment_intent.succeeded y payment_intent.failed; Tilopay admite su retorno GET documentado normalizado, con confirmación por consult.',
 };
 
 function redactOutput(
@@ -112,6 +113,20 @@ export function createPagosCrServer(
         secretKey: key,
         ...(env.ONVO_WEBHOOK_SECRET
           ? { webhookSecret: env.ONVO_WEBHOOK_SECRET }
+          : {}),
+        ...(options.fetchImpl ? { fetchImpl: options.fetchImpl } : {}),
+      });
+      providers.set(name, provider);
+      return provider;
+    }
+    if (name === 'tilopay') {
+      const provider = new TilopayAdapter({
+        apiUser: env.TILOPAY_API_USER ?? '',
+        apiPassword: env.TILOPAY_API_PASSWORD ?? '',
+        apiKey: env.TILOPAY_API_KEY ?? '',
+        testMode: env.TILOPAY_TEST_MODE === 'true',
+        ...(env.TILOPAY_BILL_TO_EMAIL
+          ? { billToEmail: env.TILOPAY_BILL_TO_EMAIL }
           : {}),
         ...(options.fetchImpl ? { fetchImpl: options.fetchImpl } : {}),
       });

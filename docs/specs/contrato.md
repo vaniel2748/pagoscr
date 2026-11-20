@@ -22,3 +22,10 @@ producción.
 La suite queda preparada en P0.4 y se vincula al adaptador demo en P0.5, a ONVO
 en P0.6 y a Tilopay en P1.10. Preparar la suite no significa haber aprobado esos
 adaptadores; la bitácora separa ambos estados.
+
+Tilopay usa el retorno GET autorizado por Vaniel, normalizado como notificación;
+no se presenta como su webhook privado. Su hash V2 llega en el cuerpo, por lo que
+la fábrica elimina ese campo para probar autenticación ausente. Las pruebas de
+monto y moneda alterados exigen rechazo por discrepancia o firma ligada al contexto,
+según el mecanismo real del proveedor. Ningún caso se omite ni se inventa un
+encabezado para adaptar la suite.
