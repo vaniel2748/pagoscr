@@ -27,3 +27,10 @@
 - Qué decidió o corrigió Vaniel: sin cambios adicionales.
 - Pruebas: 53 pasan, 0 fallan. Ocho casos nuevos comprueban contexto, concurrencia, reintento, integridad de monto, cambios de estado y unicidad. La suite compartida está preparada y tipada; todavía no está ejecutada contra ningún adaptador.
 - Commits: núcleo `c80b4fe`; batería en este commit, hash en el siguiente bloque.
+
+## 2026-11-20 14:29 · Adaptador demo sin credenciales
+
+- Qué hizo Codex: escribió especificación y pruebas antes del adaptador. Implementó una simulación con registros independientes, secreto efímero propio, HMAC sobre bytes crudos y tolerancia temporal. La operación de simulación es exclusiva del servidor. Vinculó la batería compartida al demo, sin red ni variables de entorno.
+- Qué decidió o corrigió Vaniel: sin cambios adicionales; no se usó ninguna credencial externa.
+- Pruebas: 73 pasan, 0 fallan: 17 de contrato demo y tres específicas de recorrido completo, bytes crudos y protección contra repeticiones antiguas/futuras. Tipos pasan.
+- Commits: batería `ba374e9`; demo en este commit, hash en el próximo bloque.
