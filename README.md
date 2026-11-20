@@ -191,6 +191,23 @@ limitado a demo/ONVO. La herramienta de verificar puede usar Tilopay si conectas
 el registro persistente del backend y configuras sus variables, incluido el correo
 original de facturación.
 
+## Plantilla de checkout demo
+
+Después de compilar:
+
+```sh
+npm run demo:checkout
+```
+
+Abre [http://127.0.0.1:4321](http://127.0.0.1:4321), crea la orden y confirma el
+pago demo. El servidor toma ₡20000 del catálogo, genera/verifica la notificación
+firmada y permite probar su repetición. No pide tarjeta ni carga llaves. La sesión
+dueña de una orden es la única que puede leerla o confirmarla.
+
+Es una plantilla local de Node HTTP con TypeScript y HTML/CSS/JS; escucha únicamente
+en 127.0.0.1. El diseño se comprobó en escritorio y móvil. Consulta
+[template/README.md](template/README.md) para límites, puertos e integración.
+
 ## Verificación y procedencia
 
 Guías de integración: [ONVO](docs/onvo.md), [Tilopay](docs/tilopay.md),
@@ -206,11 +223,11 @@ pruebas sin red, Secretlint, control de prefijos de llaves, compilación, valida
 de tarifas, inicio rápido por stdio (`quickstart.sh --check`, reutilizando el
 paquete que el CI ya compiló) y recorrido de ambos plugins desde una copia aislada.
 
-Hay **227 pruebas sin red** y una prueba de API ONVO autorizada aprobada. Demo,
+Hay **244 pruebas sin pasarelas externas** y una prueba de API ONVO autorizada aprobada. Demo,
 ONVO y Tilopay pasan la misma batería de 17 casos (51 de contrato). En Tilopay se
 prueba el retorno documentado con consult, no su webhook privado. La
-[skill de agentes](skill/SKILL.md) y los paquetes para ambos clientes están incluidos;
-la plantilla sigue pendiente. GitHub, npm y despliegue todavía no se han autorizado:
+[skill de agentes](skill/SKILL.md), los paquetes para ambos clientes y la plantilla
+están incluidos. GitHub, npm y despliegue todavía no se han autorizado:
 los controles están en verde localmente, y el CI remoto aún no se ha ejecutado.
 
 `prior-work/` conserva tres archivos importados sin cambios desde RestaurantPay;

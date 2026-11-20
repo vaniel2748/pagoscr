@@ -2,5 +2,7 @@ prior-work/
 node_modules/
 dist/
 build/
+output/playwright/
+.playwright-cli/
 coverage/
 package-lock.json

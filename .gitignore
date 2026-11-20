@@ -1,6 +1,8 @@
 node_modules/
 dist/
 build/
+output/playwright/
+.playwright-cli/
 coverage/
 .vitest/
 .env

@@ -55,6 +55,9 @@ const copy = async (from, to) => {
 for (const directory of ['dist', 'data', 'docs'])
   await copy(directory, directory);
 await copy('skill', 'skills/pagoscr');
+for (const file of ['index.html', 'styles.css', 'app.js', 'README.md']) {
+  await copy(`template/${file}`, `template/${file}`);
+}
 await copy('LICENSE', 'LICENSE');
 await copy('.env.example', '.env.example');
 await writeFile(
