@@ -3,6 +3,7 @@ dist/
 build/
 output/playwright/
 .playwright-cli/
+evaluacion/runs/
 coverage/
 .vitest/
 .env

@@ -27,6 +27,7 @@
     "plugin",
     "template",
     "docs",
+    "evaluacion/tareas.json",
     ".env.example"
   ],
   "scripts": {
@@ -43,6 +44,7 @@
     "quickstart:check": "bash scripts/quickstart.sh --check",
     "plugins:check": "node scripts/validar-plugins.mjs",
     "demo:checkout": "node dist/template/cli.js",
+    "evaluacion:preparar": "node scripts/preparar-evaluacion.mjs",
     "check": "npm run format:check && npm run typecheck && npm test && npm run secrets && npm run build && npm run tarifas:check && npm run quickstart:check && npm run plugins:check",
     "hooks:install": "git config core.hooksPath .githooks"
   },

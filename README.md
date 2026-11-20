@@ -19,7 +19,7 @@ cliente MCP contra el servidor real por stdio. Descubre las cuatro herramientas,
 compara costos, crea ₡20000 ficticios, verifica el webhook firmado y detecta su
 repetición. No necesita cuenta, llaves ni otro servicio. Imprime el tiempo total.
 
-Medición del 20 de noviembre de 2026 en el equipo de desarrollo: **5 segundos**
+Medición del 20 de noviembre de 2026 en el equipo de desarrollo: **6 segundos**
 desde una copia sin node_modules ni dist y con caché npm vacía, incluida descarga,
 compilación y demo. Es una medición local, no una garantía para cualquier conexión.
 
@@ -207,6 +207,15 @@ dueña de una orden es la única que puede leerla o confirmarla.
 Es una plantilla local de Node HTTP con TypeScript y HTML/CSS/JS; escucha únicamente
 en 127.0.0.1. El diseño se comprobó en escritorio y móvil. Consulta
 [template/README.md](template/README.md) para límites, puertos e integración.
+
+## Evaluación del agente
+
+Hay [cinco tareas fijas](docs/evaluacion.md) y un preparador de repositorios limpios
+sin red ni credenciales: `npm run evaluacion:preparar`. La ejecución por agentes
+independientes sigue pendiente de autorización; **no hay aún una tasa de éxito
+del agente**. Las 244 pruebas de código y el inicio rápido no se presentan como
+cinco integraciones autónomas completadas. ONVO/Tilopay de esa evaluación usarán
+fixtures, separados de la única E2E ONVO real autorizada ya aprobada.
 
 ## Verificación y procedencia
 
