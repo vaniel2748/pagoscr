@@ -48,3 +48,10 @@
 - P0.7–9: tarifas/calculadora, cuatro herramientas MCP e inicio rápido ejecutable. Se mantiene el orden de AGENTS.md.
 - La página de precios de ONVO respondió 403 al acceso automatizado; no se actualizó su fecha de verificación. Tilopay sí publicó sus tarifas; antes de crear los datos se revalidarán ambas fuentes.
 - GitHub, npm y despliegue todavía no autorizados ni realizados; el workflow está validado localmente, no ejecutado en GitHub.
+
+## 2026-11-20 14:38 · Verificación del paquete compilado y punto de autorización
+
+- Qué hizo Codex: ejecutó con Node el recorrido demo importando `dist/index.js`: creó ₡20000, confirmó por webhook firmado y reconoció la repetición. Verificó que `prior-work/` no tiene diferencias contra la importación y que el repositorio quedó limpio antes de este registro final.
+- Qué decidió o corrigió Vaniel: pendiente de autorización explícita para cargar `../.env.onvo` y ejecutar la prueba ficticia de ONVO. No se inició P0.7 para conservar el orden de piezas.
+- Pruebas: 115 pasan, 0 fallan; una E2E omitida, no ejecutada con credenciales. Formato, tipos, Secretlint, control adicional de llaves y compilación ESM/declaraciones pasan. El demo compilado confirma y deduplica sin red.
+- Commits: `adff5d9` (importación), `806c727` (harness), `c80b4fe` (núcleo), `ba374e9` (batería), `1ff7e37` (demo), `2471bd7` (ONVO con fixtures). Este commit documental cierra el registro del bloque.
