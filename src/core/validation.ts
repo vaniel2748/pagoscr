@@ -106,6 +106,7 @@ export function assertEventMatches(
     );
   }
   if (
+    typeof event.providerEventId !== 'string' ||
     !/^[A-Za-z0-9_:-]{1,256}$/.test(event.providerEventId) ||
     (event.status !== 'succeeded' && event.status !== 'failed')
   ) {

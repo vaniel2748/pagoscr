@@ -1,0 +1,20 @@
+{
+  "id": "evt_onvo_fixture",
+  "object": "event",
+  "createdAt": "2026-11-20T20:00:00.000Z",
+  "mode": "test",
+  "accountId": "acct_fixture",
+  "type": "payment_intent.succeeded",
+  "data": {
+    "object": {
+      "object": "payment_intent",
+      "id": "pi_fixture_001",
+      "amount": 2000000,
+      "currency": "CRC",
+      "receivedAmount": 2000000,
+      "capturableAmount": 0,
+      "status": "succeeded",
+      "metadata": { "pagoscrPaymentId": "order_contract" }
+    }
+  }
+}

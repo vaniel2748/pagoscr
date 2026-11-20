@@ -1,0 +1,11 @@
+{
+  "id": "pi_fixture_001",
+  "amount": 2000000,
+  "currency": "CRC",
+  "status": "succeeded",
+  "mode": "test",
+  "receivedAmount": 2000000,
+  "capturableAmount": 0,
+  "metadata": { "pagoscrPaymentId": "order_contract" },
+  "charges": []
+}

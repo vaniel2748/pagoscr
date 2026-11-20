@@ -34,3 +34,17 @@
 - Qué decidió o corrigió Vaniel: sin cambios adicionales; no se usó ninguna credencial externa.
 - Pruebas: 73 pasan, 0 fallan: 17 de contrato demo y tres específicas de recorrido completo, bytes crudos y protección contra repeticiones antiguas/futuras. Tipos pasan.
 - Commits: batería `ba374e9`; demo en este commit, hash en el próximo bloque.
+
+## 2026-11-20 14:37 · ONVO con fixtures y prueba de red preparada
+
+- Qué hizo Codex: consultó documentación oficial vigente y OpenAPI de ONVO, incluyendo autenticación, firmas, eventos, tarjetas de prueba, payment intents y checkout. Implementó el adaptador de payment intents: llaves secretas solo test, host HTTPS fijo, sin redirecciones, timeout de seis segundos, firma HMAC con rotación v1, contexto del servidor y confirmación autenticada por API antes de aceptar el pago. La creación devuelve pendiente; el adaptador no ofrece aún checkout hospedado. Los fixtures se declaran sintéticos, no grabaciones reales. Añadió una prueba de API separada con doble condición de llave y opt-in; no carga el archivo externo automáticamente.
+- Qué decidió o corrigió Vaniel: la autorización para usar las llaves externas sigue pendiente. No se leyeron ni se usaron.
+- Pruebas: 115 pasan, 0 fallan, incluida la misma batería de 17 casos para demo y ONVO. Una E2E queda omitida de forma segura sin llave/opt-in; la API real y la entrega de un webhook real no se han probado. La revisión añadió cuatro casos de defensa del núcleo: identificadores de evento deben ser texto y no pueden reutilizarse entre pagos. Se comprobó la fase roja antes de corregirlo. El hook ejecuta el conjunto completo antes del commit.
+- Commits: demo `1ff7e37`; ONVO en este commit, hash registrado al cerrar el bloque.
+
+### Pendientes al pausar para autorización
+
+- P0.6: ejecutar la prueba de API de ONVO con autorización de Vaniel; crea/confirma una transacción ficticia de ₡20000 usando la tarjeta de prueba oficial. Webhook real requiere configurar un endpoint, fuera de esta prueba.
+- P0.7–9: tarifas/calculadora, cuatro herramientas MCP e inicio rápido ejecutable. Se mantiene el orden de AGENTS.md.
+- La página de precios de ONVO respondió 403 al acceso automatizado; no se actualizó su fecha de verificación. Tilopay sí publicó sus tarifas; antes de crear los datos se revalidarán ambas fuentes.
+- GitHub, npm y despliegue todavía no autorizados ni realizados; el workflow está validado localmente, no ejecutado en GitHub.

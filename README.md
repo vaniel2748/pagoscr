@@ -8,6 +8,10 @@ del 20 al 22 de noviembre de 2026. Planificación previa con Claude Code.
 En construcción. El inicio rápido ejecutable se incorpora en P0.9.
 Todavía no se ha publicado el paquete ni creado un repositorio remoto.
 
+Estado: importación, harness, núcleo y demo terminados (P0.1–5). ONVO pasa
+el contrato con fixtures; su prueba de API real requiere autorización (P0.6).
+La calculadora y el servidor MCP siguen pendientes.
+
 Requiere Node.js 22.12 o superior; se desarrolla y verifica con Node.js 24.
 
 ```sh
@@ -21,3 +25,27 @@ y compilación. `prior-work/` conserva los tres archivos originales sin cambios;
 queda fuera de la compilación y del formato, pero sí se revisa por secretos.
 
 Licencia MIT. Consulta `ESTADO-INICIAL.md` y `BITACORA.md` para la procedencia.
+
+## ONVO: prueba de API, con autorización
+
+El adaptador usa payment intents. Crear un cobro devuelve una intención pendiente,
+sin checkout hospedado. `confirmTestCharge` recibe un método tokenizado y
+`getTestPayment` consulta el resultado. El estado de una orden se actualiza mediante
+`processWebhook`, que verifica firma y confirma el pago con ONVO.
+
+Los tests normales usan respuestas sintéticas basadas en la documentación oficial;
+no acceden a variables ni a la red de ONVO. La prueba E2E está separada, exige una
+llave secreta test y `PAGOSCR_RUN_ONVO_E2E=1`. Crea y confirma una transacción
+ficticia de ₡20000. Cubre API y consulta; no recibe un webhook real.
+
+Solo después de la autorización de Vaniel, desde esta carpeta:
+
+```sh
+PAGOSCR_RUN_ONVO_E2E=1 node --env-file=../.env.onvo ./node_modules/vitest/vitest.mjs run --config vitest.e2e.config.ts
+```
+
+Las llaves permanecen en el archivo externo o en variables de entorno. Nunca se
+copian a este repositorio ni se imprimen. Sin autorización se puede comprobar
+únicamente la omisión segura con `npm run test:e2e`, sin cargar el archivo externo.
+
+Referencias oficiales y alcance: [especificación ONVO](docs/specs/onvo.md).

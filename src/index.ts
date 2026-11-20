@@ -6,3 +6,4 @@ export * from './core/validation.js';
 export * from './core/memory-store.js';
 export * from './core/webhook-processor.js';
 export * from './adapters/demo.js';
+export * from './adapters/onvo.js';

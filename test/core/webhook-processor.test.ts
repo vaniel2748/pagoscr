@@ -121,3 +121,33 @@ it('protege la unicidad y devuelve copias de los registros', async () => {
   if (copy) Object.assign(copy, { amountCents: 1 });
   expect((await store.findPayment('demo', 'demo_1'))?.amountCents).toBe(5000);
 });
+
+it.each([undefined, null, 123])(
+  'rechaza una referencia de evento que no sea texto: %s',
+  async (providerEventId) => {
+    vi.mocked(provider.verifyWebhook).mockResolvedValueOnce({
+      ...event,
+      providerEventId: providerEventId as unknown as string,
+    });
+    await expect(
+      processWebhook(provider, request, store),
+    ).rejects.toMatchObject({ code: 'MALFORMED_WEBHOOK' });
+  },
+);
+
+it('no reutiliza un id de evento para un pago diferente', async () => {
+  await processWebhook(provider, request, store);
+  const another = {
+    ...payment,
+    paymentId: 'order_2',
+    providerPaymentId: 'demo_2',
+  };
+  await store.savePayment(another);
+  await expect(
+    store.applyVerifiedEvent(another, {
+      ...event,
+      providerPaymentId: 'demo_2',
+    }),
+  ).rejects.toMatchObject({ code: 'PAYMENT_MISMATCH' });
+  expect((await store.findPayment('demo', 'demo_2'))?.status).toBe('pending');
+});
