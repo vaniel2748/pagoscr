@@ -5,6 +5,11 @@ export default defineConfig({
   format: ['esm'],
   target: 'node22',
   platform: 'node',
+  noExternal: [/.*/],
+  metafile: true,
+  banner: {
+    js: "import { createRequire as __pagoscrCreateRequire } from 'node:module'; const require = __pagoscrCreateRequire(import.meta.url);",
+  },
   dts: true,
   sourcemap: true,
   clean: true,

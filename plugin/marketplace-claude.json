@@ -1,0 +1,12 @@
+{
+  "name": "pagoscr-local",
+  "description": "PagosCR: cobros de prueba y comparación de pasarelas de Costa Rica.",
+  "owner": { "name": "Vaniel González" },
+  "plugins": [
+    {
+      "name": "pagoscr",
+      "source": "./plugins/pagoscr",
+      "description": "Cobros de prueba y comparación de pasarelas en Costa Rica."
+    }
+  ]
+}

@@ -102,3 +102,10 @@
 - Qué decidió o corrigió Vaniel: sin nuevas decisiones; se conserva su elección de retorno Tilopay y consult.
 - Pruebas: validador oficial quick_validate aprobado; UI generada con el script oficial; 14 enlaces revisados y referencias locales existentes; conversor aprobado en siete casos de éxito/error. PyYAML se usó solo en un entorno Python temporal para el validador, sin modificar Python del sistema. Los 227 casos de aplicación se mantienen y el hook ejecuta el control completo antes del commit. La evaluación conductual de cinco tareas sigue en P2, no se confunde con validación estructural.
 - Commits: Tilopay `a57677d`; skill en este commit, hash en el siguiente bloque.
+
+## 2026-11-20 16:45 · Plugins locales para Codex y Claude Code
+
+- Qué hizo Codex: releyó formatos oficiales y contrastó la carga de rutas con el código oficial de Codex y las CLI instaladas. Preparó ambos manifiestos y catálogos, un instalador de un comando con modo dry-run y compilación con dependencias JS incluidas. Genera únicamente archivos permitidos, skill y ocho avisos de licencia; no copia credenciales, prior-work ni node_modules. Codex usa cwd relativo al plugin y Claude usa CLAUDE_PLUGIN_ROOT.
+- Qué decidió o corrigió Vaniel: sin nuevas decisiones; no se instaló el plugin en la configuración personal ni se publicó. Se conserva el requisito de autorización de AGENTS.md para instalar componentes propios.
+- Pruebas: ambos paquetes completan diagnóstico, comparación, cobro demo, confirmación y deduplicación por stdio desde una copia temporal aislada con espacios en la ruta y sin node_modules. El conversor de la skill resuelve el paquete desde esa copia. Claude Code 2.1.150 valida manifiesto y catálogo con --strict y configuración temporal sin credenciales; se corrigió una descripción de catálogo ausente. Los planes dry-run de ambos instaladores coinciden con la ayuda nativa. npm pack --dry-run revisado: 38 archivos, avisos incluidos, sin credenciales ni prior-work. El hook ejecuta los 227 casos y controles completos antes del commit.
+- Commits: skill `ac2a893`; empaquetado en este commit, hash en el siguiente bloque.

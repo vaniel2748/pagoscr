@@ -1,5 +1,6 @@
 prior-work/
 node_modules/
 dist/
+build/
 coverage/
 package-lock.json

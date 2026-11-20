@@ -1,0 +1,9 @@
+{
+  "name": "pagoscr",
+  "version": "0.1.0",
+  "description": "Cobros de prueba y comparación de pasarelas en Costa Rica, con fuentes, confirmación y dinero entero.",
+  "author": { "name": "Vaniel González" },
+  "license": "MIT",
+  "keywords": ["costa-rica", "pagos", "onvo", "tilopay", "mcp"],
+  "mcpServers": "./mcp-claude.json"
+}

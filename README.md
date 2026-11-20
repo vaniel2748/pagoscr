@@ -62,7 +62,38 @@ verificación directa **2026-11-11** y se declara la revisión indirecta del 20.
 Tilopay se verificó directamente el **2026-11-20**. Revisa las condiciones de tu
 comercio; no se agregan cargos que la fuente no especifica.
 
-## Conectar el servidor local
+## Instalar el plugin en un comando
+
+Desde este checkout, elige tu cliente con soporte de plugins:
+
+```sh
+node scripts/instalar-plugin.mjs codex
+```
+
+Para Claude Code:
+
+```sh
+node scripts/instalar-plugin.mjs claude
+```
+
+El comando instala las dependencias de compilación si faltan, genera un catálogo
+local y registra `pagoscr@pagoscr-local` en la configuración de usuario del cliente.
+Reinicia la sesión para cargar las herramientas. Empieza en modo demo. Para
+revisar los comandos sin ejecutar ninguno, agrega `--dry-run`.
+
+Los comandos corresponden a Codex 0.169.0-alpha.11.1 (`plugin add`) y Claude Code
+2.1.150 (`plugin install`), disponibles en el entorno de desarrollo. Se probaron
+los dos manifiestos y el servidor empaquetado por stdio en una copia aislada sin
+node_modules. **La instalación en la configuración personal no se ha ejecutado**;
+un agente requiere autorización antes de hacerla. No hay paquete npm ni catálogo
+público publicados.
+
+`npm run build` genera `build/marketplace/` con ambos catálogos y un plugin que
+incluye runtime, dependencias JS compiladas, skill, tarifas y licencias. No copies
+solo `plugin/`: contiene las plantillas. Consulta la
+[especificación de distribución](docs/specs/plugin.md).
+
+## Conectar solo el servidor local
 
 Una vez compilado, el cliente del agente debe ejecutar este proceso:
 
@@ -72,8 +103,7 @@ node /ruta/absoluta/a/pagoscr/dist/mcp/cli.js
 
 Usa esa ruta real en la configuración stdio de tu cliente. No uses `npm run`
 como comando MCP, porque su salida adicional puede interferir con JSON-RPC.
-El empaquetado e instalación del plugin en un comando se incorpora después del
-adaptador Tilopay; todavía no se ha publicado ningún paquete en npm.
+Esta alternativa usa directamente el CLI compilado; no necesita instalar el plugin.
 
 ## Usar el paquete desde el servidor
 
@@ -170,13 +200,14 @@ npm run hooks:install
 
 El mismo control corre antes de cada commit y en GitHub Actions: formato, tipos,
 pruebas sin red, Secretlint, control de prefijos de llaves, compilación, validación
-de tarifas e inicio rápido por stdio (`quickstart.sh --check`, reutilizando el
-paquete que el CI ya compiló).
+de tarifas, inicio rápido por stdio (`quickstart.sh --check`, reutilizando el
+paquete que el CI ya compiló) y recorrido de ambos plugins desde una copia aislada.
 
 Hay **227 pruebas sin red** y una prueba de API ONVO autorizada aprobada. Demo,
 ONVO y Tilopay pasan la misma batería de 17 casos (51 de contrato). En Tilopay se
-prueba el retorno documentado con consult, no su webhook privado. La [skill de agentes](skill/SKILL.md) está incluida; empaquetado
-y plantilla siguen pendientes. GitHub, npm y despliegue todavía no se han autorizado:
+prueba el retorno documentado con consult, no su webhook privado. La
+[skill de agentes](skill/SKILL.md) y los paquetes para ambos clientes están incluidos;
+la plantilla sigue pendiente. GitHub, npm y despliegue todavía no se han autorizado:
 los controles están en verde localmente, y el CI remoto aún no se ha ejecutado.
 
 `prior-work/` conserva tres archivos importados sin cambios desde RestaurantPay;

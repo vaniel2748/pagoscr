@@ -1,0 +1,12 @@
+{
+  "name": "pagoscr-local",
+  "interface": { "displayName": "PagosCR" },
+  "plugins": [
+    {
+      "name": "pagoscr",
+      "source": { "source": "local", "path": "./plugins/pagoscr" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_USE" },
+      "category": "Developer Tools"
+    }
+  ]
+}
