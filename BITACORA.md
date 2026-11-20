@@ -13,3 +13,10 @@
 - Qué decidió o corrigió Vaniel: sin cambios adicionales.
 - Pruebas: formato, tipos, escaneo de secretos y compilación ESM + declaraciones pasan. Harness sin casos de aplicación todavía (0 pruebas). Se fijó TypeScript 6 por incompatibilidad de su API de compilador en TypeScript 7 con tsup 9. Secretlint 14 incluye su preset recomendado; no se usa el paquete obsoleto. Dependencias: 0 vulnerabilidades reportadas por npm. El CI remoto queda pendiente de autorización para crear GitHub.
 - Commits: este bloque se registra en el commit del harness; hash en el siguiente bloque.
+
+## 2026-11-20 14:24 · Núcleo sin dependencias
+
+- Qué hizo Codex: escribió primero la especificación y las pruebas monetarias. Implementó puerto, tipos, validadores y errores seguros en español. Los montos públicos son enteros seguros; cálculos intermedios con bigint y redondeo de mitades hacia arriba. Definió el contexto de pago del servidor y el contrato de almacén atómico para deduplicar webhooks.
+- Qué decidió o corrigió Vaniel: sin cambios adicionales.
+- Pruebas: 45 pasan, 0 fallan; se verificó previamente la fase roja por ausencia de implementación. Incluye productos intermedios mayores al rango seguro, desbordamientos, fracciones, NaN y monedas no admitidas. Tipos pasan.
+- Commits: harness `806c727`; núcleo en este commit, hash en el próximo bloque.
