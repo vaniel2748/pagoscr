@@ -1,5 +1,6 @@
 export type PaymentErrorCode =
   | 'INVALID_INPUT'
+  | 'EXCHANGE_RATE_REQUIRED'
   | 'INVALID_SIGNATURE'
   | 'MALFORMED_WEBHOOK'
   | 'PAYMENT_NOT_FOUND'

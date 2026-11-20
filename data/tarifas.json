@@ -1,0 +1,134 @@
+[
+  {
+    "id": "onvo-tarjeta",
+    "pasarela": "ONVO",
+    "metodo": "tarjeta",
+    "pais": "CR",
+    "porcentajePuntosBasicos": 390,
+    "fijoUsdCentavos": 35,
+    "minimoUsdCentavos": 0,
+    "mensualidadUsdCentavos": 0,
+    "liquidacionUsdCentavos": 300,
+    "afiliacionUsdCentavos": null,
+    "requiereCotizacion": false,
+    "verificado": true,
+    "fuente": "https://onvopay.com/pricing",
+    "verificadoEl": "2026-11-11",
+    "revisadoEl": "2026-11-20",
+    "modalidadVerificacion": "indice_oficial",
+    "advertencias": [
+      "ONVO cobra US$3 por liquidación; este cargo no se suma a cada transacción.",
+      "Acceso directo a precios bloqueado con 403. La fuente oficial indexada coincide; se conserva la última verificación directa declarada del 11 de noviembre."
+    ]
+  },
+  {
+    "id": "tilopay-tarjeta",
+    "pasarela": "Tilopay",
+    "metodo": "tarjeta",
+    "pais": "CR",
+    "porcentajePuntosBasicos": 425,
+    "fijoUsdCentavos": 35,
+    "minimoUsdCentavos": 0,
+    "mensualidadUsdCentavos": 0,
+    "liquidacionUsdCentavos": null,
+    "afiliacionUsdCentavos": null,
+    "requiereCotizacion": false,
+    "verificado": true,
+    "fuente": "https://tilopay.com/en/tarifas",
+    "verificadoEl": "2026-11-20",
+    "revisadoEl": "2026-11-20",
+    "modalidadVerificacion": "directa",
+    "advertencias": [
+      "La página no publica una tarifa de liquidación; el precio final depende del modelo de integración y las condiciones del comercio."
+    ]
+  },
+  {
+    "id": "onvo-sinpe-movil",
+    "pasarela": "ONVO",
+    "metodo": "sinpe_movil",
+    "pais": "CR",
+    "porcentajePuntosBasicos": 150,
+    "fijoUsdCentavos": 0,
+    "minimoUsdCentavos": 0,
+    "mensualidadUsdCentavos": 0,
+    "liquidacionUsdCentavos": 300,
+    "afiliacionUsdCentavos": null,
+    "requiereCotizacion": false,
+    "verificado": true,
+    "fuente": "https://onvopay.com/pricing",
+    "verificadoEl": "2026-11-11",
+    "revisadoEl": "2026-11-20",
+    "modalidadVerificacion": "indice_oficial",
+    "advertencias": [
+      "ONVO cobra US$3 por liquidación; este cargo no se suma a cada transacción.",
+      "SINPE Móvil es distinto de SINPE bancario y tiene una tarifa diferente.",
+      "Acceso directo a precios bloqueado con 403. La fuente oficial indexada coincide; se conserva la última verificación directa declarada del 11 de noviembre."
+    ]
+  },
+  {
+    "id": "tilopay-sinpe-movil",
+    "pasarela": "Tilopay",
+    "metodo": "sinpe_movil",
+    "pais": "CR",
+    "porcentajePuntosBasicos": 200,
+    "fijoUsdCentavos": 35,
+    "minimoUsdCentavos": 0,
+    "mensualidadUsdCentavos": 0,
+    "liquidacionUsdCentavos": null,
+    "afiliacionUsdCentavos": null,
+    "requiereCotizacion": false,
+    "verificado": true,
+    "fuente": "https://tilopay.com/en/tarifas",
+    "verificadoEl": "2026-11-20",
+    "revisadoEl": "2026-11-20",
+    "modalidadVerificacion": "directa",
+    "advertencias": [
+      "La página no publica una tarifa de liquidación; el precio final depende del modelo de integración y las condiciones del comercio."
+    ]
+  },
+  {
+    "id": "tilopay-bac",
+    "pasarela": "Tilopay + afiliación BAC",
+    "metodo": "tarjeta",
+    "pais": "CR",
+    "porcentajePuntosBasicos": 100,
+    "fijoUsdCentavos": 0,
+    "minimoUsdCentavos": 30,
+    "mensualidadUsdCentavos": null,
+    "liquidacionUsdCentavos": null,
+    "afiliacionUsdCentavos": null,
+    "requiereCotizacion": true,
+    "verificado": false,
+    "fuente": "https://tilopay.com/bac",
+    "verificadoEl": "2026-10-13",
+    "revisadoEl": "2026-11-20",
+    "modalidadVerificacion": "referencia_previa",
+    "advertencias": [
+      "La fuente oficial publica 1% más los costos de BAC; falta la tarifa bancaria negociada.",
+      "El mínimo de US$0,30 procede de la investigación previa de Vaniel y no está corroborado en la fuente pública; no se usa para clasificar esta opción."
+    ]
+  },
+  {
+    "id": "bac-directo",
+    "pasarela": "BAC e-commerce directo (antecedente)",
+    "metodo": "tarjeta",
+    "pais": "HN",
+    "porcentajePuntosBasicos": null,
+    "fijoUsdCentavos": null,
+    "minimoUsdCentavos": null,
+    "mensualidadUsdCentavos": 4500,
+    "liquidacionUsdCentavos": null,
+    "afiliacionUsdCentavos": 20000,
+    "requiereCotizacion": true,
+    "verificado": false,
+    "fuente": "https://www.baccredomatic.com/sites/default/files/2025-10/Tarifario_Final_Servicio_a_Comercios_Actualizacion_01_0ct_25_VF_WEB_public_1.pdf",
+    "verificadoEl": "2025-10-01",
+    "revisadoEl": "2026-11-20",
+    "modalidadVerificacion": "referencia_previa",
+    "advertencias": [
+      "No aplicable a Costa Rica: el tarifario previo corresponde a Honduras (F-HON). Se conserva como antecedente no verificado.",
+      "Los valores previos US$0,10–0,15 por operación, US$45 mensuales y US$200 de afiliación no se deben presentar como una cotización para Costa Rica.",
+      "BAC requiere cotización local y tarifa bancaria negociada. Contraste por país: https://ayuda.baccredomatic.com/para_empresas_o_negocios/comercios_afiliados/e-commerce?country=es"
+    ]
+  }
+]

@@ -62,3 +62,10 @@
 - Qué decidió o corrigió Vaniel: autorizó explícitamente usar las llaves de prueba para esta operación. La autorización queda registrada y no se vuelve a pedir para el mismo alcance. GitHub, npm y despliegue siguen sin autorizarse.
 - Pruebas: E2E de API 1 pasa, 0 fallan, 0 omitidas; duración 2,33 segundos. Se conservan 115 pruebas locales aprobadas. La recepción de un webhook real no forma parte de esta prueba.
 - Commits: `2471bd7` implementó ONVO; `508c8ea` registró el cierre anterior. Este bloque cierra P0.6; sigue P0.7 (tarifas y calculadora).
+
+## 2026-11-20 14:58 · Tarifas verificables y calculadora en enteros
+
+- Qué hizo Codex: escribió especificación y pruebas antes de los datos y la calculadora. Guardó las seis filas requeridas con URL, fechas, estado, país y advertencias. Revalidó Tilopay de forma directa; ONVO solo fue accesible mediante su página oficial indexada, por lo que conservó la verificación directa del 11 de noviembre y declaró el bloqueo 403 y la revisión indirecta del 20. Comparaciones en CRC/USD con tipo de cambio explícito en céntimos CRC por USD, redondeo en enteros y cargos de liquidación/mensualidad separados. El CI ejecuta un validador que rechaza fuentes o fechas ausentes.
+- Qué decidió o corrigió Vaniel: sin nuevas decisiones. La verificación documental detectó que las cifras previas US$45/mes y US$200 de BAC proceden de Honduras; se preservó la fila no verificada, fuera del cálculo de Costa Rica. Tilopay/BAC publica 1% pero no el mínimo de US$0,30 ni la tarifa bancaria: sigue sin total calculado.
+- Pruebas: 154 pasan, 0 fallan antes de agregar tres casos adicionales que rechazan coerción de arrays a texto en el validador. El hook verifica los 157 casos esperados, fuentes, formato, tipos y compilación antes del commit. E2E autorizada previa: 1 aprobada.
+- Commits: E2E `bfc8a81`; tarifas y calculadora en este commit, hash en el siguiente bloque.
