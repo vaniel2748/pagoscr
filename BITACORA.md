@@ -1,0 +1,15 @@
+# Bitácora de PagosCR
+
+## 2026-11-20 14:20 · Paso 0 e importación
+
+- Qué hizo Codex: leyó AGENTS.md, PLAN-TECNICO.md, ESTADO-INICIAL.md e INICIO-CODEX.md. Verificó Node 24.16.0, npm 11.13.0, Git 2.54.0 y gh 2.104.0. La consulta anónima `npm view pagoscr` devolvió 404: sin paquete público; no garantiza disponibilidad para publicar. Ya hay una skill oficial para crear skills; no instaló ninguna. Creó únicamente el repositorio local e importó los tres archivos autorizados desde RestaurantPay `cdae3f9`, sin modificaciones ni credenciales.
+- Qué decidió o corrigió Vaniel: autorizó empezar conforme a INICIO-CODEX.md. No se ha solicitado usar credenciales, crear GitHub, publicar ni desplegar.
+- Pruebas: copias idénticas byte por byte y SHA-256 verificados; los tres archivos de origen sin cambios locales; `git diff --cached --check` pasa. No hay pruebas de aplicación todavía.
+- Commits: `adff5d9`.
+
+## 2026-11-20 14:20 · Harness de desarrollo
+
+- Qué hizo Codex: preparó reglas para ambos agentes, licencia MIT, variables vacías, TypeScript estricto, tsup, Vitest, Prettier, Secretlint y un control adicional para prefijos ONVO. Añadió hook de pre-commit y workflow de GitHub sin publicación automática. Node mínimo 22.12 por las herramientas vigentes; el entorno tiene Node 24. Conserva `prior-work/` sin reformatear ni compilar.
+- Qué decidió o corrigió Vaniel: sin cambios adicionales.
+- Pruebas: formato, tipos, escaneo de secretos y compilación ESM + declaraciones pasan. Harness sin casos de aplicación todavía (0 pruebas). Se fijó TypeScript 6 por incompatibilidad de su API de compilador en TypeScript 7 con tsup 9. Secretlint 14 incluye su preset recomendado; no se usa el paquete obsoleto. Dependencias: 0 vulnerabilidades reportadas por npm. El CI remoto queda pendiente de autorización para crear GitHub.
+- Commits: este bloque se registra en el commit del harness; hash en el siguiente bloque.

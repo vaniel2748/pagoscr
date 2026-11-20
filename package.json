@@ -1,0 +1,48 @@
+{
+  "name": "pagoscr",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cobros de prueba y comparación de pasarelas para builders en Costa Rica",
+  "license": "MIT",
+  "author": "Vaniel González",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "data",
+    "skill",
+    "plugin",
+    "template",
+    "docs",
+    ".env.example"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "secrets": "secretlint '**/*' && node scripts/check-secrets.mjs",
+    "check": "npm run format:check && npm run typecheck && npm test && npm run secrets && npm run build",
+    "hooks:install": "git config core.hooksPath .githooks"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "prettier": "^3.10.1",
+    "secretlint": "^14.0.1",
+    "tsup": "^9.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.1"
+  }
+}

@@ -15,15 +15,15 @@ Redactado el 11 de noviembre de 2026. La sección 5 se completa el viernes 20 a 
 
 Estado del repositorio al redactar: commit `c09a125` del 15 de octubre de 2026. Carpeta `apps/api/src/modules/payments/`.
 
-| Pieza | Archivo | Líneas | Pruebas | ¿Se reutiliza? |
-|---|---|---|---|---|
-| Puerto de pago (interfaz) | `providers/payment-provider.port.ts` | 73 | — | Sí, como base |
-| Adaptador de Tilopay | `providers/tilopay.adapter.ts` | 263 | 10 | Sí, como base |
-| Adaptador de pruebas | `providers/sandbox.adapter.ts` | 58 | — | Sí, como base del modo demo |
-| Adaptador sin configurar | `providers/unconfigured.adapter.ts` | 27 | — | No |
-| Adaptador BAC (FAC/PowerTranz) | `providers/fac.adapter.ts` | 50 | 3 | No: rechaza todo cobro, falta la documentación de BAC |
-| Fábrica de proveedores | `payment-provider.factory.ts` | 141 | — | No: es específica de RestaurantPay |
-| Servicio de pagos | `payments.service.ts` | 688 | 8 | No: maneja cuentas de mesa y división de cuenta |
+| Pieza                          | Archivo                              | Líneas | Pruebas | ¿Se reutiliza?                                        |
+| ------------------------------ | ------------------------------------ | ------ | ------- | ----------------------------------------------------- |
+| Puerto de pago (interfaz)      | `providers/payment-provider.port.ts` | 73     | —       | Sí, como base                                         |
+| Adaptador de Tilopay           | `providers/tilopay.adapter.ts`       | 263    | 10      | Sí, como base                                         |
+| Adaptador de pruebas           | `providers/sandbox.adapter.ts`       | 58     | —       | Sí, como base del modo demo                           |
+| Adaptador sin configurar       | `providers/unconfigured.adapter.ts`  | 27     | —       | No                                                    |
+| Adaptador BAC (FAC/PowerTranz) | `providers/fac.adapter.ts`           | 50     | 3       | No: rechaza todo cobro, falta la documentación de BAC |
+| Fábrica de proveedores         | `payment-provider.factory.ts`        | 141    | —       | No: es específica de RestaurantPay                    |
+| Servicio de pagos              | `payments.service.ts`                | 688    | 8       | No: maneja cuentas de mesa y división de cuenta       |
 
 Documentos previos que alimentan el proyecto, todos de RestaurantPay:
 
@@ -51,12 +51,12 @@ Documentos previos que alimentan el proyecto, todos de RestaurantPay:
 
 ## 5. Para completar el viernes 20 a las 9:00 a. m.
 
-| Dato | Valor |
-|---|---|
-| Commit de RestaurantPay del que se importa | `cdae3f9` (los tres archivos sin cambios locales) |
-| Commit de importación en PagosCR | Se completa en el commit siguiente: un commit no puede contener su propio hash. |
-| Fecha y hora del primer commit | 2026-11-20 14:18:16 CST (UTC−6) |
-| Integrantes del equipo | Vaniel González |
-| Herramientas de IA usadas | Codex para construcción; planificación previa hecha con Claude Code. |
+| Dato                                       | Valor                                                                |
+| ------------------------------------------ | -------------------------------------------------------------------- |
+| Commit de RestaurantPay del que se importa | `cdae3f9` (los tres archivos sin cambios locales)                    |
+| Commit de importación en PagosCR           | `adff5d9`                                                            |
+| Fecha y hora del primer commit             | 2026-11-20 14:18:16 CST (UTC−6)                                      |
+| Integrantes del equipo                     | Vaniel González                                                      |
+| Herramientas de IA usadas                  | Codex para construcción; planificación previa hecha con Claude Code. |
 
 La tabla de la sección 2 declara el estado del 11 de noviembre. La importación del 20 de noviembre usa el estado actual indicado arriba: 84 líneas del puerto, 426 del adaptador Tilopay y 50 del adaptador sandbox. Se copiaron exclusivamente esos tres archivos, sin modificaciones, a `prior-work/`. Ninguna credencial ni otro archivo de RestaurantPay se importó.

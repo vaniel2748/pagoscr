@@ -1,0 +1,5 @@
+prior-work/
+node_modules/
+dist/
+coverage/
+package-lock.json
