@@ -358,3 +358,10 @@
 - Codex sincronizó de nuevo cortes, montos y subtítulos. La similitud acústica mediana entre escenas subió de 0,447 a 0,919.
 - Verificación del MP4 de 1:32 a 1080p y 30 fps, con 23 subtítulos y mezcla de −16,04 LUFS y −2,26 dBTP. HyperFrames terminó sin errores ni advertencias.
 - ENTREGA.md enlaza la tercera edición, los subtítulos y el proyecto editable local.
+
+## 2026-11-21 17:51 · Video narrado con la voz de Vaniel
+
+- Vaniel eligió VoiceStudio y aportó una muestra. Codex usó el adaptador local MLX-Audio y Qwen3-TTS Base para generar el guion completo en una sola toma en español.
+- Codex ajustó el ritmo y volvió a sincronizar el motion, los montos, la música y los subtítulos. La comprobación de la toma se hizo con transcripción y análisis acústico local.
+- MP4 comprobado en 1080p a 30 fps, 1:20, 23 subtítulos y mezcla de −16 LUFS y −2,41 dBTP. HyperFrames pasó sin errores ni advertencias.
+- ENTREGA.md apunta a la cuarta edición y al proyecto editable local.
