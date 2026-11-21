@@ -252,3 +252,17 @@
 - Codex registró su aceptación en las guías, conservando la distinción entre E2E de API, prueba manual y webhook real pendiente. La captura personal no se incorpora al repositorio.
 - Pruebas previas: dos E2E reales pasan, 310 casos locales y 45 reproducciones. Esta entrada registra la comprobación manual hecha por Vaniel.
 - Tarea 1 aceptada; tarea 4 lista. Continúan el plan A/B y la propuesta de túnel, sin detener las tareas que no requieren otra decisión.
+
+## 2026-11-21 01:08 · Plan de instalación sin clonar
+
+- Codex revisó los catálogos y MCP de las fuentes oficiales, contrastó la ayuda de ambos clientes y verificó npm: pagoscr responde 404 en el registro público.
+- Preparó diez líneas fuera del repositorio: A con npm/version fija y B con el plugin compilado en GitHub, unos 4 MiB de contenido y regeneración por versión.
+- La verificación tras elegir usará carpeta vacía y configuración temporal. El paquete conserva private:true; preparar A no autoriza publicarlo.
+- Se pidió a Vaniel elegir A/B. El README documenta los comandos locales que sí funcionan mientras se decide la distribución remota.
+
+## 2026-11-21 01:08 · Propuesta para el webhook real
+
+- Codex propuso Quick Tunnel oficial de Cloudflare con binario temporal y un receptor que permite solo POST /api/webhooks/onvo hacia la plantilla local.
+- Preparó el receptor fuera del repositorio: conserva bytes/firma, limita tamaño y rechaza otras rutas; cuatro pruebas locales pasan.
+- Vaniel debe autorizar la descarga/conexión y registrar la URL en ONVO test. Después se verificará un evento y guardará únicamente una copia anonimizada.
+- La propuesta está lista para revisión; ningún túnel abierto ni webhook real declarado recibido. La plantilla aceptada sigue activa para el siguiente cobro test.
