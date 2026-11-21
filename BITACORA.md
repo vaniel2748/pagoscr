@@ -322,3 +322,11 @@
 - Codex preparó acceso público y registro oficial; normalizó el repositorio del paquete. README e instalación usan los catálogos GitHub y el demo npx sin clonar.
 - Las cuatro herramientas quedan dentro de las primeras 53 líneas. El hook verifica 315 casos locales, 45 reproducciones y coherencia de ambos plugins.
 - Falta enviar el tarball al registro y verificar descarga anónima/caché nueva en ambos clientes. La autorización persiste; no se solicita otra vez.
+
+## 2026-11-21 10:40 · npm público e instalación final comprobada
+
+- Con el sí de Vaniel, Codex publicó pagoscr@0.1.0 desde 3b494cc: 116 archivos y 771960 bytes. Descarga anónima e integridad SHA-512 coinciden.
+- Codex y Claude Code instalaron desde GitHub con configuración/cachés nuevas. Sus lanzadores usaron npm público: cuatro herramientas, demo confirmado/repetido y conversor pasan.
+- Otra caché nueva aprobó los tres ejecutables públicos. El checkout sirvió HTML/CSS/JS y confirmó el monto del catálogo del servidor con deduplicación.
+- Evidencia pública y guías actualizadas; ENTREGA.md externo refleja npm y ONVO real. La sesión npm temporal se revocó y su directorio de autenticación se eliminó.
+- Control completo: 315 casos locales y 45 reproducciones. README de 83 líneas, cuatro herramientas hasta la 53; tareas del sábado completadas.

@@ -23,6 +23,17 @@ El mismo control corre antes de cada commit y en GitHub Actions:
 El CI usa fixtures y demo, sin llaves ni API de pasarelas. La reproducción de las
 apps evaluadas no ejecuta una nueva sesión de agente. [Evaluación completa](evaluacion.md).
 
+## Instalación pública sin clonar
+
+El 21 de noviembre se publicó pagoscr@0.1.0. La descarga anónima desde npm
+coincidió con la integridad del tarball enviado. Codex y Claude Code instalaron
+el plugin desde GitHub con configuración temporal, carpetas vacías y cachés nuevas.
+Sus lanzadores descargaron npm público y completaron diagnóstico, comparación,
+demo confirmado y repetido, y conversor. Los tres ejecutables públicos también
+pasaron por separado, incluido el checkout con sus recursos y catálogo del servidor.
+[Procedimiento y versiones](distribucion-npm.md) y
+[evidencia conservada](evidencia-distribucion-0.1.0.json).
+
 ## Pruebas ONVO contra la API
 
 El 21 de noviembre de 2026 pasaron las dos E2E reales de modo test: intenciones

@@ -1,0 +1,52 @@
+{
+  "fecha": "2026-11-21",
+  "paquete": "pagoscr",
+  "version": "0.1.0",
+  "registro": "https://registry.npmjs.org",
+  "publicadoEl": "2026-11-21T16:28:00.400Z",
+  "tarball": "https://registry.npmjs.org/pagoscr/-/pagoscr-0.1.0.tgz",
+  "integrity": "sha512-/sFgeb5+7Ly9pz1OwtPMMUW/XT4N/q9chogNazi2ZrmpK4+z/JIbUFyXLoDNIEdjsljOOvkGcSxxc6N5t92QxA==",
+  "archivos": 116,
+  "bytes": 771960,
+  "descargaAnonima": true,
+  "integridadCoincide": true,
+  "fuenteGitPublicada": "3b494cc",
+  "gitHeadNpm": null,
+  "clientes": [
+    {
+      "client": "codex",
+      "version": "0.1.0",
+      "nativeInstall": true,
+      "enabled": true,
+      "source": "GitHub",
+      "tools": 4,
+      "demoConfirmed": true,
+      "duplicate": true,
+      "converter": true,
+      "emptyCwd": true,
+      "temporaryConfig": true,
+      "runtimeRegistry": "npm público, descarga anónima"
+    },
+    {
+      "client": "claude",
+      "version": "0.1.0",
+      "nativeInstall": true,
+      "enabled": true,
+      "source": "GitHub",
+      "tools": 4,
+      "demoConfirmed": true,
+      "duplicate": true,
+      "converter": true,
+      "emptyCwd": true,
+      "temporaryConfig": true,
+      "runtimeRegistry": "npm público, descarga anónima"
+    }
+  ],
+  "ejecutables": ["pagoscr-mcp", "pagoscr-centavos", "pagoscr-checkout"],
+  "checkoutDemo": {
+    "htmlCssJs": true,
+    "catalogoServidor": true,
+    "confirmado": true,
+    "duplicado": true
+  }
+}
