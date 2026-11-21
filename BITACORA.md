@@ -294,3 +294,10 @@
 - El receptor guardó solo una lista de campos permitidos y referencias anonimizadas; no conservó cuenta, contactos, tarjetas, llaves ni firma original. Procedencia documentada.
 - La regresión del fixture real pasa con nueva firma ficticia y aviso repetido deduplicado; el hook verifica 315 casos locales y 45 reproducciones.
 - Tarea 2 completada: túnel y receptor cerrados. Se indicó desactivar el endpoint temporal en ONVO. Continúa la preparación npm, que ya pasa las pruebas del tarball local.
+
+## 2026-11-21 01:37 · Plugin GitHub preparado para npm
+
+- Codex incorporó ambos catálogos raíz y el plugin ligero generado, con skill, licencias y lanzadores npm fijados a 0.1.0; no versiona el runtime compilado en ese plugin.
+- El tarball privado se probó desde carpeta vacía y caché temporal mediante un registro local: conversor, cuatro herramientas MCP, comparación y demo confirmado/repetido.
+- El checkout ejecutado por npx sirvió HTML/CSS/JS y completó el pago demo con deduplicación; el directorio de trabajo siguió vacío y no se publicó nada.
+- Continúa la instalación nativa desde GitHub con configuración temporal de Codex y Claude Code. La autorización de publicación sigue pendiente.

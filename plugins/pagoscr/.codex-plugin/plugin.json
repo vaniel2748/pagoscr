@@ -1,0 +1,22 @@
+{
+  "name": "pagoscr",
+  "version": "0.1.0",
+  "description": "Cobros de prueba y comparación de pasarelas en Costa Rica, con fuentes, confirmación y dinero entero.",
+  "author": { "name": "Vaniel González" },
+  "license": "MIT",
+  "skills": "./skills/",
+  "mcpServers": "./mcp.json",
+  "interface": {
+    "displayName": "PagosCR",
+    "shortDescription": "Cobros de prueba en Costa Rica",
+    "longDescription": "Integra demo, ONVO y el retorno documentado de Tilopay con dinero entero, confirmación por API y una calculadora con fuente y fecha. No mueve dinero real.",
+    "developerName": "Vaniel González",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": [
+      "Agrega un checkout demo a esta app",
+      "Compara los costos de ONVO y Tilopay",
+      "Diagnostica mi integración de prueba"
+    ]
+  }
+}

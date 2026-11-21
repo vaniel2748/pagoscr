@@ -1,0 +1,4 @@
+interface:
+  display_name: 'PagosCR'
+  short_description: 'Cobros de prueba y tarifas en Costa Rica'
+  default_prompt: 'Usa $pagoscr para agregar un checkout de prueba a esta app en Costa Rica.'

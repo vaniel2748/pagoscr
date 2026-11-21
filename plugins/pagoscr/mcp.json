@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "pagoscr": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "--package=pagoscr@0.1.0", "--", "pagoscr-mcp"],
+      "env": { "PAGOSCR_PROVIDER": "demo" }
+    }
+  }
+}
