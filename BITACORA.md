@@ -330,3 +330,9 @@
 - Otra caché nueva aprobó los tres ejecutables públicos. El checkout sirvió HTML/CSS/JS y confirmó el monto del catálogo del servidor con deduplicación.
 - Evidencia pública y guías actualizadas; ENTREGA.md externo refleja npm y ONVO real. La sesión npm temporal se revocó y su directorio de autenticación se eliminó.
 - Control completo: 315 casos locales y 45 reproducciones. README de 83 líneas, cuatro herramientas hasta la 53; tareas del sábado completadas.
+
+## 2026-11-21 10:54 · Aprobación final y cierre del servidor de prueba
+
+- Codex leyó la revisión final de INSTRUCCIONES-SABADO.md: las cuatro tareas están aprobadas tras comprobaciones independientes.
+- Cerró su plantilla ONVO y comprobó que el puerto 4321 quedó libre. ENTREGA.md enlaza el GUION-VIDEO.md vigente y refleja el servidor detenido.
+- Vaniel comprobará el endpoint temporal de su panel y grabará el video; tarifas se revisan el domingo. El hook previo al commit verifica 315 casos y 45 reproducciones.
