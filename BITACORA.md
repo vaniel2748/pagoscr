@@ -238,3 +238,10 @@
 - Conservó fuentes, fechas, historial de evaluación y límites de prueba. El detalle del 403 sigue en tarifas.md, sin cambiar verificadoEl de ONVO.
 - Pruebas: enlaces locales válidos y ejemplo del paquete ejecutado con confirmación y repetición deduplicada; el hook comprueba el paquete completo.
 - El feedback autoriza continuar estas tareas mientras Vaniel acepta el pago; la plantilla ONVO permanece activa en 127.0.0.1:4321.
+
+## 2026-11-21 01:00 · README para leer en treinta segundos
+
+- Codex redujo el README a 79 líneas: CI, problema, tabla de ₡20000 con cambio elegido/fuentes/fechas, instalación, demo y cuatro herramientas dentro de las primeras 48.
+- Evaluación en una frase enlazada; detalles de instalación, clientes, mediciones, procedencia y tarifas en docs/. Los comandos reflejan la distribución local vigente.
+- Pruebas: costos obtenidos de la calculadora, enlaces válidos y dry-run de ambos instaladores; el hook ejecuta los 310 casos locales y 45 reproducciones.
+- Tarea 4 lista. La aceptación de ONVO sigue pendiente de Vaniel; publicar npm y elegir la instalación sin clonar se mantienen como decisiones separadas.
