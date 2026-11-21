@@ -6,8 +6,14 @@ import type {
   Currency,
   PaymentRecord,
   PaymentStatus,
+  VerifiedWebhookEvent,
 } from '../core/types.js';
-import { assertCurrency, isRecord, isReference } from '../core/validation.js';
+import {
+  assertCurrency,
+  assertEventMatches,
+  isRecord,
+  isReference,
+} from '../core/validation.js';
 
 export type OnvoRequest = (
   path: string,
@@ -124,6 +130,7 @@ export async function createTestCheckout(
 export async function getTestCheckoutPayment(
   expected: PaymentRecord,
   request: OnvoRequest,
+  eventPaymentIntentId?: string,
 ) {
   if (
     expected.provider !== 'onvo' ||
@@ -139,6 +146,14 @@ export async function getTestCheckoutPayment(
     await request(`/checkout/sessions/${expected.providerPaymentId}`, 'GET'),
     expected,
   );
+  if (
+    eventPaymentIntentId !== undefined &&
+    eventPaymentIntentId !== session.paymentIntentId
+  )
+    throw new PaymentError(
+      'PAYMENT_MISMATCH',
+      'El evento y la API de ONVO indican intenciones de pago distintas para la sesión.',
+    );
   let status: PaymentStatus =
     session.status === 'expired' ? 'failed' : 'pending';
   if (session.paymentStatus === 'paid') {
@@ -175,4 +190,61 @@ export async function getTestCheckoutPayment(
     currency: expected.currency,
     status,
   };
+}
+
+/** Se llama únicamente después de verificar firma, cuerpo crudo y modo del sobre. */
+export async function verifyCheckoutEvent(
+  body: Record<string, unknown>,
+  expected: PaymentRecord,
+  request: OnvoRequest,
+): Promise<VerifiedWebhookEvent> {
+  if (
+    !isReference(body.id) ||
+    !isRecord(body.data) ||
+    !isRecord(body.data.object)
+  )
+    throw new PaymentError(
+      'MALFORMED_WEBHOOK',
+      'El evento de checkout necesita id y data.object.',
+    );
+  const object = body.data.object;
+  if (
+    object.object !== 'checkout_session' ||
+    !isReference(object.id) ||
+    object.status !== 'complete' ||
+    object.paymentStatus !== 'paid' ||
+    !isReference(object.paymentIntentId)
+  )
+    throw new PaymentError(
+      'MALFORMED_WEBHOOK',
+      'El evento debe describir una sesión complete/paid con su intención de pago.',
+    );
+  if (
+    isRecord(object.metadata) &&
+    object.metadata.pagoscrPaymentId !== undefined &&
+    object.metadata.pagoscrPaymentId !== expected.paymentId
+  )
+    throw new PaymentError(
+      'PAYMENT_MISMATCH',
+      'La referencia de la orden en el evento de ONVO no coincide con el servidor.',
+    );
+  const event: VerifiedWebhookEvent = {
+    providerEventId: body.id,
+    providerPaymentId: object.id,
+    amountCents: assertCents(object.amountTotal),
+    currency: assertCurrency(object.currency),
+    status: 'succeeded',
+  };
+  assertEventMatches(event, expected);
+  const confirmed = await getTestCheckoutPayment(
+    expected,
+    request,
+    object.paymentIntentId,
+  );
+  if (confirmed.status !== 'succeeded')
+    throw new PaymentError(
+      'PAYMENT_MISMATCH',
+      'La API de ONVO todavía no confirmó el pago del checkout. Reintenta el aviso más tarde.',
+    );
+  return event;
 }

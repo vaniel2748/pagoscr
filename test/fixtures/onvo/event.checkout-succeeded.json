@@ -1,0 +1,19 @@
+{
+  "id": "evt_checkout_fixture",
+  "object": "event",
+  "mode": "test",
+  "type": "checkout_session.succeeded",
+  "data": {
+    "object": {
+      "object": "checkout_session",
+      "id": "cs_fixture",
+      "status": "complete",
+      "paymentStatus": "paid",
+      "amountSubtotal": 2000000,
+      "amountTotal": 2000000,
+      "currency": "CRC",
+      "paymentIntentId": "pi_fixture_001",
+      "metadata": { "pagoscrPaymentId": "order_checkout" }
+    }
+  }
+}

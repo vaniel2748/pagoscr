@@ -175,3 +175,10 @@
 - Una sesión abierta sigue pendiente. Datos contradictorios o una API no disponible no confirman el pago; cada consulta externa limita su espera a cuatro segundos.
 - Pruebas: 23 casos nuevos con fixtures, 58 pruebas ONVO pasan y tipos correctos. El hook verifica el paquete antes del commit.
 - Sin llamadas reales ni uso de llaves. Sigue pendiente conectar el evento firmado y la plantilla pública.
+
+## 2026-11-20 23:58 · Evento firmado del checkout de ONVO
+
+- Codex conectó checkout_session.succeeded con processWebhook: firma del cuerpo crudo, sesión e intención consultadas y coincidencia de orden, monto y moneda.
+- El mismo aviso concurrente se aplica una vez; una caída de la API permite reintentar sin confirmar antes de tiempo. No se inventó un evento de checkout fallido.
+- Pruebas: 13 casos nuevos, 74 pruebas de adaptador/contrato ONVO pasan y tipos correctos; controles completos mediante el hook.
+- Todos los eventos siguen siendo sintéticos. El webhook real requiere el túnel y la autorización de la tarea siguiente.

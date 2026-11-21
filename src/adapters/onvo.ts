@@ -23,7 +23,11 @@ import {
   parseWebhookJson,
   verifyTimestampSignature,
 } from './webhook-utils.js';
-import { createTestCheckout, getTestCheckoutPayment } from './onvo-checkout.js';
+import {
+  createTestCheckout,
+  getTestCheckoutPayment,
+  verifyCheckoutEvent,
+} from './onvo-checkout.js';
 
 export interface OnvoOptions {
   readonly secretKey: string;
@@ -220,11 +224,12 @@ export class OnvoAdapter implements PaymentProvider {
       );
     if (
       body.type !== 'payment_intent.succeeded' &&
-      body.type !== 'payment_intent.failed'
+      body.type !== 'payment_intent.failed' &&
+      body.type !== 'checkout_session.succeeded'
     ) {
       throw new PaymentError(
         'UNSUPPORTED_EVENT',
-        'Configura eventos payment_intent.succeeded y payment_intent.failed en el endpoint de ONVO.',
+        'Configura checkout_session.succeeded para checkout o payment_intent.succeeded y payment_intent.failed para intenciones en el endpoint de ONVO.',
       );
     }
     if (
@@ -235,9 +240,13 @@ export class OnvoAdapter implements PaymentProvider {
     ) {
       throw new PaymentError(
         'MALFORMED_WEBHOOK',
-        'El sobre de ONVO necesita id, modo test y data.object de la intención.',
+        'El sobre de ONVO necesita id, modo test y data.object del pago.',
       );
     }
+    if (body.type === 'checkout_session.succeeded')
+      return verifyCheckoutEvent(body, expected, (path, method, data) =>
+        this.request(path, method, data, 4000),
+      );
     const object = body.data.object;
     const succeeded = body.type === 'payment_intent.succeeded';
     if (
