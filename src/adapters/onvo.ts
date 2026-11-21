@@ -23,7 +23,7 @@ import {
   parseWebhookJson,
   verifyTimestampSignature,
 } from './webhook-utils.js';
-import { createTestCheckout } from './onvo-checkout.js';
+import { createTestCheckout, getTestCheckoutPayment } from './onvo-checkout.js';
 
 export interface OnvoOptions {
   readonly secretKey: string;
@@ -141,6 +141,15 @@ export class OnvoAdapter implements PaymentProvider {
   }
 
   /** Consulta de servidor; devuelve solo datos normalizados y nunca tokens. */
+  async getTestCheckoutPayment(
+    expected: PaymentRecord,
+  ): Promise<OnvoTestPayment> {
+    return getTestCheckoutPayment(expected, (path, method, body) =>
+      this.request(path, method, body, 4000),
+    );
+  }
+
+  /** Consulta de servidor de una intención creada sin checkout alojado. */
   async getTestPayment(providerPaymentId: string): Promise<OnvoTestPayment> {
     this.requireReference(providerPaymentId);
     const payment = this.parsePayment(
@@ -313,13 +322,14 @@ export class OnvoAdapter implements PaymentProvider {
     path: string,
     method: 'POST' | 'GET',
     body?: Record<string, unknown>,
+    timeoutMs = 6000,
   ): Promise<Record<string, unknown>> {
     let response: Response;
     try {
       response = await this.#http(`https://api.onvopay.com/v1${path}`, {
         method,
         redirect: 'error',
-        signal: AbortSignal.timeout(6000),
+        signal: AbortSignal.timeout(timeoutMs),
         headers: {
           Authorization: `Bearer ${this.#secretKey}`,
           'Content-Type': 'application/json',
@@ -330,7 +340,7 @@ export class OnvoAdapter implements PaymentProvider {
     } catch {
       throw new PaymentError(
         'GATEWAY_ERROR',
-        'No se pudo contactar ONVO en seis segundos. Revisa la conexión; consulta la orden antes de crear otro cobro.',
+        'No se pudo contactar ONVO dentro del tiempo límite. Revisa la conexión; consulta la orden antes de crear otro cobro.',
       );
     }
     if (!response.ok)

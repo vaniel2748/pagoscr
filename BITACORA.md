@@ -168,3 +168,10 @@
 - El adaptador optativo crea una sesión test y valida cantidad, monto, moneda y dominio HTTPS antes de devolver el enlace. Conserva las intenciones existentes.
 - Pruebas: 14 casos nuevos con fixtures pasan; tipos correctos. El hook ejecuta los controles completos antes del commit.
 - Vaniel pidió comenzar las instrucciones del sábado. Sin credenciales, despliegue ni cambios en Nota; la confirmación y pantalla local continúan en este bloque de tarea.
+
+## 2026-11-20 23:56 · Confirmación del checkout por la API
+
+- Codex añadió la consulta de la sesión guardada y su intención vinculada. Exige complete/paid, modo test, monto, moneda y recepción completa; no presupone metadata heredada.
+- Una sesión abierta sigue pendiente. Datos contradictorios o una API no disponible no confirman el pago; cada consulta externa limita su espera a cuatro segundos.
+- Pruebas: 23 casos nuevos con fixtures, 58 pruebas ONVO pasan y tipos correctos. El hook verifica el paquete antes del commit.
+- Sin llamadas reales ni uso de llaves. Sigue pendiente conectar el evento firmado y la plantilla pública.

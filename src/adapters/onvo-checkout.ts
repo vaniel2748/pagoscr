@@ -4,6 +4,8 @@ import type {
   CreateChargeInput,
   CreateChargeResult,
   Currency,
+  PaymentRecord,
+  PaymentStatus,
 } from '../core/types.js';
 import { assertCurrency, isRecord, isReference } from '../core/validation.js';
 
@@ -115,5 +117,62 @@ export async function createTestCheckout(
     providerPaymentId: session.id,
     status: 'pending',
     clientAction: { type: 'redirect', url: url.href },
+  };
+}
+
+/** La referencia persistida de sesión enlaza la orden con su intención de pago. */
+export async function getTestCheckoutPayment(
+  expected: PaymentRecord,
+  request: OnvoRequest,
+) {
+  if (
+    expected.provider !== 'onvo' ||
+    !isReference(expected.providerPaymentId) ||
+    assertCents(expected.amountCents) === 0
+  )
+    throw new PaymentError(
+      'INVALID_INPUT',
+      'Consulta una orden de ONVO guardada por el servidor, con referencia y monto válidos.',
+    );
+  assertCurrency(expected.currency);
+  const session = parseCheckoutSession(
+    await request(`/checkout/sessions/${expected.providerPaymentId}`, 'GET'),
+    expected,
+  );
+  let status: PaymentStatus =
+    session.status === 'expired' ? 'failed' : 'pending';
+  if (session.paymentStatus === 'paid') {
+    if (session.status !== 'complete' || !isReference(session.paymentIntentId))
+      throw new PaymentError(
+        'PAYMENT_MISMATCH',
+        'La sesión pagada necesita estado complete y una intención de pago válida. Vuelve a consultar ONVO.',
+      );
+    const payment = await request(
+      `/payment-intents/${session.paymentIntentId}`,
+      'GET',
+    );
+    if (payment.mode !== 'test')
+      throw new PaymentError(
+        'TEST_MODE_REQUIRED',
+        'La intención vinculada al checkout debe pertenecer al modo de prueba.',
+      );
+    if (
+      payment.id !== session.paymentIntentId ||
+      assertCents(payment.amount) !== expected.amountCents ||
+      assertCurrency(payment.currency) !== expected.currency ||
+      payment.status !== 'succeeded' ||
+      assertCents(payment.receivedAmount) !== expected.amountCents
+    )
+      throw new PaymentError(
+        'PAYMENT_MISMATCH',
+        'La API de ONVO no confirmó el monto completo, moneda y estado de la intención vinculada. Vuelve a consultar la orden.',
+      );
+    status = 'succeeded';
+  }
+  return {
+    providerPaymentId: session.id,
+    amountCents: expected.amountCents,
+    currency: expected.currency,
+    status,
   };
 }
