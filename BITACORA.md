@@ -210,3 +210,10 @@
 - El recibo oculta el enlace tras confirmar y conserva la referencia al recargar. Se documentan solo nombres de variables en .env.example.
 - Pruebas: compilación, tipos y revisión Chrome a 1280 y 390 px; demo y ONVO sintético confirmados, recarga y repetición correctas, cero errores o desbordamientos.
 - Una sola sesión ONVO sintética creada; ninguna llamada real. La CLI rechaza ONVO sin llave test antes de abrir un puerto; Nota permanece intacta.
+
+## 2026-11-21 00:23 · Prueba opcional del checkout contra ONVO
+
+- Codex añadió una segunda E2E de red: crear enlace, pagar con el método ficticio oficial y consultar sesión e intención. Reutiliza la tarjeta test existente.
+- La confirmación de sesión usa pm, según ConfirmCheckoutSession del OpenAPI oficial; esta prueba de API no sustituye la aceptación manual de la pantalla.
+- Pruebas: tipos correctos; sin opt-in ni llave, ambas E2E se omiten y no hacen red. Los controles del hook mantienen las pruebas con fixtures separadas del entorno real.
+- Pendiente permiso nuevo de Vaniel para cargar el archivo externo y ejecutar estas pruebas; ninguna llave usada en este bloque.
