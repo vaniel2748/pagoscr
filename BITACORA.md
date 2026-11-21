@@ -315,3 +315,10 @@
 - Nueva prueba desde carpeta vacía y caché nueva: conversor, MCP de cuatro herramientas, comparación, demo confirmado/repetido y checkout con HTML/CSS/JS pasan.
 - Las instalaciones nativas de ambos clientes ya habían aprobado el mismo recorrido desde sus copias temporales. El hook conserva 315 pruebas locales y 45 reproducciones.
 - Mantiene private:true y no ha publicado. La revisión exige el sí explícito adicional de Vaniel; el túnel del webhook real está cerrado.
+
+## 2026-11-21 10:17 · Publicación npm autorizada
+
+- Vaniel dio el sí explícito para publicar pagoscr@0.1.0 y quitar private:true. El CLI confirmó la sesión temporal de la cuenta npm vaniel.
+- Codex preparó acceso público y registro oficial; normalizó el repositorio del paquete. README e instalación usan los catálogos GitHub y el demo npx sin clonar.
+- Las cuatro herramientas quedan dentro de las primeras 53 líneas. El hook verifica 315 casos locales, 45 reproducciones y coherencia de ambos plugins.
+- Falta enviar el tarball al registro y verificar descarga anónima/caché nueva en ambos clientes. La autorización persiste; no se solicita otra vez.

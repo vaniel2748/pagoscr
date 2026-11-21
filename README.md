@@ -18,23 +18,30 @@ Usá tu propio tipo de cambio; mensualidad/liquidación van aparte y las tarifas
 
 ## Instalar en tu agente
 
-Desde el checkout, con Node.js 22.12 o superior y npm:
+Requiere Node.js 22.12 o superior, npm, Git y un cliente con plugins.
+
+Codex, desde cualquier carpeta:
 
 ```sh
-node scripts/instalar-plugin.mjs codex
+codex plugin marketplace add vaniel2748/pagoscr && codex plugin add pagoscr@pagoscr
 ```
 
-Para Claude Code: `node scripts/instalar-plugin.mjs claude`. Reiniciá la sesión.
-[Preparar el checkout y ver la instalación completa](docs/instalacion.md).
+Claude Code:
+
+```sh
+claude plugin marketplace add vaniel2748/pagoscr && claude plugin install pagoscr@pagoscr --scope user
+```
+
+Reiniciá la sesión. [Instalación y clientes comprobados](docs/instalacion.md).
 
 ## Probar el demo sin cuenta ni tarjeta
 
 ```sh
-./scripts/quickstart.sh
+npx -y --package=pagoscr@0.1.0 -- pagoscr-checkout
 ```
 
-Crea un cobro ficticio, lo confirma y comprueba que un aviso repetido no lo duplique.
-El mismo recorrido corre en el CI.
+Abrí [el checkout local](http://127.0.0.1:4321), creá la orden y confirmá el pago
+ficticio. El servidor comprueba el resultado y detecta avisos repetidos.
 
 ## Qué hace el agente
 
@@ -47,15 +54,12 @@ El mismo recorrido corre en el CI.
 
 [5 de 5 tareas terminaron en un cobro de prueba confirmado (2 tras un reintento por cuota)](docs/evaluacion.md).
 
-## Abrir la pantalla de pago
+## Probar ONVO
 
-Después de compilar, `npm run demo:checkout` abre el checkout demo en
-[http://127.0.0.1:4321](http://127.0.0.1:4321).
-
-Para ONVO, configurá las llaves test en el archivo externo y ejecutá:
+Configurá ONVO_TEST_SECRET_KEY en el entorno del servidor y ejecutá:
 
 ```sh
-PAGOSCR_PASARELA=onvo node --env-file=../.env.onvo dist/template/cli.js
+PAGOSCR_PASARELA=onvo npx -y --package=pagoscr@0.1.0 -- pagoscr-checkout
 ```
 
 Pagás en ONVO y volvés a consultar. El servidor toma el precio de su catálogo y

@@ -1,33 +1,36 @@
 # Instalar PagosCR en el agente
 
-Requiere Node.js 22.12 o superior, npm y un cliente con soporte de plugins.
-La distribución actual se prepara desde una copia del repositorio:
-
-```sh
-git clone https://github.com/vaniel2748/pagoscr.git
-cd pagoscr
-```
+Requiere Node.js 22.12 o superior, npm, Git y un cliente con soporte de plugins.
+Desde cualquier carpeta:
 
 ## Codex
 
 ```sh
-node scripts/instalar-plugin.mjs codex
+codex plugin marketplace add vaniel2748/pagoscr && codex plugin add pagoscr@pagoscr
 ```
 
 ## Claude Code
 
 ```sh
-node scripts/instalar-plugin.mjs claude
+claude plugin marketplace add vaniel2748/pagoscr && claude plugin install pagoscr@pagoscr --scope user
 ```
 
-El instalador prepara dependencias si faltan, compila y registra el catálogo
-local y `pagoscr@pagoscr-local` en la configuración de usuario. Reinicia la sesión
-del agente para cargar las cuatro herramientas. El modo inicial es demo.
-Añade `--dry-run` para ver los programas y argumentos que ejecutaría.
+El cliente descarga el plugin desde GitHub y lanza pagoscr@0.1.0 desde npm.
+Reinicia la sesión del agente para cargar las cuatro herramientas. El modo
+inicial es demo. El runtime, el conversor y el checkout usan la misma versión fija.
+[Distribución y pruebas de ambos clientes](distribucion-npm.md).
 
-No hay versión publicada en npm. La instalación sin clonar está pendiente de
-publicar la opción A ya preparada; estos comandos usan el checkout local existente.
-[Comandos remotos preparados y pruebas en ambos clientes](distribucion-npm.md).
+## Desde un checkout de desarrollo
+
+```sh
+git clone https://github.com/vaniel2748/pagoscr.git
+cd pagoscr
+node scripts/instalar-plugin.mjs codex
+```
+
+Para Claude Code usa `node scripts/instalar-plugin.mjs claude`. Este instalador
+compila y registra pagoscr@pagoscr-local en la configuración de usuario. Añade
+`--dry-run` para revisar los programas y argumentos sin ejecutarlos.
 
 ## Clientes comprobados
 

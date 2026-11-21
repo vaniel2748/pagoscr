@@ -1,10 +1,10 @@
 # Distribución por npm y catálogo GitHub
 
-Vaniel eligió la opción A el 21 de noviembre de 2026. El paquete **pagoscr@0.1.0**
-está preparado y probado localmente; su publicación todavía espera autorización.
-`package.json` conserva `private: true`.
+Vaniel eligió la opción A y autorizó la publicación el 21 de noviembre de 2026.
+El runtime y el conversor se distribuyen como **pagoscr@0.1.0**, con versión exacta.
+El indicador private:true se retiró después de esa autorización.
 
-## Comandos preparados para después de publicar
+## Instalar desde el catálogo GitHub
 
 Desde cualquier carpeta, con Node.js 22.12 o superior, npm, Git y el cliente:
 
@@ -44,9 +44,9 @@ comparación, cobro demo confirmado, repetición deduplicada y conversor de cent
 El directorio de trabajo siguió vacío. El checkout del tarball también sirvió
 HTML/CSS/JS y completó el cobro demo con deduplicación.
 
-Estos resultados comprueban instalación y ejecución del tarball preparado. La
-descarga de pagoscr@0.1.0 desde el registro público se comprobará al publicarlo;
-en la preparación se utilizó explícitamente el registro temporal.
+Estos resultados describen la preparación con registro temporal. Después de
+publicar se repite la descarga anónima desde el registro público; el resultado
+se conserva en la [bitácora](https://github.com/vaniel2748/pagoscr/blob/main/BITACORA.md).
 
 La instalación local anterior sigue disponible con
 `node scripts/instalar-plugin.mjs codex` o `claude`, desde el checkout.

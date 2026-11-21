@@ -14,8 +14,8 @@ plugin/. No se anuncian URLs GitHub/npm que aún no existen.
 
 El 21 de noviembre Vaniel eligió preparar la distribución npm: los catálogos raíz
 y `plugins/pagoscr` ya están en GitHub, con runtime y conversor fijados a 0.1.0.
-La publicación npm requiere otro sí; los clientes se probaron con el tarball en
-un registro temporal. [Diseño, comandos y evidencia](../distribucion-npm.md).
+La publicación fue autorizada con un sí separado. Los clientes se probaron con
+el tarball en un registro temporal antes de usar el registro público. [Diseño, comandos y evidencia](../distribucion-npm.md).
 
 El plugin contiene ambos manifiestos, skill/referencias/conversor, paquete ESM,
 tarifas, licencia y avisos de dependencias. El MCP y sus dependencias JS quedan

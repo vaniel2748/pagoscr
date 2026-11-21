@@ -1,13 +1,17 @@
 {
   "name": "pagoscr",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "description": "Cobros de prueba y comparación de pasarelas para builders en Costa Rica",
   "license": "MIT",
   "author": "Vaniel González",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vaniel2748/pagoscr.git"
+    "url": "git+https://github.com/vaniel2748/pagoscr.git"
   },
   "homepage": "https://github.com/vaniel2748/pagoscr#readme",
   "bugs": {
