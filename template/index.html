@@ -19,7 +19,8 @@
         <div class="topbar-right">
           <span class="location">Hecho en Costa Rica</span
           ><span class="demo-pill"
-            ><span aria-hidden="true">●</span> Modo demo</span
+            ><span aria-hidden="true">●</span
+            ><span id="mode-label">Modo demo</span></span
           >
         </div>
       </header>
@@ -28,7 +29,7 @@
         <div class="intro">
           <p class="eyebrow">MENOS FRICCIÓN. MÁS IDEAS.</p>
           <h1>Tu primer cobro,<br /><em>sin vueltas.</em></h1>
-          <p class="lead">
+          <p class="lead" id="intro-copy">
             De la idea al pago confirmado. Probá el recorrido<br
               class="desktop-break"
             />
@@ -63,7 +64,7 @@
             </div>
             <ul class="product-features" aria-label="Características del demo">
               <li>Sin registro</li>
-              <li>Sin tarjeta</li>
+              <li id="card-feature">Sin tarjeta</li>
               <li>Sin dinero real</li>
             </ul>
           </section>
@@ -85,7 +86,8 @@
               ><span data-price>—</span>
             </div>
             <div class="summary-line subtle">
-              <span>Tipo de operación</span><span>Simulación</span>
+              <span>Tipo de operación</span
+              ><span id="operation-type">Simulación</span>
             </div>
             <div class="total-line">
               <span>Total</span><strong data-price>—</strong>
@@ -107,7 +109,8 @@
               <li id="step-payment">
                 <span class="step-icon">2</span
                 ><span
-                  >Confirmá el pago demo<small
+                  ><span id="payment-step-title">Confirmá el pago demo</span
+                  ><small id="payment-step-copy"
                     >Una simulación, de principio a fin.</small
                   ></span
                 >
@@ -122,6 +125,14 @@
               </li>
             </ol>
 
+            <a
+              class="primary-button"
+              id="onvo-payment"
+              target="_blank"
+              rel="noopener noreferrer"
+              hidden
+              >Pagar con ONVO</a
+            >
             <button class="primary-button" id="primary-action" disabled>
               Preparando…
             </button>

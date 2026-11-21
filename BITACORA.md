@@ -203,3 +203,10 @@
 - Un aviso válido se confirma por API y se deduplica. Firma alterada, JSON inválido y cuerpo excesivo se rechazan; una caída de ONVO responde 503 para reintentar.
 - Pruebas: 31 casos HTTP pasan, cuatro nuevos del endpoint; tipos correctos. El hook vuelve a comprobar el paquete completo antes del commit.
 - Endpoint solo local y eventos sintéticos; todavía no hay túnel ni webhook real registrado.
+
+## 2026-11-21 00:21 · Pantalla de pago ONVO y modo demo
+
+- La plantilla pública selecciona demo u ONVO con PAGOSCR_PASARELA; ONVO abre su enlace en otra pestaña y consulta al volver. No recoge tarjetas ni acepta éxito de la URL.
+- El recibo oculta el enlace tras confirmar y conserva la referencia al recargar. Se documentan solo nombres de variables en .env.example.
+- Pruebas: compilación, tipos y revisión Chrome a 1280 y 390 px; demo y ONVO sintético confirmados, recarga y repetición correctas, cero errores o desbordamientos.
+- Una sola sesión ONVO sintética creada; ninguna llamada real. La CLI rechaza ONVO sin llave test antes de abrir un puerto; Nota permanece intacta.

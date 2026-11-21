@@ -3,25 +3,45 @@ let token;
 let payment = null;
 let product;
 let busy = false;
+let provider = 'demo';
 
 function render() {
   const state = payment?.estado ?? 'new';
+  const onvo = provider === 'onvo';
   document.body.dataset.state = state;
   $('status-label').textContent =
     state === 'succeeded'
       ? 'Pago confirmado'
-      : state === 'pending'
-        ? 'Orden lista. Falta confirmar.'
-        : 'Todo listo para empezar';
+      : state === 'failed'
+        ? 'El pago no se confirmó'
+        : state === 'pending'
+          ? onvo
+            ? 'Esperando el pago en ONVO'
+            : 'Orden lista. Falta confirmar.'
+          : 'Todo listo para empezar';
   $('primary-action').textContent = busy
     ? 'Procesando…'
     : state === 'succeeded'
       ? 'Consultar estado'
       : state === 'pending'
-        ? 'Confirmar pago demo'
-        : 'Crear orden demo';
+        ? onvo
+          ? 'Consultar pago'
+          : 'Confirmar pago demo'
+        : state === 'failed'
+          ? 'Consultar estado'
+          : onvo
+            ? 'Crear orden de prueba'
+            : 'Crear orden demo';
+  $('primary-action').className =
+    onvo && state === 'pending' ? 'replay-button' : 'primary-button';
   $('primary-action').disabled = busy || !token;
-  $('replay-action').hidden = state !== 'succeeded';
+  $('replay-action').hidden = onvo || state !== 'succeeded';
+  const payLink = $('onvo-payment');
+  const canPay =
+    onvo && state === 'pending' && payment?.accionCliente?.type === 'redirect';
+  payLink.hidden = !canPay;
+  if (canPay) payLink.href = payment.accionCliente.url;
+  else payLink.removeAttribute('href');
   $('replay-action').disabled = busy;
   $('reference-block').hidden = !payment;
   $('payment-reference').textContent = payment?.id ?? '';
@@ -67,8 +87,13 @@ async function act(repeat = false) {
     if (!payment) {
       result = await request('/api/cobros', { producto: product.id });
       $('feedback').textContent =
-        'Tu orden está lista. Ahora podés confirmar el pago de prueba.';
-    } else if (payment.estado === 'pending' || repeat) {
+        provider === 'onvo'
+          ? 'Abrí el pago en ONVO, usá una tarjeta de prueba y volvé a esta pestaña.'
+          : 'Tu orden está lista. Ahora podés confirmar el pago de prueba.';
+    } else if (
+      provider === 'demo' &&
+      (payment.estado === 'pending' || repeat)
+    ) {
       result = await request(`/api/cobros/${payment.id}/confirmar-demo`, {});
       $('feedback').textContent = result.duplicado
         ? 'Evento repetido detectado. El pago se aplicó una sola vez.'
@@ -76,7 +101,11 @@ async function act(repeat = false) {
     } else {
       result = await request(`/api/cobros/${payment.id}`);
       $('feedback').textContent =
-        'Estado consultado: tu pago sigue confirmado.';
+        result.pago.estado === 'succeeded'
+          ? '¡Listo! El servidor confirmó tu pago de prueba.'
+          : result.pago.estado === 'failed'
+            ? 'El enlace venció sin un pago confirmado. Revisá la orden antes de crear otro cobro.'
+            : 'ONVO todavía no confirmó el pago. Podés volver a consultar.';
     }
     payment = result.pago;
   } catch (error) {
@@ -92,13 +121,31 @@ async function act(repeat = false) {
 }
 $('primary-action').addEventListener('click', () => act());
 $('replay-action').addEventListener('click', () => act(true));
+window.addEventListener('focus', () => {
+  if (provider === 'onvo' && payment?.estado === 'pending') void act();
+});
 try {
   // Datos del catálogo: el navegador nunca calcula ni envía el monto final.
   request('/api/catalogo')
     .then((catalog) => {
       token = catalog.csrfToken;
+      provider = catalog.pasarela ?? 'demo';
       product = catalog.producto;
       payment = catalog.pago;
+      if (provider === 'onvo') {
+        $('mode-label').textContent = 'ONVO · prueba';
+        $('intro-copy').textContent =
+          'Probá un cobro con tarjeta en la página de ONVO. Usá únicamente una tarjeta de prueba.';
+        $('card-feature').textContent = 'Tarjeta de prueba';
+        $('operation-type').textContent = 'ONVO · prueba';
+        $('payment-step-title').textContent = 'Pagá en ONVO';
+        $('payment-step-copy').textContent =
+          'Se abre en otra pestaña. Volvé aquí al terminar.';
+        $('feedback').textContent =
+          payment?.estado === 'pending'
+            ? 'Tu orden sigue lista. Abrí ONVO para pagar o consultá el estado.'
+            : 'Creá tu orden para abrir el pago con tarjeta de prueba.';
+      }
       $('product-name').textContent = product.nombre;
       document.querySelectorAll('[data-price]').forEach((node) => {
         node.textContent = product.montoFormateado;
