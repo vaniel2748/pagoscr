@@ -8,6 +8,7 @@ import {
 import { DemoAdapter } from '../src/adapters/demo.js';
 import { OnvoAdapter, type OnvoOptions } from '../src/adapters/onvo.js';
 import { InMemoryPaymentStore } from '../src/core/memory-store.js';
+import { PaymentError } from '../src/core/errors.js';
 import { formatMajorUnits } from '../src/core/money.js';
 import { processWebhook } from '../src/core/webhook-processor.js';
 import type {
@@ -46,24 +47,16 @@ function json(res: ServerResponse, body: unknown, status = 200) {
   res.writeHead(status, { 'content-type': 'application/json; charset=utf-8' });
   res.end(JSON.stringify(body));
 }
-async function readJson(
-  req: IncomingMessage,
-): Promise<Record<string, unknown>> {
-  if (
-    !/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'] ?? '')
-  ) {
-    req.resume();
-    throw new HttpError(415, 'Envía una petición JSON.');
-  }
-  const body = await new Promise<Buffer>((resolve, reject) => {
+function readRawBody(req: IncomingMessage, limit: number): Promise<Buffer> {
+  return new Promise<Buffer>((resolve, reject) => {
     let size = 0;
     let failed = false;
     let chunks: Buffer[] = [];
     req.on('data', (chunk: Buffer) => {
       size += chunk.length;
-      if (size > maxBodyBytes) {
+      if (size > limit) {
         if (!failed)
-          reject(new HttpError(413, 'La petición excede 4096 bytes.'));
+          reject(new HttpError(413, `La petición excede ${limit} bytes.`));
         failed = true;
         chunks = [];
       } else if (!failed) chunks.push(chunk);
@@ -75,6 +68,17 @@ async function readJson(
       reject(new HttpError(400, 'No se pudo leer la petición.')),
     );
   });
+}
+async function readJson(
+  req: IncomingMessage,
+): Promise<Record<string, unknown>> {
+  if (
+    !/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'] ?? '')
+  ) {
+    req.resume();
+    throw new HttpError(415, 'Envía una petición JSON.');
+  }
+  const body = await readRawBody(req, maxBodyBytes);
   try {
     const value: unknown = JSON.parse(
       new TextDecoder('utf-8', { fatal: true }).decode(body),
@@ -196,6 +200,43 @@ export function createCheckoutServer(options: CheckoutServerOptions = {}) {
       if (!/^(?:127\.0\.0\.1|localhost):\d+$/.test(host))
         throw new HttpError(403, 'Este demo se ejecuta solo en localhost.');
       const path = new URL(req.url ?? '/', `http://${host}`).pathname;
+      if (
+        req.method === 'POST' &&
+        path === '/api/webhooks/onvo' &&
+        provider instanceof OnvoAdapter
+      ) {
+        const rawBody = await readRawBody(req, 65_536);
+        const signature = req.headers['x-onvo-signature'];
+        try {
+          const result = await processWebhook(
+            provider,
+            {
+              rawBody,
+              headers: {
+                'X-Onvo-Signature':
+                  typeof signature === 'string' ? signature : undefined,
+              },
+            },
+            store,
+          );
+          json(res, {
+            ok: true,
+            estado: result.status,
+            duplicado: result.duplicate,
+          });
+        } catch (error) {
+          if (!(error instanceof PaymentError)) throw error;
+          throw new HttpError(
+            error.code === 'GATEWAY_ERROR'
+              ? 503
+              : error.code === 'INVALID_SIGNATURE'
+                ? 401
+                : 400,
+            'No se pudo verificar el aviso de ONVO. Revisa firma, referencia y estado de prueba; un fallo de API permite reintentar.',
+          );
+        }
+        return;
+      }
       const file = staticFiles.get(
         path as '/' | '/pago' | '/app.js' | '/styles.css',
       );

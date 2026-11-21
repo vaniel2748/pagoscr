@@ -196,3 +196,10 @@
 - Creaciones y consultas concurrentes comparten la misma orden; una creación incierta no se repite automáticamente. La página de retorno ignora estados de la URL.
 - Pruebas: 27 casos HTTP pasan, incluidos diez nuevos de ONVO; tipos correctos. El hook comprueba también contratos, MCP y reproducción de la evaluación.
 - Sin cambios en frontend-nota ni credenciales. Faltan la interfaz de pago, el endpoint firmado y la prueba manual autorizada.
+
+## 2026-11-21 00:10 · Endpoint local de avisos ONVO
+
+- La plantilla ONVO recibe bytes crudos en /api/webhooks/onvo, limita el cuerpo y entrega firma y orden a processWebhook; el navegador no interviene en esa ruta.
+- Un aviso válido se confirma por API y se deduplica. Firma alterada, JSON inválido y cuerpo excesivo se rechazan; una caída de ONVO responde 503 para reintentar.
+- Pruebas: 31 casos HTTP pasan, cuatro nuevos del endpoint; tipos correctos. El hook vuelve a comprobar el paquete completo antes del commit.
+- Endpoint solo local y eventos sintéticos; todavía no hay túnel ni webhook real registrado.

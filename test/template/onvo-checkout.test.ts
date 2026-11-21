@@ -5,7 +5,14 @@ import { createCheckoutServer } from '../../template/server.js';
 import { InMemoryPaymentStore } from '../../src/core/memory-store.js';
 import created from '../fixtures/onvo/checkout-session.created.json' with { type: 'json' };
 import paid from '../fixtures/onvo/checkout-session.paid.json' with { type: 'json' };
-import { fakeSecretKey, succeededFixture } from '../helpers/onvo.js';
+import {
+  fakeSecretKey,
+  fakeWebhookSecret,
+  fixedNow,
+  signedRequest,
+  succeededFixture,
+} from '../helpers/onvo.js';
+import checkoutEvent from '../fixtures/onvo/event.checkout-succeeded.json' with { type: 'json' };
 
 let server: Server;
 let base: string;
@@ -47,7 +54,12 @@ beforeEach(async () => {
   });
   store = new InMemoryPaymentStore();
   server = createCheckoutServer({
-    onvo: { secretKey: fakeSecretKey, fetchImpl: http },
+    onvo: {
+      secretKey: fakeSecretKey,
+      webhookSecret: fakeWebhookSecret,
+      fetchImpl: http,
+      clock: () => fixedNow,
+    },
     store,
   });
   await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
@@ -160,4 +172,75 @@ it('otra sesión no puede consultar ni crear un cobro desde el navegador ajeno',
   });
   expect(response.status).toBe(403);
   expect(creations()).toHaveLength(1);
+});
+
+const eventFor = (paymentId: string) => ({
+  ...checkoutEvent,
+  data: {
+    object: {
+      ...checkoutEvent.data.object,
+      metadata: { pagoscrPaymentId: paymentId },
+    },
+  },
+});
+const notify = (request: ReturnType<typeof signedRequest>) =>
+  fetch(base + '/api/webhooks/onvo', {
+    method: 'POST',
+    body: request.rawBody,
+    headers: { ...request.headers, 'content-type': 'application/json' },
+  });
+
+it('recibe bytes crudos sin sesión de navegador y deduplica el webhook confirmado', async () => {
+  const { pago } = await create();
+  apiSession = paid;
+  const request = signedRequest(JSON.stringify(eventFor(pago.id), null, 2));
+  expect(await (await notify(request)).json()).toMatchObject({
+    ok: true,
+    estado: 'succeeded',
+    duplicado: false,
+  });
+  expect(await (await notify(request)).json()).toMatchObject({
+    ok: true,
+    estado: 'succeeded',
+    duplicado: true,
+  });
+  expect((await (await get('/api/catalogo')).json()).pago.estado).toBe(
+    'succeeded',
+  );
+  expect(creations()).toHaveLength(1);
+});
+
+it('rechaza firma alterada antes de consultar ONVO y deja la orden pendiente', async () => {
+  const { pago } = await create();
+  const request = signedRequest(eventFor(pago.id));
+  request.rawBody = Buffer.from(JSON.stringify(eventFor(pago.id), null, 2));
+  expect((await notify(request)).status).toBe(401);
+  expect(http).toHaveBeenCalledTimes(1);
+  expect(await store.findPayment('onvo', created.id)).toMatchObject({
+    status: 'pending',
+  });
+});
+
+it('una caída de la API responde reintentable y no consume el aviso', async () => {
+  const { pago } = await create();
+  apiSession = paid;
+  const request = signedRequest(eventFor(pago.id));
+  unavailable = true;
+  expect((await notify(request)).status).toBe(503);
+  expect(await store.findPayment('onvo', created.id)).toMatchObject({
+    status: 'pending',
+  });
+  unavailable = false;
+  expect(await (await notify(request)).json()).toMatchObject({
+    estado: 'succeeded',
+    duplicado: false,
+  });
+});
+
+it('limita el webhook y rechaza JSON mal formado sin exponerlo', async () => {
+  expect((await notify(signedRequest('x'.repeat(65_537)))).status).toBe(413);
+  const failure = await notify(signedRequest('{detalle-privado'));
+  expect(failure.status).toBe(400);
+  expect(await failure.text()).not.toContain('detalle-privado');
+  expect(http).not.toHaveBeenCalled();
 });
