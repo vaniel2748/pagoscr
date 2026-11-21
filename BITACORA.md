@@ -336,3 +336,11 @@
 - Codex leyó la revisión final de INSTRUCCIONES-SABADO.md: las cuatro tareas están aprobadas tras comprobaciones independientes.
 - Cerró su plantilla ONVO y comprobó que el puerto 4321 quedó libre. ENTREGA.md enlaza el GUION-VIDEO.md vigente y refleja el servidor detenido.
 - Vaniel comprobará el endpoint temporal de su panel y grabará el video; tarifas se revisan el domingo. El hook previo al commit verifica 315 casos y 45 reproducciones.
+
+## 2026-11-21 15:47 · Video en motion con Nota actual
+
+- Vaniel pidió narración en español y música suave; eligió Holden y corrigió el uso inicial del frontend antiguo.
+- Codex produjo un MP4 privado de 2:00,17 en 1080p y 30 fps, con capturas y grabación actuales de Nota, voz, música y subtítulos. El video y su proyecto editable quedan fuera del repositorio y del paquete npm.
+- Verificación: HyperFrames sin errores, 3605 fotogramas, demo confirmado y referencia conservada al recargar; mezcla de −16,15 LUFS y −2,27 dBTP. El audio se midió, sin revisión auditiva humana.
+- ENTREGA.md externo enlaza los archivos locales. Se conserva una pausa para leer las comisiones y no se inventa una integración autónoma cronometrada ni se publica el código de Nota.
+- Commits: ccc921e es la base técnica pública; este bloque añade solo documentación. No cambia pagoscr@0.1.0.
