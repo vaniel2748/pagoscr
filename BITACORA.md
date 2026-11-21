@@ -344,3 +344,10 @@
 - Verificación: HyperFrames sin errores, 3605 fotogramas, demo confirmado y referencia conservada al recargar; mezcla de −16,15 LUFS y −2,27 dBTP. El audio se midió, sin revisión auditiva humana.
 - ENTREGA.md externo enlaza los archivos locales. Se conserva una pausa para leer las comisiones y no se inventa una integración autónoma cronometrada ni se publica el código de Nota.
 - Commits: ccc921e es la base técnica pública; este bloque añade solo documentación. No cambia pagoscr@0.1.0.
+
+## 2026-11-21 16:28 · Segunda edición del video
+
+- Vaniel pidió corregir el acento de la voz y mejorar el motion. Codex generó una locución nueva dirigida a español latinoamericano neutro.
+- Las comisiones aparecen con la narración. La portada y el checkout tienen grabaciones del sitio Nota, con transiciones que retoman el recibo.
+- El pedido demo se confirmó y conservó la referencia al recargar. La revisión de legibilidad aumentó las fuentes y corrigió un rótulo de ONVO.
+- MP4 local comprobado en 1080p y 30 fps, 1:38, voz y música medida a −16,32 LUFS, 23 subtítulos. La ficha indica los archivos de la segunda edición.
