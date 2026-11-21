@@ -26,7 +26,8 @@ del agente para cargar las cuatro herramientas. El modo inicial es demo.
 Añade `--dry-run` para ver los programas y argumentos que ejecutaría.
 
 No hay versión publicada en npm. La instalación sin clonar está pendiente de
-elegir la distribución; estos comandos usan el checkout local existente.
+publicar la opción A ya preparada; estos comandos usan el checkout local existente.
+[Comandos remotos preparados y pruebas en ambos clientes](distribucion-npm.md).
 
 ## Clientes comprobados
 

@@ -54,7 +54,7 @@
     "tarifas:check": "node scripts/validar-tarifas.mjs",
     "quickstart": "bash scripts/quickstart.sh",
     "quickstart:check": "bash scripts/quickstart.sh --check",
-    "plugins:check": "node scripts/validar-plugins.mjs",
+    "plugins:check": "node scripts/validar-plugins.mjs && node scripts/validar-plugin-npm.mjs",
     "demo:checkout": "node dist/template/cli.js",
     "evaluacion:preparar": "node scripts/preparar-evaluacion.mjs",
     "evaluacion:reproducir": "node scripts/reproducir-evaluacion.mjs",

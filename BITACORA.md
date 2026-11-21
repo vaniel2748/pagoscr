@@ -301,3 +301,10 @@
 - El tarball privado se probó desde carpeta vacía y caché temporal mediante un registro local: conversor, cuatro herramientas MCP, comparación y demo confirmado/repetido.
 - El checkout ejecutado por npx sirvió HTML/CSS/JS y completó el pago demo con deduplicación; el directorio de trabajo siguió vacío y no se publicó nada.
 - Continúa la instalación nativa desde GitHub con configuración temporal de Codex y Claude Code. La autorización de publicación sigue pendiente.
+
+## 2026-11-21 01:42 · Instalación nativa desde GitHub en ambos clientes
+
+- Desde carpetas vacías, Codex 0.171.0-alpha.13 y Claude Code 2.1.150 registraron el catálogo GitHub e instalaron pagoscr@pagoscr habilitado, con configuración temporal.
+- Los MCP de ambas copias completaron cuatro herramientas, diagnóstico sin llaves, comparación, cobro demo confirmado y repetido; sus conversores también pasan y el cwd sigue vacío.
+- Runtime 0.1.0 servido desde el tarball en registro npm local, sin publicar; la guía distingue esa prueba de descargarlo del registro público después de autorizarlo.
+- El CI comprueba además versión fija, skill sincronizada y artefactos GitHub versionados. Queda preparar el tarball final y solicitar el sí de publicación.

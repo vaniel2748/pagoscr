@@ -12,6 +12,11 @@ plugins/pagoscr. El catálogo Codex vive en .agents/plugins/marketplace.json y e
 de Claude en .claude-plugin/marketplace.json. Las plantillas versionadas viven en
 plugin/. No se anuncian URLs GitHub/npm que aún no existen.
 
+El 21 de noviembre Vaniel eligió preparar la distribución npm: los catálogos raíz
+y `plugins/pagoscr` ya están en GitHub, con runtime y conversor fijados a 0.1.0.
+La publicación npm requiere otro sí; los clientes se probaron con el tarball en
+un registro temporal. [Diseño, comandos y evidencia](../distribucion-npm.md).
+
 El plugin contiene ambos manifiestos, skill/referencias/conversor, paquete ESM,
 tarifas, licencia y avisos de dependencias. El MCP y sus dependencias JS quedan
 compilados juntos; la ejecución requiere Node, sin node_modules externo. Se
