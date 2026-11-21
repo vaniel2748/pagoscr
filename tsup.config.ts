@@ -5,6 +5,7 @@ export default defineConfig({
     index: 'src/index.ts',
     'mcp/cli': 'src/mcp/cli.ts',
     'template/cli': 'template/cli.ts',
+    'cli/centavos': 'src/cli/centavos.ts',
   },
   format: ['esm'],
   target: 'node22',

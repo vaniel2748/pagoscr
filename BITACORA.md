@@ -273,3 +273,10 @@
 - El túnel apunta a un receptor de solo webhooks; página y catálogo públicos responden 404. Falta que Vaniel registre el endpoint y guarde su secreto externo.
 - Añadió el evento oficial webhook_endpoint.test: firma y modo verificados, respuesta 200 sin consultar ni cambiar pagos. Cuatro casos nuevos; 69 pruebas dirigidas y tipos pasan.
 - El hook comprueba 314 casos y 45 reproducciones. La conexión de prueba se distingue de recibir un pago real; el fixture de pago real sigue pendiente.
+
+## 2026-11-21 01:18 · Ejecutables del paquete npm preparado
+
+- Vaniel eligió A. Codex añadió pagoscr-centavos y pagoscr-checkout junto al MCP; el conversor reutiliza el núcleo entero existente y el checkout incluye sus recursos.
+- El manifiesto incorpora repositorio, incidencias y página del proyecto; lockfile actualizado sin red ni cambios de dependencias. Mantiene versión 0.1.0 y private:true.
+- Pruebas: ejecutable convierte 20000.00 a 2000000 y rechaza 0.001; tipos y compilación correctos. El hook verifica los 314 casos locales y 45 reproducciones.
+- Continúan el plugin remoto y las pruebas del tarball; publicar npm todavía requiere el sí separado de Vaniel.
