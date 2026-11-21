@@ -231,3 +231,10 @@
 - Codex corrigió el flujo: consulta la sesión completa antes de devolver su enlace; guardó dos respuestas reales anonimizadas con procedencia y dos regresiones.
 - Pruebas: 66 casos dirigidos y tipos pasan; ambas E2E ONVO test pasan en 5,57 s. El hook comprueba 310 pruebas locales y las 45 reproducciones.
 - Documentó consulta-checkout:… y su deduplicación en las guías ONVO/seguridad. Falta que Vaniel pague en la pantalla; ningún webhook real recibido aún.
+
+## 2026-11-21 00:58 · Guías separadas para instalación y evidencia
+
+- Codex reunió instalación/versiones de clientes, pruebas/mediciones, procedencia y ejemplo de paquete en cuatro guías de docs/ para acortar el README.
+- Conservó fuentes, fechas, historial de evaluación y límites de prueba. El detalle del 403 sigue en tarifas.md, sin cambiar verificadoEl de ONVO.
+- Pruebas: enlaces locales válidos y ejemplo del paquete ejecutado con confirmación y repetición deduplicada; el hook comprueba el paquete completo.
+- El feedback autoriza continuar estas tareas mientras Vaniel acepta el pago; la plantilla ONVO permanece activa en 127.0.0.1:4321.
