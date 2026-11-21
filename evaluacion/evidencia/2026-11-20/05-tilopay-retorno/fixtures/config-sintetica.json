@@ -1,0 +1,19 @@
+{
+  "apiUser": "usuario-ficticio",
+  "apiPassword": "clave-ficticia-solo-fixtures",
+  "apiKey": "clave-integracion-ficticia",
+  "testMode": true,
+  "redirectUrl": "https://merchant.example/retorno",
+  "billing": {
+    "firstName": "Cliente",
+    "lastName": "Prueba",
+    "address": "Dirección de prueba",
+    "address2": "",
+    "city": "San José",
+    "state": "CR-SJ",
+    "postalCode": "10101",
+    "country": "CR",
+    "telephone": "88888888",
+    "email": "cliente@example.com"
+  }
+}

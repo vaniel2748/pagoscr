@@ -8,7 +8,10 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const report = JSON.parse(
-  await readFile(join(root, 'evaluacion/resultados/2026-11-20.json'), 'utf8'),
+  await readFile(
+    join(root, 'evaluacion/resultados/2026-11-20-completa.json'),
+    'utf8',
+  ),
 );
 const temporary = await mkdtemp(join(tmpdir(), 'pagoscr-repro-evaluacion-'));
 let tests = 0;
@@ -59,7 +62,7 @@ try {
   }
   assert.equal(tests, report.resumen.pruebasDeEvaluacionAprobadas);
   console.log(
-    `Reproducción: ${tests} pruebas, tres cobros demo. Dos tareas siguen bloqueadas por cuota; no se cuentan como aprobadas.`,
+    `Reproducción: ${tests} pruebas; ${report.resumen.cobrosDemoConfirmados} cobros demo y ${report.resumen.cobrosFixturesConfirmados} con fixtures. Sin API de pasarelas. El informe inicial conserva los dos bloqueos por cuota.`,
   );
 } finally {
   await rm(temporary, { recursive: true, force: true });

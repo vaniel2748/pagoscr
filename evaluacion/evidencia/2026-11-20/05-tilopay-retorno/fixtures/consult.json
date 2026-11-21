@@ -1,0 +1,17 @@
+{
+  "type": "200",
+  "message": "",
+  "response": [
+    {
+      "id_tilopay": 734312,
+      "orderNumber": "order_contract",
+      "amount": "20000.00",
+      "currency": "CRC",
+      "code": "1",
+      "auth": "123456",
+      "capture": "Capture",
+      "environment": "Test",
+      "type": "Payment"
+    }
+  ]
+}

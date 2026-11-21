@@ -1,42 +1,46 @@
 # Evaluación del agente: cinco tareas fijas
 
-Las [cinco tareas](../evaluacion/tareas.json) evalúan integrar pagos en aplicaciones
-limpias usando la skill distribuida. La ejecución autorizada del 20 de noviembre
-terminó con **3/5 tareas aprobadas y tres cobros demo confirmados**. Dos subagentes
-fueron bloqueados por la cuota del servicio antes de ejecutar sus tareas. Permanecen
-en el denominador; no se publica 5/5 ni se infiere éxito de ONVO/Tilopay a partir del demo.
+Las [cinco tareas](../evaluacion/tareas.json) terminaron con **5/5 aprobadas**:
+tres cobros demo y dos confirmaciones con fixtures (ONVO y Tilopay). Las dos
+últimas se completaron al reintentar interrupciones de cuota. El
+[primer informe 3/5](../evaluacion/resultados/2026-11-20.json) conserva ambos
+bloqueos; el [informe completo](../evaluacion/resultados/2026-11-20-completa.json)
+registra los reintentos sin convertirlos en éxitos al primer intento.
 
-| Caso                 | Primer resultado                         | Pruebas revisadas | Trabajo del agente |
-| -------------------- | ---------------------------------------- | ----------------- | ------------------ |
-| Demo CRC             | Aprobado, succeeded en el almacén        | 5 pasan           | 3 min              |
-| Catálogo USD         | Aprobado, 2000 centavos USD confirmados  | 6 pasan           | 2 min 41 s         |
-| Eventos concurrentes | Aprobado, una entrega y evento repetido  | 6 pasan           | 3 min 4 s          |
-| ONVO con fixtures    | Bloqueado por cuota antes de implementar | Sin ejecutar      | Sin medición       |
-| Tilopay con fixtures | Bloqueado por cuota antes de implementar | Sin ejecutar      | Sin medición       |
+| Caso                 | Resultado observado                                                           | Pruebas  |
+| -------------------- | ----------------------------------------------------------------------------- | -------- |
+| Demo CRC             | succeeded en el almacén y repetición detectada                                | 5 pasan  |
+| Catálogo USD         | 2000 centavos USD confirmados                                                 | 6 pasan  |
+| Eventos concurrentes | Una entrega ante dos notificaciones iguales                                   | 6 pasan  |
+| ONVO con fixtures    | Pendiente, método tokenizado, firma y consulta autenticada antes de succeeded | 12 pasan |
+| Tilopay con fixtures | Retorno GET con V2, consult Test y captura confirmada                         | 16 pasan |
 
-Los tiempos de trabajo fueron reportados por los subagentes. La revisión del
-coordinador ocurrió después, en paralelo a instalación y autorización de GitHub;
-su demora está separada en el [registro JSON](../evaluacion/resultados/2026-11-20.json).
-No se presenta el tiempo del agente como una medición completa hasta la revisión.
-No hubo correcciones del autor a esas tres soluciones. Se revisó el código, se
-repitieron las 17 pruebas y se comprobaron 261 archivos congelados y los catálogos.
+No hubo correcciones del autor a las cinco implementaciones. Los subagentes
+trabajaron sin historial del autor, con la app, pedido, paquete y skill locales.
+El modelo fue heredado de la sesión; la herramienta no expuso su identificador.
+El paquete evaluado corresponde al commit b887033. Se revisó el código, se
+repitieron las 45 pruebas y se comprobaron 261 archivos congelados y los cinco
+catálogos. Ninguna de estas evaluaciones usó credenciales o API de pasarelas.
 
-Se usaron subagentes Codex sin historial del autor, con el modelo heredado de la
-sesión; el identificador del modelo no fue expuesto por la herramienta. Cada uno
-recibió solo su app, pedido y skill. El paquete evaluado corresponde al commit
-b887033, anterior a los resultados; no se usaron credenciales ni API de pasarelas.
+Los tres primeros agentes reportaron 3 min, 2 min 41 s y 3 min 4 s de trabajo.
+La revisión del coordinador fue posterior y está separada en el registro. Los dos
+últimos intervalos reportados incluyen la interrupción de cuota; no se pudo aislar
+con confianza su tiempo activo. No se promete integrar ONVO/Tilopay en menos de
+cinco minutos a partir de estos tiempos ni se presentan fixtures como E2E reales.
+La E2E ONVO autorizada del proyecto se reporta por separado.
 
-La [evidencia original](../evaluacion/evidencia/2026-11-20/) conserva las soluciones
-y pruebas sin reformatearlas, junto con sus hashes. Desde el checkout compilado:
+La [evidencia original](../evaluacion/evidencia/2026-11-20/) conserva código y
+pruebas sin reformatear, junto con sus hashes. Desde el checkout compilado:
 
 ```sh
 npm run evaluacion:reproducir
 ```
 
-Ese comando usa copias temporales y la dependencia local compilada, sin instalar
-paquetes ni usar la red. Vuelve a ejecutar los tres casos terminados; **no crea
-nuevas sesiones de agente** ni completa los dos casos bloqueados. También corre
-en el CI. La E2E real ONVO del proyecto se reporta por separado.
+Usa copias temporales y la dependencia compilada, sin instalar paquetes ni usar
+la red. Repite las 45 pruebas de las cinco soluciones y también corre en el CI.
+Esta reproducción no crea nuevas sesiones de agente.
+
+Criterios fijados antes de ejecutar:
 
 | Tarea                | Resultado que debe observarse                                                                        |
 | -------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -80,7 +84,7 @@ archivos cambiados, duración incluyendo intervención humana, pruebas, estado f
 modalidad (demo o fixtures) y motivo si falla. Un bloqueo no se excluye del denominador.
 Revisa que la descripción final del agente no confunda fixtures con una cuenta real.
 
-El resultado será N/5 tareas completas y M/5 cobros confirmados, distinguiendo demo
+Para un nuevo ensayo registra N/5 tareas completas y M/5 cobros confirmados, distinguiendo demo
 y fixtures. Los casos ONVO/Tilopay de esta evaluación no prueban sus API ni entrega
 de webhooks reales. La E2E ONVO autorizada del proyecto se reporta por separado.
 Si una tarea requiere intervención para pasar, registra el primer resultado y la

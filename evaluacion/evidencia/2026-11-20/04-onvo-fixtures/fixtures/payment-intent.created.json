@@ -1,0 +1,12 @@
+{
+  "id": "pi_fixture_001",
+  "amount": 2000000,
+  "currency": "CRC",
+  "description": "Cobro sintético de contrato",
+  "status": "requires_payment_method",
+  "mode": "test",
+  "receivedAmount": 0,
+  "capturableAmount": 0,
+  "metadata": { "pagoscrPaymentId": "order_contract" },
+  "charges": []
+}

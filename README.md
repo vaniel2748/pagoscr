@@ -21,7 +21,7 @@ cliente MCP contra el servidor real por stdio. Descubre las cuatro herramientas,
 compara costos, crea ₡20000 ficticios, verifica el webhook firmado y detecta su
 repetición. No necesita cuenta, llaves ni otro servicio. Imprime el tiempo total.
 
-Medición del 20 de noviembre de 2026 en el equipo de desarrollo: **6 segundos**
+Medición del 20 de noviembre de 2026 en el equipo de desarrollo: **6,35 segundos**
 desde una copia sin node_modules ni dist y con caché npm vacía, incluida descarga,
 compilación y demo. Es una medición local, no una garantía para cualquier conexión.
 
@@ -213,14 +213,14 @@ en 127.0.0.1. El diseño se comprobó en escritorio y móvil. Consulta
 
 ## Evaluación del agente
 
-La [evaluación independiente](docs/evaluacion.md) dio **3/5 tareas completas y tres
-cobros demo confirmados**. Dos casos (ONVO/Tilopay con fixtures) fueron bloqueados
-por cuota del servicio antes de ejecutar; no se cuentan como éxitos. Las tres
-soluciones no requirieron correcciones del autor y sus 17 pruebas se reproducen
-con `npm run evaluacion:reproducir`, también incluido en el CI. Hay código original,
-hashes, tiempos y límites en el registro. Esa reproducción no es una nueva sesión
-de agente ni una E2E de pasarela. El preparador de futuras apps limpias continúa
-disponible con `npm run evaluacion:preparar`.
+La [evaluación independiente](docs/evaluacion.md) completó **5/5 tareas**: tres
+cobros demo y dos con fixtures de ONVO/Tilopay. Dos interrupciones de cuota se
+resolvieron con reintentos; se conserva el primer informe 3/5. Las implementaciones
+no requirieron correcciones del autor. Sus **45 pruebas** se reproducen con
+`npm run evaluacion:reproducir`, también en el CI, con código original, hashes y
+límites registrados. Esa reproducción no es una nueva sesión de agente ni una
+E2E de pasarela. El preparador de futuras apps limpias está disponible con
+`npm run evaluacion:preparar`.
 
 ## Verificación y procedencia
 
@@ -236,7 +236,7 @@ El mismo control corre antes de cada commit y en GitHub Actions: formato, tipos,
 pruebas sin pasarelas externas, Secretlint, control de prefijos de llaves, compilación, validación
 de tarifas, inicio rápido por stdio (`quickstart.sh --check`, reutilizando el
 paquete que el CI ya compiló), recorrido de ambos plugins desde una copia aislada
-y las 17 pruebas conservadas de la evaluación independiente.
+y las 45 pruebas conservadas de la evaluación independiente.
 
 Hay **244 pruebas sin pasarelas externas** y una prueba de API ONVO autorizada aprobada. Demo,
 ONVO y Tilopay pasan la misma batería de 17 casos (51 de contrato). En Tilopay se
