@@ -161,3 +161,10 @@
 - Qué decidió o corrigió Vaniel: señaló que la página no explicaba bien el producto y pidió lenguaje más simple y menos técnico. La revisión se hizo sobre el sitio existente.
 - Pruebas: compilación sin errores ni advertencias, formato y diff limpios. Playwright verificó el mensaje completo y ausencia de jerga en el contenido principal en 1456×840, 390×844 y 320×844, sin desbordamiento ni errores JavaScript. En cada tamaño comprobó el pedido explícito de tipo de cambio, los costos de ejemplo, creación del pedido, confirmación simulada, aviso repetido y recuperación al recargar. Los detalles técnicos se pueden abrir. No se añadieron pruebas unitarias de textos; se revisó la página funcionando.
 - Commits: ecbe7c9 en el repositorio privado local del frontend. Este commit registra el bloque en la bitácora pública, sin copiar recursos de Nota; su hook ejecuta los controles del paquete.
+
+## 2026-11-20 23:53 · Enlace de checkout alojado de ONVO
+
+- Codex revisó OpenAPI, checkout, SDK y eventos oficiales; eligió un enlace fijo con tarjeta y captura automática, documentado en docs/specs/onvo-checkout.md.
+- El adaptador optativo crea una sesión test y valida cantidad, monto, moneda y dominio HTTPS antes de devolver el enlace. Conserva las intenciones existentes.
+- Pruebas: 14 casos nuevos con fixtures pasan; tipos correctos. El hook ejecuta los controles completos antes del commit.
+- Vaniel pidió comenzar las instrucciones del sábado. Sin credenciales, despliegue ni cambios en Nota; la confirmación y pantalla local continúan en este bloque de tarea.

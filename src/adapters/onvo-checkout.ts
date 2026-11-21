@@ -1,0 +1,119 @@
+import { PaymentError } from '../core/errors.js';
+import { assertCents } from '../core/money.js';
+import type {
+  CreateChargeInput,
+  CreateChargeResult,
+  Currency,
+} from '../core/types.js';
+import { assertCurrency, isRecord, isReference } from '../core/validation.js';
+
+export type OnvoRequest = (
+  path: string,
+  method: 'GET' | 'POST',
+  body?: Record<string, unknown>,
+) => Promise<Record<string, unknown>>;
+
+interface CheckoutOrder {
+  readonly amountCents: number;
+  readonly currency: Currency;
+  readonly providerPaymentId?: string;
+}
+
+export function parseCheckoutSession(
+  data: Record<string, unknown>,
+  expected: CheckoutOrder,
+) {
+  if (data.mode !== 'test')
+    throw new PaymentError(
+      'TEST_MODE_REQUIRED',
+      'La sesión de ONVO debe pertenecer al modo de prueba.',
+    );
+  if (
+    !isReference(data.id) ||
+    !['open', 'complete', 'expired'].includes(String(data.status)) ||
+    !['unpaid', 'paid'].includes(String(data.paymentStatus)) ||
+    !Array.isArray(data.lineItems) ||
+    data.lineItems.length !== 1 ||
+    !isRecord(data.lineItems[0])
+  )
+    throw new PaymentError(
+      'GATEWAY_ERROR',
+      'ONVO devolvió una sesión incompleta. Revisa el contrato del checkout.',
+    );
+  const item = data.lineItems[0];
+  const price = isRecord(item.price) ? item.price : item;
+  if (
+    (expected.providerPaymentId !== undefined &&
+      data.id !== expected.providerPaymentId) ||
+    item.quantity !== 1 ||
+    item.isQuantityAdjustable === true ||
+    (price.mode !== undefined && price.mode !== 'test') ||
+    (price.type !== undefined && price.type !== 'one_time') ||
+    assertCents(price.unitAmount) !== expected.amountCents ||
+    assertCurrency(price.currency) !== expected.currency ||
+    (item.unitAmount !== undefined &&
+      item.unitAmount !== expected.amountCents) ||
+    (item.currency !== undefined && item.currency !== expected.currency)
+  )
+    throw new PaymentError(
+      'PAYMENT_MISMATCH',
+      'La sesión de ONVO no coincide con la referencia, cantidad, monto o moneda de la orden del servidor.',
+    );
+  return {
+    id: data.id,
+    status: data.status,
+    paymentStatus: data.paymentStatus,
+    paymentIntentId: data.paymentIntentId,
+  };
+}
+
+export async function createTestCheckout(
+  charge: CreateChargeInput,
+  request: OnvoRequest,
+): Promise<CreateChargeResult> {
+  const data = await request('/checkout/sessions/one-time-link', 'POST', {
+    lineItems: [
+      {
+        quantity: 1,
+        unitAmount: charge.amountCents,
+        currency: charge.currency,
+        description: charge.description,
+        isQuantityAdjustable: false,
+        priceType: 'one_time',
+      },
+    ],
+    paymentMethodTypes: ['card'],
+    captureMethod: 'automatic',
+    metadata: { pagoscrPaymentId: charge.paymentId },
+    ...(charge.returnUrl
+      ? { redirectUrl: charge.returnUrl, cancelUrl: charge.returnUrl }
+      : {}),
+  });
+  const session = parseCheckoutSession(data, charge);
+  if (session.status !== 'open' || session.paymentStatus !== 'unpaid')
+    throw new PaymentError(
+      'PAYMENT_MISMATCH',
+      'ONVO debe crear una sesión nueva pendiente de pago. Consulta la orden antes de reintentar.',
+    );
+  let url: URL;
+  try {
+    if (typeof data.url !== 'string') throw new Error();
+    url = new URL(data.url);
+    if (
+      url.origin !== 'https://checkout.onvopay.com' ||
+      url.username ||
+      url.password
+    )
+      throw new Error();
+  } catch {
+    throw new PaymentError(
+      'GATEWAY_ERROR',
+      'ONVO no devolvió una URL HTTPS válida de su checkout. No abras enlaces de otros dominios.',
+    );
+  }
+  return {
+    providerPaymentId: session.id,
+    status: 'pending',
+    clientAction: { type: 'redirect', url: url.href },
+  };
+}

@@ -23,9 +23,11 @@ import {
   parseWebhookJson,
   verifyTimestampSignature,
 } from './webhook-utils.js';
+import { createTestCheckout } from './onvo-checkout.js';
 
 export interface OnvoOptions {
   readonly secretKey: string;
+  readonly checkout?: boolean;
   readonly webhookSecret?: string;
   readonly fetchImpl?: typeof fetch;
   readonly clock?: () => number;
@@ -61,13 +63,14 @@ export function assertOnvoTestSecretKey(
   }
 }
 
-/** Adaptador de payment intents. Solo prueba; el host no es configurable. */
+/** Intenciones o checkout alojado de prueba; el host no es configurable. */
 export class OnvoAdapter implements PaymentProvider {
   readonly name = 'onvo' as const;
   readonly #secretKey: string;
   readonly #webhookSecret: string | undefined;
   readonly #http: typeof fetch;
   readonly #clock: () => number;
+  readonly #checkout: boolean;
 
   constructor(options: OnvoOptions) {
     assertOnvoTestSecretKey(options.secretKey);
@@ -84,10 +87,13 @@ export class OnvoAdapter implements PaymentProvider {
     this.#webhookSecret = options.webhookSecret;
     this.#http = options.fetchImpl ?? fetch;
     this.#clock = options.clock ?? Date.now;
+    this.#checkout = options.checkout === true;
   }
 
   async createCharge(input: CreateChargeInput): Promise<CreateChargeResult> {
     const charge = validateChargeInput(input);
+    if (this.#checkout)
+      return createTestCheckout(charge, this.request.bind(this));
     const payment = this.parsePayment(
       await this.request('/payment-intents', 'POST', {
         amount: charge.amountCents,

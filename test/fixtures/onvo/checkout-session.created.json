@@ -1,0 +1,17 @@
+{
+  "id": "cs_fixture",
+  "url": "https://checkout.onvopay.com/pay/cs_fixture",
+  "mode": "test",
+  "status": "open",
+  "paymentStatus": "unpaid",
+  "lineItems": [
+    {
+      "quantity": 1,
+      "price": {
+        "mode": "test",
+        "unitAmount": 2000000,
+        "currency": "CRC"
+      }
+    }
+  ]
+}
