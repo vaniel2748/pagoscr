@@ -308,3 +308,10 @@
 - Los MCP de ambas copias completaron cuatro herramientas, diagnóstico sin llaves, comparación, cobro demo confirmado y repetido; sus conversores también pasan y el cwd sigue vacío.
 - Runtime 0.1.0 servido desde el tarball en registro npm local, sin publicar; la guía distingue esa prueba de descargarlo del registro público después de autorizarlo.
 - El CI comprueba además versión fija, skill sincronizada y artefactos GitHub versionados. Queda preparar el tarball final y solicitar el sí de publicación.
+
+## 2026-11-21 01:48 · Tarball final listo para aprobar publicación
+
+- Codex preparó pagoscr-0.1.0.tgz: 116 archivos, 771865 bytes comprimidos; inspección sin entornos, node_modules, prior-work ni recursos Nota.
+- Nueva prueba desde carpeta vacía y caché nueva: conversor, MCP de cuatro herramientas, comparación, demo confirmado/repetido y checkout con HTML/CSS/JS pasan.
+- Las instalaciones nativas de ambos clientes ya habían aprobado el mismo recorrido desde sus copias temporales. El hook conserva 315 pruebas locales y 45 reproducciones.
+- Mantiene private:true y no ha publicado. La revisión exige el sí explícito adicional de Vaniel; el túnel del webhook real está cerrado.
