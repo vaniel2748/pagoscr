@@ -351,3 +351,10 @@
 - Las comisiones aparecen con la narración. La portada y el checkout tienen grabaciones del sitio Nota, con transiciones que retoman el recibo.
 - El pedido demo se confirmó y conservó la referencia al recargar. La revisión de legibilidad aumentó las fuentes y corrigió un rótulo de ONVO.
 - MP4 local comprobado en 1080p y 30 fps, 1:38, voz y música medida a −16,32 LUFS, 23 subtítulos. La ficha indica los archivos de la segunda edición.
+
+## 2026-11-21 17:33 · Una sola voz en el video
+
+- Vaniel pidió corregir los cambios de timbre entre escenas. Codex sintetizó el guion completo en una toma continua de 88,8 segundos, con voz dirigida a español latinoamericano neutro.
+- Codex sincronizó de nuevo cortes, montos y subtítulos. La similitud acústica mediana entre escenas subió de 0,447 a 0,919.
+- Verificación del MP4 de 1:32 a 1080p y 30 fps, con 23 subtítulos y mezcla de −16,04 LUFS y −2,26 dBTP. HyperFrames terminó sin errores ni advertencias.
+- ENTREGA.md enlaza la tercera edición, los subtítulos y el proyecto editable local.
