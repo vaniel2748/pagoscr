@@ -103,6 +103,8 @@ de la orden y del almacén de tu aplicación.
 `npm run check` ejecuta contrato común, pruebas específicas, tipos, secretos,
 validación de tarifas, compilación e inicio rápido. Comprueba ambos paquetes
 desde una copia aislada. No usa credenciales de pasarelas ni llama sus API.
-La prueba ONVO real requiere activación y autorización; no prueba entrega de un
-webhook real. Tilopay se ha comprobado con fixtures. Los avisos de terceros van
-incluidos en la distribución compilada.
+Las E2E de API ONVO requieren activación y autorización. Además, el 21 de noviembre
+se recibió y verificó un webhook real de checkout test antes de anonimizarlo;
+su [procedencia](../test/fixtures/onvo/PROCEDENCIA.md) distingue la firma original
+de la firma ficticia usada para probar la copia modificada en CI. Tilopay se ha
+comprobado con fixtures. Los avisos de terceros acompañan la distribución compilada.

@@ -146,7 +146,10 @@ marca el pago como completado. [Seguridad y persistencia](seguridad.md).
 La suite común usa fixtures; el checkout también incluye respuestas reales
 anonimizadas de creación y consulta. El 21 de noviembre de 2026 pasaron las dos
 E2E contra la API de ONVO test, intenciones y checkout, en 5,57 segundos en total.
-Ambas cobran ₡20000 ficticios y consultan el resultado. No se ha recibido un webhook real.
+Ambas cobran ₡20000 ficticios y consultan el resultado. El 21 de noviembre, a las 01:31 de Costa Rica, se recibió un webhook real de
+checkout test: firma verificada y sesión/intención confirmadas por API. Su
+[fixture anonimizado y procedencia](../test/fixtures/onvo/PROCEDENCIA.md) quedan en
+el repositorio; el túnel temporal se cerró después de capturarlo.
 La aceptación manual del checkout y su recuperación al recargar también fue
 confirmada por Vaniel el 21 de noviembre; ese resultado procede de su prueba.
 La E2E está separada del CI: una prueba de intenciones y otra de checkout que paga

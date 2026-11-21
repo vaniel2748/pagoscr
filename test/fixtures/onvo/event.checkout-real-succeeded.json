@@ -1,0 +1,21 @@
+{
+  "id": "evt_real_checkout_fixture",
+  "object": "event",
+  "mode": "test",
+  "type": "checkout_session.succeeded",
+  "data": {
+    "object": {
+      "object": "checkout_session",
+      "id": "cs_real_webhook_fixture",
+      "status": "complete",
+      "paymentStatus": "paid",
+      "amountSubtotal": 2000000,
+      "amountTotal": 2000000,
+      "currency": "CRC",
+      "paymentIntentId": "pi_real_webhook_fixture",
+      "metadata": {
+        "pagoscrPaymentId": "order_real_webhook_fixture"
+      }
+    }
+  }
+}

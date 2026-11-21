@@ -287,3 +287,10 @@
 - El generador reutiliza las fuentes versionadas y las reglas de formato. No añade runtime compilado al plugin GitHub ni depende de rutas del checkout al ejecutarse.
 - Pruebas: manifiesto y catálogo aprobados por Claude Code --strict con configuración temporal; formato correcto. Primer tarball inspeccionado: 115 archivos, sin entornos ni prior-work.
 - Vaniel guardó el secreto externo y confirmó conexión correcta con ONVO. Se solicitó otro pago test para recibir el webhook; la prueba del paquete sigue sin publicación.
+
+## 2026-11-21 01:35 · Webhook real de checkout recibido y verificado
+
+- Tras la conexión correcta, Vaniel completó otro pago test. A las 01:31:03 de Costa Rica llegó checkout_session.succeeded: processWebhook validó firma y confirmó sesión/intención por API.
+- El receptor guardó solo una lista de campos permitidos y referencias anonimizadas; no conservó cuenta, contactos, tarjetas, llaves ni firma original. Procedencia documentada.
+- La regresión del fixture real pasa con nueva firma ficticia y aviso repetido deduplicado; el hook verifica 315 casos locales y 45 reproducciones.
+- Tarea 2 completada: túnel y receptor cerrados. Se indicó desactivar el endpoint temporal en ONVO. Continúa la preparación npm, que ya pasa las pruebas del tarball local.

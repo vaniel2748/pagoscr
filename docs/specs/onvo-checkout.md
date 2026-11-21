@@ -21,5 +21,6 @@ Contrato revisado en la documentación oficial y OpenAPI el 20 de noviembre de
 - La plantilla pública conserva demo por defecto. ONVO abre otra pestaña y la
   plantilla consulta al regresar. No se asume que ONVO admita retorno HTTP local;
   un retorno HTTPS configurado sirve la misma página, sin aceptar un estado final.
-- Pruebas sintéticas en CI; E2E solo con opt-in y permiso para las llaves test.
-  El webhook real y el túnel corresponden al bloque siguiente.
+- Fixtures sintéticos y reales anonimizados en CI; E2E solo con opt-in y permiso.
+  El 21 de noviembre se aceptó la pantalla y se verificó un webhook real test;
+  procedencia y cierre del túnel documentados en la guía ONVO.

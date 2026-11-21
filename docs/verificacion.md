@@ -12,8 +12,8 @@ El mismo control corre antes de cada commit y en GitHub Actions:
 | Control                       | Evidencia                                                                          |
 | ----------------------------- | ---------------------------------------------------------------------------------- |
 | Formato y TypeScript estricto | Prettier y tsc sin errores.                                                        |
-| Pruebas locales               | 314 casos, incluidas las respuestas ONVO reales anonimizadas.                      |
-| Contrato compartido           | 17 casos por adaptador: demo, ONVO y Tilopay; 51 dentro de las 314 pruebas.        |
+| Pruebas locales               | 315 casos, incluidas las respuestas ONVO reales anonimizadas.                      |
+| Contrato compartido           | 17 casos por adaptador: demo, ONVO y Tilopay; 51 dentro de las 315 pruebas.        |
 | Secretos                      | Secretlint y revisión de prefijos de pasarelas; nunca imprimen el valor detectado. |
 | Compilación y tarifas         | Paquete, plugins y filas con fuente, fecha y unidades válidas.                     |
 | Inicio rápido                 | MCP real por stdio: diagnóstico, comparación, demo confirmado y aviso repetido.    |
@@ -32,8 +32,10 @@ cubierta con [fixtures reales anonimizados y su procedencia](../test/fixtures/on
 
 El 21 de noviembre Vaniel aceptó la pantalla alojada: pagó con tarjeta ficticia,
 vio «Pago confirmado» y comprobó la misma referencia tras recargar. Aportó una
-captura de éxito en ONVO test. Aún no se ha recibido un webhook real; sus firmas
-y confirmación se prueban con eventos sintéticos.
+captura de éxito en ONVO test. A las 01:31 de Costa Rica se recibió
+un webhook real de checkout test, verificado con firma y consultas API antes de
+guardar su copia anonimizada. El CI vuelve a firmar ese fixture modificado con
+claves ficticias. El túnel temporal se cerró al completar la recepción.
 Tilopay usa fixtures de su retorno documentado y consult; no se ha hecho E2E ni
 se ha supuesto el contrato de su webhook privado.
 

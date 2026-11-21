@@ -34,5 +34,6 @@ si procesas en segundo plano, persiste el trabajo antes de responder 2xx. Una AP
 no disponible no consume el evento ni cambia el pago a exitoso.
 
 Llaves secretas solo del entorno. Si ya existe autorización para la prueba concreta,
-no la vuelvas a pedir; valida el prefijo antes de cualquier petición. Los fixtures
-del proyecto son sintéticos y no prueban recepción de un webhook real.
+no la vuelvas a pedir; valida el prefijo antes de cualquier petición. El proyecto
+incluye un webhook test real recibido y verificado el 21-11-2026 antes de
+anonimizarlo; la firma de su copia en las pruebas usa un secreto ficticio.
