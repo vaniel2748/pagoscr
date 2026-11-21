@@ -13,6 +13,7 @@ import {
   succeededFixture,
 } from '../helpers/onvo.js';
 import checkoutEvent from '../fixtures/onvo/event.checkout-succeeded.json' with { type: 'json' };
+import connectionTest from '../fixtures/onvo/event.connection-test.json' with { type: 'json' };
 
 let server: Server;
 let base: string;
@@ -244,3 +245,36 @@ it('limita el webhook y rechaza JSON mal formado sin exponerlo', async () => {
   expect(await failure.text()).not.toContain('detalle-privado');
   expect(http).not.toHaveBeenCalled();
 });
+
+it('probar conexión valida la firma y el endpoint sin confirmar ni consultar el pago', async () => {
+  await create();
+  expect(await (await notify(signedRequest(connectionTest))).json()).toEqual({
+    ok: true,
+    conexion: true,
+  });
+  expect(await store.findPayment('onvo', created.id)).toMatchObject({
+    status: 'pending',
+  });
+  expect(http).toHaveBeenCalledTimes(2);
+});
+
+it('probar conexión rechaza una firma alterada', async () => {
+  const request = signedRequest(connectionTest);
+  request.rawBody = Buffer.from(JSON.stringify(connectionTest, null, 2));
+  expect((await notify(request)).status).toBe(401);
+  expect(http).not.toHaveBeenCalled();
+});
+
+it.each([
+  { ...connectionTest, mode: 'live' },
+  {
+    ...connectionTest,
+    data: { object: { object: 'payment_intent', id: 'pi_fixture' } },
+  },
+])(
+  'no acepta una conexión de producción o con otro recurso: %j',
+  async (event) => {
+    expect((await notify(signedRequest(event))).status).toBe(400);
+    expect(http).not.toHaveBeenCalled();
+  },
+);

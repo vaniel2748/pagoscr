@@ -72,7 +72,7 @@ confirma el resultado con la pasarela. [Pasos y tarjeta de prueba](docs/onvo.md)
 npm run check
 ```
 
-310 pruebas locales, 51 de ellas de contrato compartido; 45 pruebas adicionales
+314 pruebas locales, 51 de ellas de contrato compartido; 45 pruebas adicionales
 reproducen la evaluación del agente. Las E2E de ONVO se ejecutan por separado.
 
 Hecho por Vaniel González con Codex durante el Dojo AI Hackathon del 20 al 22 de

@@ -125,6 +125,11 @@ En modo ONVO, el endpoint local es `POST /api/webhooks/onvo` y recibe
 parser JSON**, hasta 65536 bytes, y entrega `X-Onvo-Signature` sin modificar.
 No reconstruyas el cuerpo con JSON.stringify: cambia lo firmado.
 
+El botón «Probar conexión» de ONVO envía `webhook_endpoint.test`. La plantilla
+verifica firma, modo test y recurso webhook_endpoint, y responde 200 sin consultar
+ni actualizar pagos. Es una comprobación del endpoint; no sustituye el evento de
+un cobro real de prueba. [Formato oficial](https://docs.onvopay.com/webhooks/events).
+
 `processWebhook` verifica HMAC-SHA256, timestamp con tolerancia de 300 segundos y
 cualquier firma v1 válida de la rotación. Después consulta sesión e intención y
 exige que confirmen el mismo pago y monto completo. Una firma válida por sí sola

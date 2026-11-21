@@ -208,17 +208,18 @@ export function createCheckoutServer(options: CheckoutServerOptions = {}) {
         const rawBody = await readRawBody(req, 65_536);
         const signature = req.headers['x-onvo-signature'];
         try {
-          const result = await processWebhook(
-            provider,
-            {
-              rawBody,
-              headers: {
-                'X-Onvo-Signature':
-                  typeof signature === 'string' ? signature : undefined,
-              },
+          const request = {
+            rawBody,
+            headers: {
+              'X-Onvo-Signature':
+                typeof signature === 'string' ? signature : undefined,
             },
-            store,
-          );
+          };
+          if (provider.verifyConnectionTest(request)) {
+            json(res, { ok: true, conexion: true });
+            return;
+          }
+          const result = await processWebhook(provider, request, store);
           json(res, {
             ok: true,
             estado: result.status,

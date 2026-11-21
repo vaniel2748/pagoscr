@@ -1,0 +1,7 @@
+{
+  "id": "evt_connection_fixture",
+  "object": "event",
+  "mode": "test",
+  "type": "webhook_endpoint.test",
+  "data": { "object": { "object": "webhook_endpoint", "id": "wh_fixture" } }
+}

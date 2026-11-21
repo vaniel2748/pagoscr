@@ -12,8 +12,8 @@ El mismo control corre antes de cada commit y en GitHub Actions:
 | Control                       | Evidencia                                                                          |
 | ----------------------------- | ---------------------------------------------------------------------------------- |
 | Formato y TypeScript estricto | Prettier y tsc sin errores.                                                        |
-| Pruebas locales               | 310 casos, incluidas las respuestas ONVO reales anonimizadas.                      |
-| Contrato compartido           | 17 casos por adaptador: demo, ONVO y Tilopay; 51 dentro de las 310 pruebas.        |
+| Pruebas locales               | 314 casos, incluidas las respuestas ONVO reales anonimizadas.                      |
+| Contrato compartido           | 17 casos por adaptador: demo, ONVO y Tilopay; 51 dentro de las 314 pruebas.        |
 | Secretos                      | Secretlint y revisión de prefijos de pasarelas; nunca imprimen el valor detectado. |
 | Compilación y tarifas         | Paquete, plugins y filas con fuente, fecha y unidades válidas.                     |
 | Inicio rápido                 | MCP real por stdio: diagnóstico, comparación, demo confirmado y aviso repetido.    |

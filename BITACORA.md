@@ -266,3 +266,10 @@
 - Preparó el receptor fuera del repositorio: conserva bytes/firma, limita tamaño y rechaza otras rutas; cuatro pruebas locales pasan.
 - Vaniel debe autorizar la descarga/conexión y registrar la URL en ONVO test. Después se verificará un evento y guardará únicamente una copia anonimizada.
 - La propuesta está lista para revisión; ningún túnel abierto ni webhook real declarado recibido. La plantilla aceptada sigue activa para el siguiente cobro test.
+
+## 2026-11-21 01:16 · Túnel autorizado y prueba de conexión ONVO
+
+- Vaniel eligió preparar npm y autorizó el túnel. Codex descargó cloudflared 2026.11.1 a una carpeta temporal y contrastó su SHA-256 oficial.
+- El túnel apunta a un receptor de solo webhooks; página y catálogo públicos responden 404. Falta que Vaniel registre el endpoint y guarde su secreto externo.
+- Añadió el evento oficial webhook_endpoint.test: firma y modo verificados, respuesta 200 sin consultar ni cambiar pagos. Cuatro casos nuevos; 69 pruebas dirigidas y tipos pasan.
+- El hook comprueba 314 casos y 45 reproducciones. La conexión de prueba se distingue de recibir un pago real; el fixture de pago real sigue pendiente.

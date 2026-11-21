@@ -200,28 +200,29 @@ export class OnvoAdapter implements PaymentProvider {
     }
   }
 
+  /** Probar conexión verifica el endpoint; nunca confirma una orden ni consulta pagos. */
+  verifyConnectionTest(request: WebhookRequest): boolean {
+    const body = this.verifiedWebhookBody(request);
+    if (body.type !== 'webhook_endpoint.test') return false;
+    if (
+      !isReference(body.id) ||
+      !isRecord(body.data) ||
+      !isRecord(body.data.object) ||
+      body.data.object.object !== 'webhook_endpoint' ||
+      !isReference(body.data.object.id)
+    )
+      throw new PaymentError(
+        'MALFORMED_WEBHOOK',
+        'La prueba de conexión necesita un sobre y referencia de endpoint válidos.',
+      );
+    return true;
+  }
+
   async verifyWebhook(
     request: WebhookRequest,
     expected: PaymentRecord,
   ): Promise<VerifiedWebhookEvent> {
-    validateWebhookRequest(request);
-    if (!this.#webhookSecret)
-      throw new PaymentError(
-        'INVALID_INPUT',
-        'Configura ONVO_WEBHOOK_SECRET del endpoint de prueba antes de verificar webhooks.',
-      );
-    verifyTimestampSignature(
-      request.rawBody,
-      headerValue(request.headers, 'x-onvo-signature'),
-      this.#webhookSecret,
-      this.#clock(),
-    );
-    const body = parseWebhookJson(request.rawBody);
-    if (body.mode !== 'test')
-      throw new PaymentError(
-        'TEST_MODE_REQUIRED',
-        'El webhook debe pertenecer al modo de prueba de ONVO.',
-      );
+    const body = this.verifiedWebhookBody(request);
     if (
       body.type !== 'payment_intent.succeeded' &&
       body.type !== 'payment_intent.failed' &&
@@ -291,6 +292,30 @@ export class OnvoAdapter implements PaymentProvider {
       );
     }
     return event;
+  }
+
+  private verifiedWebhookBody(
+    request: WebhookRequest,
+  ): Record<string, unknown> {
+    validateWebhookRequest(request);
+    if (!this.#webhookSecret)
+      throw new PaymentError(
+        'INVALID_INPUT',
+        'Configura ONVO_WEBHOOK_SECRET del endpoint de prueba antes de verificar webhooks.',
+      );
+    verifyTimestampSignature(
+      request.rawBody,
+      headerValue(request.headers, 'x-onvo-signature'),
+      this.#webhookSecret,
+      this.#clock(),
+    );
+    const body = parseWebhookJson(request.rawBody);
+    if (body.mode !== 'test')
+      throw new PaymentError(
+        'TEST_MODE_REQUIRED',
+        'El webhook debe pertenecer al modo de prueba de ONVO.',
+      );
+    return body;
   }
 
   private requireReference(id: string): void {
