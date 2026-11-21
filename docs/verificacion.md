@@ -30,8 +30,10 @@ y checkout alojado, con ₡20000 ficticios por caso, en 5,57 segundos en total.
 El POST de checkout omite campos que sí devuelve el GET; esa diferencia quedó
 cubierta con [fixtures reales anonimizados y su procedencia](../test/fixtures/onvo/PROCEDENCIA.md).
 
-La pantalla alojada espera la aceptación manual de Vaniel. Aún no se ha recibido
-un webhook real; sus firmas y confirmación se prueban con eventos sintéticos.
+El 21 de noviembre Vaniel aceptó la pantalla alojada: pagó con tarjeta ficticia,
+vio «Pago confirmado» y comprobó la misma referencia tras recargar. Aportó una
+captura de éxito en ONVO test. Aún no se ha recibido un webhook real; sus firmas
+y confirmación se prueban con eventos sintéticos.
 Tilopay usa fixtures de su retorno documentado y consult; no se ha hecho E2E ni
 se ha supuesto el contrato de su webhook privado.
 

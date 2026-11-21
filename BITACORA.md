@@ -245,3 +245,10 @@
 - Evaluación en una frase enlazada; detalles de instalación, clientes, mediciones, procedencia y tarifas en docs/. Los comandos reflejan la distribución local vigente.
 - Pruebas: costos obtenidos de la calculadora, enlaces válidos y dry-run de ambos instaladores; el hook ejecuta los 310 casos locales y 45 reproducciones.
 - Tarea 4 lista. La aceptación de ONVO sigue pendiente de Vaniel; publicar npm y elegir la instalación sin clonar se mantienen como decisiones separadas.
+
+## 2026-11-21 01:01 · Aceptación manual del checkout ONVO
+
+- Vaniel confirmó «Pago confirmado» y la misma referencia al recargar la plantilla; aportó una captura del pago completado en ONVO test.
+- Codex registró su aceptación en las guías, conservando la distinción entre E2E de API, prueba manual y webhook real pendiente. La captura personal no se incorpora al repositorio.
+- Pruebas previas: dos E2E reales pasan, 310 casos locales y 45 reproducciones. Esta entrada registra la comprobación manual hecha por Vaniel.
+- Tarea 1 aceptada; tarea 4 lista. Continúan el plan A/B y la propuesta de túnel, sin detener las tareas que no requieren otra decisión.

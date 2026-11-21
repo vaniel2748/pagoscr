@@ -91,8 +91,9 @@ Abre [la plantilla local](http://127.0.0.1:4321), crea la orden y pulsa **Pagar
 con ONVO**. En su pestaña usa la tarjeta ficticia oficial `4242 4242 4242 4242`,
 CVV `123` y una fecha futura. Vuelve a la plantilla: consulta al recuperar el foco;
 también puedes pulsar **Consultar pago**. Recarga y comprueba la misma referencia.
-La confirmación de la pantalla alojada con esta integración sigue pendiente de
-la prueba manual de Vaniel; el recorrido local se comprobó con fixtures.
+El 21 de noviembre de 2026 Vaniel completó el pago en esta pantalla de ONVO test y
+confirmó que la plantilla mostró «Pago confirmado» y conservó la referencia al
+recargar. La captura aportada muestra el éxito del checkout en modo de prueba.
 
 El monto viene del catálogo; el navegador envía solo el producto. La orden se
 guarda antes de devolver `clientAction.url`; el MCP la devuelve en
@@ -141,6 +142,8 @@ La suite común usa fixtures; el checkout también incluye respuestas reales
 anonimizadas de creación y consulta. El 21 de noviembre de 2026 pasaron las dos
 E2E contra la API de ONVO test, intenciones y checkout, en 5,57 segundos en total.
 Ambas cobran ₡20000 ficticios y consultan el resultado. No se ha recibido un webhook real.
+La aceptación manual del checkout y su recuperación al recargar también fue
+confirmada por Vaniel el 21 de noviembre; ese resultado procede de su prueba.
 La E2E está separada del CI: una prueba de intenciones y otra de checkout que paga
 por API con el método ficticio; no sustituye la prueba manual de su pantalla.
 Con autorización para esta prueba, desde el checkout fuente, carga el
