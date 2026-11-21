@@ -97,11 +97,15 @@ export async function createTestCheckout(
       ? { redirectUrl: charge.returnUrl, cancelUrl: charge.returnUrl }
       : {}),
   });
-  const session = parseCheckoutSession(data, charge);
-  if (session.status !== 'open' || session.paymentStatus !== 'unpaid')
+  if (data.mode !== 'test')
     throw new PaymentError(
-      'PAYMENT_MISMATCH',
-      'ONVO debe crear una sesión nueva pendiente de pago. Consulta la orden antes de reintentar.',
+      'TEST_MODE_REQUIRED',
+      'La sesión creada por ONVO debe pertenecer al modo de prueba.',
+    );
+  if (!isReference(data.id))
+    throw new PaymentError(
+      'GATEWAY_ERROR',
+      'ONVO no devolvió la referencia de sesión. Consulta la orden antes de reintentar.',
     );
   let url: URL;
   try {
@@ -119,6 +123,16 @@ export async function createTestCheckout(
       'ONVO no devolvió una URL HTTPS válida de su checkout. No abras enlaces de otros dominios.',
     );
   }
+  // El POST real omite status y cantidad; el GET devuelve la sesión completa.
+  const session = parseCheckoutSession(
+    await request(`/checkout/sessions/${data.id}`, 'GET'),
+    { ...charge, providerPaymentId: data.id },
+  );
+  if (session.status !== 'open' || session.paymentStatus !== 'unpaid')
+    throw new PaymentError(
+      'PAYMENT_MISMATCH',
+      'ONVO debe crear una sesión nueva pendiente de pago. Consulta la orden antes de reintentar.',
+    );
   return {
     providerPaymentId: session.id,
     status: 'pending',

@@ -12,6 +12,7 @@ Contrato revisado en la documentación oficial y OpenAPI el 20 de noviembre de
   intenciones para integraciones existentes.
 - La sesión debe ser test y coincidir en importe y moneda. Las referencias se
   guardan antes de devolver el enlace al navegador o al agente.
+  La creación real omite estado y cantidad; se consulta por GET antes de validar.
 - Confirmar requiere consultar la sesión y su intención vinculada, comprobar
   `complete`/`paid`, modo test, importe, moneda y recepción completa del dinero.
   No se supone que la metadata se copie automáticamente a la intención.

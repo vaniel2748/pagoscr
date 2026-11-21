@@ -97,6 +97,9 @@ la prueba manual de Vaniel; el recorrido local se comprobó con fixtures.
 El monto viene del catálogo; el navegador envía solo el producto. La orden se
 guarda antes de devolver `clientAction.url`; el MCP la devuelve en
 `cobro.accionCliente.url`. La URL de retorno no decide el estado del pago.
+El POST real omite `status` y la cantidad del artículo; PagosCR consulta la sesión
+completa antes de entregar el enlace. Hay [respuestas reales anonimizadas](../test/fixtures/onvo/PROCEDENCIA.md)
+que cubren esa diferencia frente al esquema general de OpenAPI.
 No se asume que ONVO admita HTTP local como retorno: se abre otra pestaña. Si
 configuras `PAGOSCR_RETURN_URL`, debe ser HTTPS y servir la página neutral `/pago`.
 
@@ -105,6 +108,14 @@ si está `complete`/`paid`, su intención vinculada por `GET /payment-intents/{i
 Comprueba modo test, referencia, cantidad fija, monto, moneda y `receivedAmount`
 completo. La plantilla actualiza la orden solo con esa comprobación. No presupone
 que la metadata de la sesión se copie a la intención.
+
+Si no llega el webhook, esa consulta autenticada permite confirmar la orden.
+La plantilla registra el resultado con el identificador interno determinista
+`consulta-checkout:<sesión>:<estado>`. Lo genera el servidor a partir de la sesión
+guardada y del resultado validado; no es un evento emitido por ONVO ni un dato que
+el navegador pueda elegir. Se aplica y deduplica mediante `PaymentStore`, sin
+crear otro cobro. Cumple la misma función que `lookupCapturedPayment` de Tilopay
+con su `consult` autenticado. [Persistencia y efectos únicos](seguridad.md).
 
 ## Recibir el evento firmado
 
@@ -126,9 +137,10 @@ marca el pago como completado. [Seguridad y persistencia](seguridad.md).
 
 ## Qué está comprobado
 
-La suite común y los casos de checkout pasan con fixtures sintéticos. El 20 de
-noviembre se autorizó y aprobó una prueba contra la API: tarjeta ficticia oficial, intención de ₡20000,
-confirmación y consulta, en 2,33 segundos. No se ha recibido un webhook real.
+La suite común usa fixtures; el checkout también incluye respuestas reales
+anonimizadas de creación y consulta. El 21 de noviembre de 2026 pasaron las dos
+E2E contra la API de ONVO test, intenciones y checkout, en 5,57 segundos en total.
+Ambas cobran ₡20000 ficticios y consultan el resultado. No se ha recibido un webhook real.
 La E2E está separada del CI: una prueba de intenciones y otra de checkout que paga
 por API con el método ficticio; no sustituye la prueba manual de su pantalla.
 Con autorización para esta prueba, desde el checkout fuente, carga el

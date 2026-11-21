@@ -1,6 +1,8 @@
 import { expect, it, vi } from 'vitest';
 import { OnvoAdapter } from '../../src/adapters/onvo.js';
 import created from '../fixtures/onvo/checkout-session.created.json' with { type: 'json' };
+import realCreated from '../fixtures/onvo/checkout-session.real-created.json' with { type: 'json' };
+import realOpen from '../fixtures/onvo/checkout-session.real-open.json' with { type: 'json' };
 import { fakeSecretKey } from '../helpers/onvo.js';
 
 const order = {
@@ -59,7 +61,7 @@ it('solo añade un retorno HTTPS del servidor cuando está configurado', async (
   await expect(
     provider.createCharge({ ...order, returnUrl: 'http://localhost/pago' }),
   ).rejects.toThrow();
-  expect(http).toHaveBeenCalledTimes(1);
+  expect(http).toHaveBeenCalledTimes(2);
 });
 
 it.each([
@@ -100,4 +102,28 @@ it('rechaza importes decimales antes de contactar la API', async () => {
     provider.createCharge({ ...order, amountCents: 1.5 }),
   ).rejects.toThrow();
   expect(http).not.toHaveBeenCalled();
+});
+
+it('consulta la sesión completa porque el POST real omite estado y cantidad', async () => {
+  const { http, provider } = setup();
+  http
+    .mockResolvedValueOnce(Response.json(realCreated))
+    .mockResolvedValueOnce(Response.json(realOpen));
+  await expect(provider.createCharge(order)).resolves.toMatchObject({
+    providerPaymentId: realOpen.id,
+    clientAction: { type: 'redirect', url: realCreated.url },
+  });
+  expect(http.mock.calls[1]?.[0]).toBe(
+    `https://api.onvopay.com/v1/checkout/sessions/${realOpen.id}`,
+  );
+});
+
+it('no devuelve el enlace si la consulta de la sesión creada corresponde a otra orden', async () => {
+  const { http, provider } = setup();
+  http
+    .mockResolvedValueOnce(Response.json(realCreated))
+    .mockResolvedValueOnce(Response.json({ ...realOpen, id: 'cs_other' }));
+  await expect(provider.createCharge(order)).rejects.toMatchObject({
+    code: 'PAYMENT_MISMATCH',
+  });
 });

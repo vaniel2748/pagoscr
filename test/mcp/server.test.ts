@@ -263,12 +263,15 @@ it('no propaga un mensaje externo que contiene una llave', async () => {
 it('verifica ONVO con firma y confirma contra la API usando el registro de esta sesión', async () => {
   await client.close();
   await server.close();
+  let completed = false;
   const network = vi.fn<typeof fetch>(async (url, init) =>
     Response.json(
       init?.method === 'POST'
         ? createdCheckout
         : String(url).includes('/checkout/sessions/')
-          ? paidCheckout
+          ? completed
+            ? paidCheckout
+            : createdCheckout
           : succeededFixture,
     ),
   );
@@ -284,6 +287,7 @@ it('verifica ONVO con firma y confirma contra la API usando el registro de esta 
     name: 'crear_cobro_de_prueba',
     arguments: { ...creation, pasarela: 'onvo' },
   });
+  completed = true;
   const request = signedRequest(checkoutEvent, Math.floor(Date.now() / 1000));
   const result = await client.callTool({
     name: 'verificar_webhook',
@@ -297,7 +301,7 @@ it('verifica ONVO con firma y confirma contra la API usando el registro de esta 
     valido: true,
     pago: { estado: 'succeeded', duplicado: false },
   });
-  expect(network).toHaveBeenCalledTimes(3);
+  expect(network).toHaveBeenCalledTimes(4);
   expect(JSON.stringify(result)).not.toContain(fakeSecretKey);
 });
 

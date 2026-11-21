@@ -1,0 +1,20 @@
+{
+  "id": "cs_real_fixture",
+  "mode": "test",
+  "status": "open",
+  "paymentStatus": "unpaid",
+  "url": "https://checkout.onvopay.com/pay/cs_real_fixture",
+  "paymentIntentId": "pi_real_fixture",
+  "lineItems": [
+    {
+      "quantity": 1,
+      "isQuantityAdjustable": false,
+      "price": {
+        "currency": "CRC",
+        "mode": "test",
+        "type": "one_time",
+        "unitAmount": 2000000
+      }
+    }
+  ]
+}

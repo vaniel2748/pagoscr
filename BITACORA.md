@@ -224,3 +224,10 @@
 - Incluyó el comando local con archivo externo y los pasos de la tarjeta ficticia. La documentación distingue fixtures, E2E de API y aceptación manual pendiente.
 - Pruebas: formato y diff correctos; el hook comprueba 308 casos locales y 45 reproducciones, sin activar E2E de red.
 - Vaniel preguntó por la pantalla antigua: se aclaró que se probó el checkout público del plugin, como pide INSTRUCCIONES-SABADO; Nota sigue siendo la página principal intacta.
+
+## 2026-11-21 00:54 · E2E reales de ONVO y respuesta parcial de creación
+
+- El feedback nuevo autoriza cargar las llaves externas para las dos E2E y la plantilla. La primera corrida detectó que el POST real omite status y cantidad.
+- Codex corrigió el flujo: consulta la sesión completa antes de devolver su enlace; guardó dos respuestas reales anonimizadas con procedencia y dos regresiones.
+- Pruebas: 66 casos dirigidos y tipos pasan; ambas E2E ONVO test pasan en 5,57 s. El hook comprueba 310 pruebas locales y las 45 reproducciones.
+- Documentó consulta-checkout:… y su deduplicación en las guías ONVO/seguridad. Falta que Vaniel pague en la pantalla; ningún webhook real recibido aún.

@@ -44,11 +44,11 @@ Los hosts de API son fijos HTTPS, sin seguir redirecciones, con timeout.
 `peekWebhookReference` es una lectura **no autenticada**, útil solo para localizar
 el registro. `processWebhook` carga la orden y exige verificación del adaptador:
 
-| Pasarela | Autenticación y confirmación                                                                        |
-| -------- | --------------------------------------------------------------------------------------------------- |
-| Demo     | Firma HMAC efímera, timestamp y registro de simulación independiente.                               |
-| ONVO     | Cuerpo crudo, X-Onvo-Signature, tolerancia de cinco minutos y consulta autenticada de la intención. |
-| Tilopay  | Retorno GET normalizado, OrderHash V2 por defecto y consult autenticado obligatorio.                |
+| Pasarela | Autenticación y confirmación                                                                                           |
+| -------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Demo     | Firma HMAC efímera, timestamp y registro de simulación independiente.                                                  |
+| ONVO     | Cuerpo crudo, X-Onvo-Signature, tolerancia de cinco minutos y consulta autenticada de sesión/intención según el flujo. |
+| Tilopay  | Retorno GET normalizado, OrderHash V2 por defecto y consult autenticado obligatorio.                                   |
 
 El evento debe coincidir con pasarela, referencia, monto y moneda del registro.
 La firma por sí sola no convierte un pago en exitoso. Tampoco lo hacen un retorno
@@ -60,6 +60,19 @@ El verificador admite hasta 65536 bytes; el servidor HTTP debe imponer el límit
 al leer el stream, antes de acumular un cuerpo arbitrario. En ONVO usa los bytes
 recibidos antes del parser JSON. No mezcles la firma de una pasarela con otra.
 Los retornos Tilopay se adaptan explícitamente; no representan su webhook privado.
+
+## Confirmar por consulta del servidor
+
+La plantilla también puede confirmar un checkout sin esperar su webhook. Consulta
+ONVO con la llave test del servidor y la sesión guardada: exige complete/paid,
+cantidad, monto y moneda de la orden, más su intención vinculada succeeded con
+receivedAmount completo. La URL de retorno o el estado del navegador no participan.
+
+Ese resultado se registra con `consulta-checkout:<sesión>:<estado>`, un id interno
+determinista para deduplicar la confirmación. No pretende ser un evento de ONVO.
+El cliente no lo envía ni lo escoge; `PaymentStore` comprueba el pago original y
+aplica el resultado verificado atómicamente. Equivale a confirmar Tilopay mediante
+`lookupCapturedPayment` y `consult`: la consulta autenticada aporta la evidencia.
 
 ## Persistir y deduplicar
 
@@ -76,6 +89,10 @@ contrato `PaymentStore` con estas garantías:
    avanzar a succeeded solo con confirmación válida posterior.
 5. Entrega/facturación con efecto único, mediante la misma transacción o un outbox
    persistente. Una comprobación en memoria seguida de dos escrituras no es atómica.
+
+Una consulta y un webhook pueden tener ids distintos para el mismo pago. Vincula
+el efecto de entrega a la orden, además de deduplicar eventos, para no entregarla
+dos veces cuando lleguen ambas confirmaciones.
 
 Mantén la misma referencia al reintentar y reconcilia un timeout de creación antes
 de generar otro cobro. No se promete idempotencia distribuida de creación: depende

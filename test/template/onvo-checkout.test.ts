@@ -215,7 +215,7 @@ it('rechaza firma alterada antes de consultar ONVO y deja la orden pendiente', a
   const request = signedRequest(eventFor(pago.id));
   request.rawBody = Buffer.from(JSON.stringify(eventFor(pago.id), null, 2));
   expect((await notify(request)).status).toBe(401);
-  expect(http).toHaveBeenCalledTimes(1);
+  expect(http).toHaveBeenCalledTimes(2);
   expect(await store.findPayment('onvo', created.id)).toMatchObject({
     status: 'pending',
   });
