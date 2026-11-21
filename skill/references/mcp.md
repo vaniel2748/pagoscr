@@ -24,8 +24,9 @@ prueba expresamente pedido, no de un formulario público del comprador.
 
 Devuelve `cobro.estado: pending`. En demo, `siguientePaso` contiene herramienta y
 argumentos para verificar la notificación firmada. Es una simulación sin dinero.
-Con ONVO hay que completar el método tokenizado en la app; una intención creada
-no es un cobro completado. No inventes un enlace de checkout que el resultado no da.
+Con ONVO, cobro.accionCliente.url contiene el enlace HTTPS del checkout alojado.
+Ábrelo para introducir la tarjeta ficticia en ONVO; verifica después el evento
+checkout_session.succeeded firmado. Crear el enlace o volver de ONVO no confirma.
 
 ## verificar_webhook
 

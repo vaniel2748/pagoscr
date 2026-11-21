@@ -146,12 +146,17 @@ una transacción persistente con unicidad.
 
 ## ONVO en modo de prueba
 
-El adaptador usa payment intents. Crear un cobro devuelve una intención pendiente,
-sin checkout hospedado. La app recoge un método tokenizado con el SDK de ONVO;
-`confirmTestCharge` lo confirma y `getTestPayment` consulta el resultado mínimo.
-El estado de una orden se actualiza con `processWebhook`, que exige firma y
-confirmación contra la API. Nunca se admiten llaves live ni datos de tarjeta en
-las herramientas MCP.
+La plantilla y crear_cobro_de_prueba devuelven un enlace para pagar en ONVO con
+tarjeta de prueba. El servidor guarda la orden y confirma por API la sesión y su
+intención vinculada; el webhook exige además firma. Volver del pago no decide el
+estado. El adaptador conserva también su flujo anterior de intenciones.
+
+```sh
+PAGOSCR_PASARELA=onvo node --env-file=../.env.onvo dist/template/cli.js
+```
+
+Abre [la plantilla local](http://127.0.0.1:4321), crea la orden, paga en la otra
+pestaña y vuelve a consultar. [Pasos y tarjeta de prueba](docs/onvo.md).
 
 El 20 de noviembre de 2026 se autorizó y aprobó una prueba contra la API de ONVO:
 creación, confirmación y consulta de **₡20000 ficticios**, en 2,33 segundos. La

@@ -7,21 +7,25 @@ Fuentes oficiales: [autenticación](https://docs.onvopay.com/authentication),
 [pruebas](https://docs.onvopay.com/payments/testing) y
 [Checkout](https://docs.onvopay.com/checkout/one-time-links).
 
-El adaptador PagosCR usa payment intents y host fijo de ONVO. La creación guarda
-metadata.pagoscrPaymentId y devuelve pendiente, sin formulario hospedado. Tokeniza
-con el SDK cliente de ONVO y una publishable key test; confirma la referencia del
-método desde el servidor. Nunca lleves PAN o CVV reales al backend ni al agente.
-El único envío de tarjeta del test E2E del proyecto usa la ficticia oficial y solo
-se ejecuta con llave test validada y autorización explícita.
+La plantilla y el MCP usan checkout alojado con host fijo de ONVO.
+`OnvoAdapter({ checkout: true })` crea POST /v1/checkout/sessions/one-time-link,
+guarda metadata.pagoscrPaymentId y devuelve pendiente con clientAction.url.
+Guarda la orden y la referencia de sesión antes de abrir ese enlace. La tarjeta
+se introduce en ONVO; no hay llave publicable ni tarjeta en la plantilla.
 
-Si se necesita Checkout hospedado, usa su guía oficial para ese flujo; no supongas
-que createCharge devuelve una URL de sesión ni mezcles eventos checkout_session
-con el adaptador de payment intents sin implementar y probar ese contrato.
+`getTestCheckoutPayment(ordenGuardada)` consulta sesión e intención vinculada:
+complete/paid, test, cantidad fija, importe, moneda, succeeded y receivedAmount
+completo. No presupone metadata heredada. El retorno del navegador no confirma.
+`checkout_session.succeeded` pasa por firma y ambas consultas con processWebhook.
 
-Recibe payment_intent.succeeded y payment_intent.failed. Verifica X-Onvo-Signature
+Sin checkout:true se conserva el flujo de intenciones y SDK: creación sin URL,
+confirmTestCharge con un método tokenizado y getTestPayment. Sus eventos son
+payment_intent.succeeded y payment_intent.failed y su metadata debe coincidir.
+
+Verifica X-Onvo-Signature
 sobre timestamp + punto + cuerpo crudo, con HMAC-SHA256, tolerancia de 300 segundos
 y comparación constante contra cualquier v1 de la rotación. Después consulta la
-intención por API: modo test, id, monto, moneda y metadata deben coincidir. Para
+sesión/intención por API según el flujo: modo test, id, monto y moneda deben coincidir. Para
 éxito exige succeeded y receivedAmount completo. No aceptes processing, un retorno
 del navegador o una autorización sin captura como pago completado.
 

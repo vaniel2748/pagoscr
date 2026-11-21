@@ -217,3 +217,10 @@
 - La confirmación de sesión usa pm, según ConfirmCheckoutSession del OpenAPI oficial; esta prueba de API no sustituye la aceptación manual de la pantalla.
 - Pruebas: tipos correctos; sin opt-in ni llave, ambas E2E se omiten y no hacen red. Los controles del hook mantienen las pruebas con fixtures separadas del entorno real.
 - Pendiente permiso nuevo de Vaniel para cargar el archivo externo y ejecutar estas pruebas; ninguna llave usada en este bloque.
+
+## 2026-11-21 00:26 · Guías del checkout alojado
+
+- Codex actualizó la guía ONVO, referencias del agente y plantilla: enlace alojado, consulta verificada, evento firmado y compatibilidad con intenciones existentes.
+- Incluyó el comando local con archivo externo y los pasos de la tarjeta ficticia. La documentación distingue fixtures, E2E de API y aceptación manual pendiente.
+- Pruebas: formato y diff correctos; el hook comprueba 308 casos locales y 45 reproducciones, sin activar E2E de red.
+- Vaniel preguntó por la pantalla antigua: se aclaró que se probó el checkout público del plugin, como pide INSTRUCCIONES-SABADO; Nota sigue siendo la página principal intacta.
