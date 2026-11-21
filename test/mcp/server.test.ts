@@ -13,13 +13,14 @@ import {
   tilopayConsultFixture,
 } from '../helpers/tilopay.js';
 import {
-  createdFixture,
-  eventFixture,
   fakeSecretKey,
   fakeWebhookSecret,
   signedRequest,
   succeededFixture,
 } from '../helpers/onvo.js';
+import createdCheckout from '../fixtures/onvo/checkout-session.created.json' with { type: 'json' };
+import paidCheckout from '../fixtures/onvo/checkout-session.paid.json' with { type: 'json' };
+import checkoutEvent from '../fixtures/onvo/event.checkout-succeeded.json' with { type: 'json' };
 
 let client: Client;
 let server: ReturnType<typeof createPagosCrServer>;
@@ -210,16 +211,19 @@ it('bloquea una llave de producción antes de contactar ONVO', async () => {
   expect(network).not.toHaveBeenCalled();
 });
 
-it('crea ONVO con fixtures y deja el pago pendiente para completar el método', async () => {
+it('guarda ONVO pendiente y devuelve al agente su enlace de tarjeta de prueba', async () => {
   await client.close();
   await server.close();
   const network = vi.fn<typeof fetch>(async () =>
-    Response.json(createdFixture),
+    Response.json(createdCheckout),
   );
+  const store = new InMemoryPaymentStore();
+  const save = vi.spyOn(store, 'savePayment');
   await connect({
     env: { ONVO_TEST_SECRET_KEY: fakeSecretKey },
     fetchImpl: network,
-    idFactory: () => 'order_contract',
+    store,
+    idFactory: () => 'order_checkout',
   });
   const result = await client.callTool({
     name: 'crear_cobro_de_prueba',
@@ -227,8 +231,14 @@ it('crea ONVO con fixtures y deja el pago pendiente para completar el método', 
   });
   expect(data(result).cobro).toMatchObject({
     estado: 'pending',
-    referenciaPasarela: createdFixture.id,
+    referenciaPasarela: createdCheckout.id,
     montoCentavos: 2_000_000,
+    accionCliente: { type: 'redirect', url: createdCheckout.url },
+  });
+  expect(save).toHaveBeenCalledOnce();
+  expect(await store.findPayment('onvo', createdCheckout.id)).toMatchObject({
+    paymentId: 'order_checkout',
+    status: 'pending',
   });
   expect(JSON.stringify(result)).not.toContain(fakeSecretKey);
 });
@@ -253,8 +263,14 @@ it('no propaga un mensaje externo que contiene una llave', async () => {
 it('verifica ONVO con firma y confirma contra la API usando el registro de esta sesión', async () => {
   await client.close();
   await server.close();
-  const network = vi.fn<typeof fetch>(async (_url, init) =>
-    Response.json(init?.method === 'POST' ? createdFixture : succeededFixture),
+  const network = vi.fn<typeof fetch>(async (url, init) =>
+    Response.json(
+      init?.method === 'POST'
+        ? createdCheckout
+        : String(url).includes('/checkout/sessions/')
+          ? paidCheckout
+          : succeededFixture,
+    ),
   );
   await connect({
     env: {
@@ -262,13 +278,13 @@ it('verifica ONVO con firma y confirma contra la API usando el registro de esta 
       ONVO_WEBHOOK_SECRET: fakeWebhookSecret,
     },
     fetchImpl: network,
-    idFactory: () => 'order_contract',
+    idFactory: () => 'order_checkout',
   });
   await client.callTool({
     name: 'crear_cobro_de_prueba',
     arguments: { ...creation, pasarela: 'onvo' },
   });
-  const request = signedRequest(eventFixture, Math.floor(Date.now() / 1000));
+  const request = signedRequest(checkoutEvent, Math.floor(Date.now() / 1000));
   const result = await client.callTool({
     name: 'verificar_webhook',
     arguments: {
@@ -281,7 +297,7 @@ it('verifica ONVO con firma y confirma contra la API usando el registro de esta 
     valido: true,
     pago: { estado: 'succeeded', duplicado: false },
   });
-  expect(network).toHaveBeenCalledTimes(2);
+  expect(network).toHaveBeenCalledTimes(3);
   expect(JSON.stringify(result)).not.toContain(fakeSecretKey);
 });
 

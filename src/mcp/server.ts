@@ -49,7 +49,7 @@ const messages: Record<PaymentErrorCode, string> = {
   DUPLICATE_PAYMENT:
     'La referencia del pago ya está registrada. Reutiliza el cobro existente.',
   UNSUPPORTED_EVENT:
-    'El proveedor o evento no está disponible. ONVO admite payment_intent.succeeded y payment_intent.failed; Tilopay admite su retorno GET documentado normalizado, con confirmación por consult.',
+    'El proveedor o evento no está disponible. ONVO admite checkout_session.succeeded, payment_intent.succeeded y payment_intent.failed; Tilopay admite su retorno GET documentado normalizado, con confirmación por consult.',
 };
 
 function redactOutput(
@@ -111,6 +111,7 @@ export function createPagosCrServer(
       assertOnvoTestSecretKey(key);
       const provider = new OnvoAdapter({
         secretKey: key,
+        checkout: true,
         ...(env.ONVO_WEBHOOK_SECRET
           ? { webhookSecret: env.ONVO_WEBHOOK_SECRET }
           : {}),
@@ -216,7 +217,7 @@ export function createPagosCrServer(
     {
       title: 'Crear un cobro ficticio de demo u ONVO test',
       description:
-        'Crea un cobro desde el servidor con monto en centavos enteros. Solo demo u ONVO con llave secreta test del entorno. Nunca recibe llaves ni datos de tarjeta como argumentos. Devuelve pendiente; en demo incluye los argumentos firmados para verificar_webhook. La app real obtiene el monto de su orden, nunca del navegador.',
+        'Crea un cobro desde el servidor con monto en centavos enteros. Solo demo u ONVO con llave secreta test del entorno. ONVO devuelve una URL HTTPS en cobro.accionCliente para pagar con tarjeta de prueba. Nunca recibe llaves ni datos de tarjeta como argumentos. Devuelve pendiente; en demo incluye los argumentos firmados para verificar_webhook. La app real obtiene el monto de su orden, nunca del navegador.',
       inputSchema: z.strictObject({
         pasarela: z.enum(['demo', 'onvo']),
         monto: cents,
@@ -281,7 +282,7 @@ export function createPagosCrServer(
           cobro,
           siguientePaso: {
             instrucciones:
-              'Completa el método de pago tokenizado de ONVO desde la app de prueba. Después verifica su webhook firmado en esta sesión. La creación de una intención no confirma un pago.',
+              'Abre cobro.accionCliente.url y paga con una tarjeta de prueba oficial en la página de ONVO. Después verifica checkout_session.succeeded firmado en esta sesión. El enlace y el retorno del navegador no confirman un pago.',
           },
         };
       }),

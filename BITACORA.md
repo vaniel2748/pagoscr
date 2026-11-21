@@ -182,3 +182,10 @@
 - El mismo aviso concurrente se aplica una vez; una caída de la API permite reintentar sin confirmar antes de tiempo. No se inventó un evento de checkout fallido.
 - Pruebas: 13 casos nuevos, 74 pruebas de adaptador/contrato ONVO pasan y tipos correctos; controles completos mediante el hook.
 - Todos los eventos siguen siendo sintéticos. El webhook real requiere el túnel y la autorización de la tarea siguiente.
+
+## 2026-11-21 00:05 · Enlace de pago desde el agente
+
+- crear_cobro_de_prueba usa checkout alojado para ONVO y devuelve su URL después de guardar la orden; explica cómo pagar y verificar el evento firmado.
+- Conserva las cuatro herramientas y el modo demo. El inicio rápido ahora informa décimas de segundo, incluyendo cuando las dependencias ya están listas.
+- Pruebas: 19 pruebas MCP pasan, tipos correctos y demo completo sin credenciales en 0,9 segundos. El hook ejecuta los controles antes del commit.
+- Continúa la plantilla pública de ONVO; la prueba manual y el webhook real todavía no se realizaron.
