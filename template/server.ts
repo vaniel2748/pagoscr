@@ -6,10 +6,16 @@ import {
   type ServerResponse,
 } from 'node:http';
 import { DemoAdapter } from '../src/adapters/demo.js';
+import { OnvoAdapter, type OnvoOptions } from '../src/adapters/onvo.js';
 import { InMemoryPaymentStore } from '../src/core/memory-store.js';
 import { formatMajorUnits } from '../src/core/money.js';
 import { processWebhook } from '../src/core/webhook-processor.js';
-import type { PaymentRecord, WebhookRequest } from '../src/core/types.js';
+import type {
+  ClientAction,
+  PaymentRecord,
+  PaymentStore,
+  WebhookRequest,
+} from '../src/core/types.js';
 
 const product = {
   id: 'kit-builder',
@@ -24,6 +30,8 @@ const maxBodyBytes = 4096;
 interface Session {
   token: string;
   payment?: Promise<PaymentRecord>;
+  action?: ClientAction;
+  refresh?: Promise<PaymentRecord>;
   event?: WebhookRequest;
 }
 class HttpError extends Error {
@@ -78,24 +86,36 @@ async function readJson(
     throw new HttpError(400, 'La petición JSON está mal formada.');
   }
 }
-function view(payment: PaymentRecord) {
+function view(payment: PaymentRecord, action: ClientAction = { type: 'none' }) {
   return {
     id: payment.paymentId,
     estado: payment.status,
     montoCentavos: payment.amountCents,
     moneda: payment.currency,
     montoFormateado: `₡${formatMajorUnits(payment.amountCents)}`,
+    pasarela: payment.provider,
+    accionCliente: payment.status === 'pending' ? action : { type: 'none' },
   };
 }
 
-/** Demo local: no acepta credenciales, hosts públicos ni proveedores de red. */
-export function createCheckoutServer(options: { assetsDirectory?: URL } = {}) {
+export interface CheckoutServerOptions {
+  readonly assetsDirectory?: URL;
+  readonly onvo?: Omit<OnvoOptions, 'checkout'>;
+  readonly returnUrl?: string;
+  readonly store?: PaymentStore;
+}
+
+/** Plantilla local de prueba: demo sin credenciales u ONVO test configurado por el servidor. */
+export function createCheckoutServer(options: CheckoutServerOptions = {}) {
   const assets = options.assetsDirectory ?? new URL('./', import.meta.url);
-  const provider = new DemoAdapter();
-  const store = new InMemoryPaymentStore();
+  const provider = options.onvo
+    ? new OnvoAdapter({ ...options.onvo, checkout: true })
+    : new DemoAdapter();
+  const store = options.store ?? new InMemoryPaymentStore();
   const sessions = new Map<string, Session>();
   const staticFiles = new Map([
     ['/', ['index.html', 'text/html; charset=utf-8']],
+    ['/pago', ['index.html', 'text/html; charset=utf-8']],
     ['/app.js', ['app.js', 'text/javascript; charset=utf-8']],
     ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
   ] as const);
@@ -121,12 +141,45 @@ export function createCheckoutServer(options: { assetsDirectory?: URL } = {}) {
     );
     return session;
   };
-  const currentPayment = async (session: Session, id: string) => {
+  const refreshPayment = async (
+    payment: PaymentRecord,
+  ): Promise<PaymentRecord> => {
+    if (!(provider instanceof OnvoAdapter)) return payment;
+    const confirmed = await provider.getTestCheckoutPayment(payment);
+    if (confirmed.status !== 'pending')
+      await store.applyVerifiedEvent(payment, {
+        ...confirmed,
+        status: confirmed.status,
+        providerEventId: `consulta-checkout:${payment.providerPaymentId}:${confirmed.status}`,
+      });
+    return (await store.findPayment(provider.name, payment.providerPaymentId))!;
+  };
+  const currentPayment = async (
+    session: Session,
+    id: string,
+    refresh = false,
+  ) => {
     const created = await session.payment;
     if (!created || created.paymentId !== id)
       throw new HttpError(404, 'No se encontró tu orden.');
-    const current = await store.findPayment('demo', created.providerPaymentId);
+    const current = await store.findPayment(
+      provider.name,
+      created.providerPaymentId,
+    );
     if (!current) throw new HttpError(404, 'No se encontró tu orden.');
+    if (
+      refresh &&
+      current.status === 'pending' &&
+      provider instanceof OnvoAdapter
+    ) {
+      session.refresh ??= refreshPayment(current);
+      const refreshing = session.refresh;
+      try {
+        return await refreshing;
+      } finally {
+        if (session.refresh === refreshing) delete session.refresh;
+      }
+    }
     return current;
   };
 
@@ -143,7 +196,9 @@ export function createCheckoutServer(options: { assetsDirectory?: URL } = {}) {
       if (!/^(?:127\.0\.0\.1|localhost):\d+$/.test(host))
         throw new HttpError(403, 'Este demo se ejecuta solo en localhost.');
       const path = new URL(req.url ?? '/', `http://${host}`).pathname;
-      const file = staticFiles.get(path as '/' | '/app.js' | '/styles.css');
+      const file = staticFiles.get(
+        path as '/' | '/pago' | '/app.js' | '/styles.css',
+      );
       if (req.method === 'GET' && file) {
         const contents = await readFile(new URL(file[0], assets));
         res.writeHead(200, { 'content-type': file[1] });
@@ -154,13 +209,17 @@ export function createCheckoutServer(options: { assetsDirectory?: URL } = {}) {
         const session = ensureSession(req, res);
         const payment = await session.payment;
         json(res, {
+          pasarela: provider.name,
           producto: {
             ...product,
             montoFormateado: `₡${formatMajorUnits(product.montoCentavos)}`,
           },
           csrfToken: session.token,
           pago: payment
-            ? view(await currentPayment(session, payment.paymentId))
+            ? view(
+                await currentPayment(session, payment.paymentId, true),
+                session.action,
+              )
             : null,
         });
         return;
@@ -170,7 +229,12 @@ export function createCheckoutServer(options: { assetsDirectory?: URL } = {}) {
       if (req.method === 'GET' && route && !route[2]) {
         const session = findSession(req);
         if (!session) throw new HttpError(404, 'No se encontró tu orden.');
-        json(res, { pago: view(await currentPayment(session, route[1]!)) });
+        json(res, {
+          pago: view(
+            await currentPayment(session, route[1]!, true),
+            session.action,
+          ),
+        });
         return;
       }
       if (req.method !== 'POST' || (path !== '/api/cobros' && !route?.[2]))
@@ -200,23 +264,33 @@ export function createCheckoutServer(options: { assetsDirectory?: URL } = {}) {
             amountCents: product.montoCentavos,
             currency: product.moneda,
             description: product.nombre,
+            ...(options.returnUrl ? { returnUrl: options.returnUrl } : {}),
           };
           const charge = await provider.createCharge(order);
           const payment: PaymentRecord = {
             ...order,
-            provider: 'demo',
+            provider: provider.name,
             providerPaymentId: charge.providerPaymentId,
             status: charge.status,
           };
           await store.savePayment(payment);
+          session.action = charge.clientAction;
           return payment;
         })();
         const payment = await session.payment;
         json(res, {
-          pago: view(await currentPayment(session, payment.paymentId)),
+          pago: view(
+            await currentPayment(session, payment.paymentId),
+            session.action,
+          ),
         });
         return;
       }
+      if (!(provider instanceof DemoAdapter))
+        throw new HttpError(
+          404,
+          'La simulación demo no está disponible en ONVO.',
+        );
       if (Object.keys(body).length !== 0)
         throw new HttpError(
           400,
@@ -237,7 +311,7 @@ export function createCheckoutServer(options: { assetsDirectory?: URL } = {}) {
             error:
               error instanceof HttpError
                 ? error.message
-                : 'No se pudo verificar el demo. Recarga para consultar el estado de tu orden.',
+                : 'No se pudo consultar el pago. Conservamos tu orden; volvé a consultar antes de crear otro cobro.',
           },
           error instanceof HttpError ? error.status : 500,
         );

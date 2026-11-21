@@ -189,3 +189,10 @@
 - Conserva las cuatro herramientas y el modo demo. El inicio rápido ahora informa décimas de segundo, incluyendo cuando las dependencias ya están listas.
 - Pruebas: 19 pruebas MCP pasan, tipos correctos y demo completo sin credenciales en 0,9 segundos. El hook ejecuta los controles antes del commit.
 - Continúa la plantilla pública de ONVO; la prueba manual y el webhook real todavía no se realizaron.
+
+## 2026-11-21 00:08 · Órdenes ONVO en la plantilla pública
+
+- La plantilla admite ONVO test del servidor y conserva demo por defecto. Guarda la orden antes de mostrar su enlace y recupera el estado por API al consultar o recargar.
+- Creaciones y consultas concurrentes comparten la misma orden; una creación incierta no se repite automáticamente. La página de retorno ignora estados de la URL.
+- Pruebas: 27 casos HTTP pasan, incluidos diez nuevos de ONVO; tipos correctos. El hook comprueba también contratos, MCP y reproducción de la evaluación.
+- Sin cambios en frontend-nota ni credenciales. Faltan la interfaz de pago, el endpoint firmado y la prueba manual autorizada.
