@@ -14,6 +14,10 @@ const run = join(
   new Date().toISOString().replace(/[:.]/g, '-'),
 );
 await mkdir(run, { recursive: true });
+const npmUserConfig = join(run, 'npm-user-vacio.npmrc');
+const npmGlobalConfig = join(run, 'npm-global-vacio.npmrc');
+await writeFile(npmUserConfig, '');
+await writeFile(npmGlobalConfig, '');
 const writeJson = (path, value) =>
   writeFile(path, `${JSON.stringify(value, null, 2)}\n`);
 async function inventory(directory, base = directory, result = {}) {
@@ -111,9 +115,9 @@ for (const task of tasks) {
       '--ignore-scripts',
       '--no-audit',
       '--no-fund',
-      '--userconfig=/dev/null',
-      '--globalconfig=/private/tmp/pagoscr-empty-global-npmrc',
-      '--cache=/private/tmp/pagoscr-evaluacion-npm-cache',
+      `--userconfig=${npmUserConfig}`,
+      `--globalconfig=${npmGlobalConfig}`,
+      `--cache=${join(run, 'npm-cache')}`,
     ],
     { cwd: directory, stdio: 'pipe' },
   );

@@ -5,5 +5,7 @@ build/
 output/playwright/
 .playwright-cli/
 evaluacion/runs/
+# Evidencia original del agente, conservada sin reformatear.
+evaluacion/evidencia/
 coverage/
 package-lock.json

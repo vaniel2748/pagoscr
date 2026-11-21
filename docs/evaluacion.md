@@ -1,9 +1,42 @@
 # Evaluación del agente: cinco tareas fijas
 
 Las [cinco tareas](../evaluacion/tareas.json) evalúan integrar pagos en aplicaciones
-limpias usando la skill distribuida. **Todavía no se han ejecutado por agentes
-independientes**. No hay porcentaje de éxito del agente ni se anuncia 5/5 a partir
-de las pruebas de contrato, del inicio rápido o de soluciones escritas por el autor.
+limpias usando la skill distribuida. La ejecución autorizada del 20 de noviembre
+terminó con **3/5 tareas aprobadas y tres cobros demo confirmados**. Dos subagentes
+fueron bloqueados por la cuota del servicio antes de ejecutar sus tareas. Permanecen
+en el denominador; no se publica 5/5 ni se infiere éxito de ONVO/Tilopay a partir del demo.
+
+| Caso                 | Primer resultado                         | Pruebas revisadas | Trabajo del agente |
+| -------------------- | ---------------------------------------- | ----------------- | ------------------ |
+| Demo CRC             | Aprobado, succeeded en el almacén        | 5 pasan           | 3 min              |
+| Catálogo USD         | Aprobado, 2000 centavos USD confirmados  | 6 pasan           | 2 min 41 s         |
+| Eventos concurrentes | Aprobado, una entrega y evento repetido  | 6 pasan           | 3 min 4 s          |
+| ONVO con fixtures    | Bloqueado por cuota antes de implementar | Sin ejecutar      | Sin medición       |
+| Tilopay con fixtures | Bloqueado por cuota antes de implementar | Sin ejecutar      | Sin medición       |
+
+Los tiempos de trabajo fueron reportados por los subagentes. La revisión del
+coordinador ocurrió después, en paralelo a instalación y autorización de GitHub;
+su demora está separada en el [registro JSON](../evaluacion/resultados/2026-11-20.json).
+No se presenta el tiempo del agente como una medición completa hasta la revisión.
+No hubo correcciones del autor a esas tres soluciones. Se revisó el código, se
+repitieron las 17 pruebas y se comprobaron 261 archivos congelados y los catálogos.
+
+Se usaron subagentes Codex sin historial del autor, con el modelo heredado de la
+sesión; el identificador del modelo no fue expuesto por la herramienta. Cada uno
+recibió solo su app, pedido y skill. El paquete evaluado corresponde al commit
+b887033, anterior a los resultados; no se usaron credenciales ni API de pasarelas.
+
+La [evidencia original](../evaluacion/evidencia/2026-11-20/) conserva las soluciones
+y pruebas sin reformatearlas, junto con sus hashes. Desde el checkout compilado:
+
+```sh
+npm run evaluacion:reproducir
+```
+
+Ese comando usa copias temporales y la dependencia local compilada, sin instalar
+paquetes ni usar la red. Vuelve a ejecutar los tres casos terminados; **no crea
+nuevas sesiones de agente** ni completa los dos casos bloqueados. También corre
+en el CI. La E2E real ONVO del proyecto se reporta por separado.
 
 | Tarea                | Resultado que debe observarse                                                                        |
 | -------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -32,7 +65,8 @@ Para validar conducta hay que dar a cada agente **solo** su TAREA.md, su reposit
 y la skill distribuida; no proporcionar implementación propuesta, hallazgos del
 autor o contexto de otras tareas. El agente trabaja dentro de esa app, sin tocar
 vendor/fixtures, sin instalar plugins, sin leer entornos y sin usar pasarelas reales.
-La delegación debe estar autorizada conforme a las instrucciones de la sesión.
+Vaniel autorizó expresamente esta ejecución independiente. Para futuras ejecuciones,
+la delegación debe respetar las autorizaciones de la sesión.
 
 ## Registrar y revisar
 

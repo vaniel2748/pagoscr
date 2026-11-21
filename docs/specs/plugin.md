@@ -34,5 +34,8 @@ validar el paquete no instala nada ni usa cuentas del cliente.
 Verificación: manifiestos y rutas contenidos, ausencia de archivos de entorno,
 prior-work y node_modules, arranque stdio del paquete aislado, demo completo y
 conversor sin dependencias del repo. El cliente Claude valida además el catálogo
-y plugin con su validador nativo, si está disponible. La instalación real en los
-clientes sigue pendiente hasta recibir autorización; no se declara ejecutada.
+y plugin con su validador nativo, si está disponible. El 20 de noviembre Vaniel
+autorizó y se completó la instalación real en ambos clientes. Sus listados nativos
+confirman habilitación y las copias instaladas pasan el recorrido MCP demo sin
+credenciales. No se ejecutaron modelos externos ni se usaron API de pasarelas
+para verificar la instalación.

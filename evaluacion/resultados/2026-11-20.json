@@ -1,0 +1,136 @@
+{
+  "preparadoEl": "2026-11-20T23:08:21.730Z",
+  "metodo": "Subagentes independientes sin historial del autor, paquete local y fixtures",
+  "resultados": [
+    {
+      "id": "01-demo-crc",
+      "commitInicial": "9533cbe",
+      "estado": "aprobado",
+      "pagoConfirmado": true,
+      "duracionAgenteSegundos": 180,
+      "herramienta": "Codex, subagente independiente sin historial del autor",
+      "modelo": "Heredado de la sesión; identificador no expuesto",
+      "modalidad": "demo",
+      "inicioReportadoUtc": "2026-11-20T23:18:59Z",
+      "finReportadoUtc": "2026-11-20T23:21:59Z",
+      "verificadoPorCoordinadorUtc": "2026-11-21T00:01:58.380Z",
+      "duracionHastaRevisionSegundos": 2579,
+      "pruebas": {
+        "pasan": 5,
+        "fallan": 0
+      },
+      "intervencion": "Ninguna corrección; revisión de código, pruebas repetidas y 261 archivos congelados comprobados por el coordinador",
+      "archivosEvidencia": {
+        "README.md": "66db3f47247b6bb956ee03048549afc7673859b9f178c4ae2b9b85bcd2985dea",
+        "demo.mjs": "a19b4bc7374d4b6b512091aafb5550ff1050bf4723fb034d10711d546f833f35",
+        "public/index.html": "2ad68d660bada24dcf309a65e274d6869653fc594b885b1b7e6836b40de4dd9b",
+        "server.mjs": "0c4606f106bdc33b454a5f7a82ec570d00156b537359b027747a57bad375bd02",
+        "test/checkout.test.mjs": "76af1733d5eeaf63155724656683ee00fb50b80a37b4a4dcf78b3bffca36cdc7",
+        ".gitignore": "e80e2c2e60b1a940b9a18760eb0551bde4f2588c72c900ef429e129087bf44ae",
+        "TAREA.md": "6b1e431406764f18737416ddfa6974f206a3950ee5a1dce78c2f903fb8760be2",
+        "app.mjs": "266606ed3bb46f5cdd9cdf1f996dc23f7a0212636eab995d60d467fb1ae23261",
+        "catalogo.json": "046761bccb9b6f38961adb2ca0ad31b6c4712ce6fef0b2bef472b8f61adf0787",
+        "package.json": "e8bb6a6a626a7235f7496d0b47f778b19498e228858f612e9ba1a4a12176c907"
+      },
+      "notaDuracion": "La revisión y reproducción posterior incluye espera del coordinador y resolución de GitHub. No mide únicamente el trabajo del agente."
+    },
+    {
+      "id": "02-catalogo-usd",
+      "commitInicial": "a32da54",
+      "estado": "aprobado",
+      "pagoConfirmado": true,
+      "duracionAgenteSegundos": 161,
+      "herramienta": "Codex, subagente independiente sin historial del autor",
+      "modelo": "Heredado de la sesión; identificador no expuesto",
+      "modalidad": "demo",
+      "inicioReportadoUtc": "2026-11-20T23:19:05Z",
+      "finReportadoUtc": "2026-11-20T23:21:46Z",
+      "verificadoPorCoordinadorUtc": "2026-11-21T00:01:58.382Z",
+      "duracionHastaRevisionSegundos": 2573,
+      "pruebas": {
+        "pasan": 6,
+        "fallan": 0
+      },
+      "intervencion": "Ninguna corrección; revisión de código, pruebas repetidas y 261 archivos congelados comprobados por el coordinador",
+      "archivosEvidencia": {
+        "README.md": "3a0b6efb6718c785996dab44ee343076c528c2f7506d9424b8a9835c4361f78a",
+        "app.test.mjs": "888df7a2ea4c3ceee462ae1e5ff183ed09977be46929265054012cb9ddacb367",
+        ".gitignore": "e80e2c2e60b1a940b9a18760eb0551bde4f2588c72c900ef429e129087bf44ae",
+        "TAREA.md": "d4e2f4fa172a73e7f7117729cf97e472503a5807302b460fedaa918a5aed5f5f",
+        "app.mjs": "8c395e6e459a44816c0a543b845ffe290d29c8426882477ad78d874248cca3e0",
+        "catalogo.json": "2722d977062860b11a57405f835a1f85894b928947cf94676725b7b11fd81c64",
+        "package.json": "7e04156579b229ff727ae9ca47b5ec916ae7f310a27d683f5522c794fd60e526"
+      },
+      "notaDuracion": "La revisión y reproducción posterior incluye espera del coordinador y resolución de GitHub. No mide únicamente el trabajo del agente."
+    },
+    {
+      "id": "03-eventos-concurrentes",
+      "commitInicial": "e2bdc96",
+      "estado": "aprobado",
+      "pagoConfirmado": true,
+      "duracionAgenteSegundos": 184,
+      "herramienta": "Codex, subagente independiente sin historial del autor",
+      "modelo": "Heredado de la sesión; identificador no expuesto",
+      "modalidad": "demo",
+      "inicioReportadoUtc": "2026-11-20T23:19:12Z",
+      "finReportadoUtc": "2026-11-20T23:22:16Z",
+      "verificadoPorCoordinadorUtc": "2026-11-21T00:01:58.382Z",
+      "duracionHastaRevisionSegundos": 2566,
+      "pruebas": {
+        "pasan": 6,
+        "fallan": 0
+      },
+      "intervencion": "Ninguna corrección; revisión de código, pruebas repetidas y 261 archivos congelados comprobados por el coordinador",
+      "archivosEvidencia": {
+        "README.md": "69e0f291c01027e89282d989866dc7d8b87d50dc2e96ee2ec3dfb4ad8c5747b0",
+        "app.test.mjs": "0745b3bc0477d261d8077bcaed94eab689e1fecaf2c8899fc9757dd27131f484",
+        ".gitignore": "e80e2c2e60b1a940b9a18760eb0551bde4f2588c72c900ef429e129087bf44ae",
+        "TAREA.md": "cd09539910e2ba82c2024d8cb8151ce1eba27384d427ae4f58257f601df8af98",
+        "app.mjs": "0bbe207f9781612e8d4ee9787ea67907707684055189ac8490a38fc1a7afa133",
+        "catalogo.json": "046761bccb9b6f38961adb2ca0ad31b6c4712ce6fef0b2bef472b8f61adf0787",
+        "package.json": "6852b6c92fde25a80e50c7084a8b6b530b0ea83530b9a2ae5b947992df72c86f"
+      },
+      "notaDuracion": "La revisión y reproducción posterior incluye espera del coordinador y resolución de GitHub. No mide únicamente el trabajo del agente."
+    },
+    {
+      "id": "04-onvo-fixtures",
+      "commitInicial": "3070a32",
+      "estado": "bloqueado_cuota_del_servicio",
+      "pagoConfirmado": null,
+      "duracionAgenteSegundos": null,
+      "herramienta": "Codex, subagente independiente sin historial del autor",
+      "modelo": "Heredado de la sesión; identificador no expuesto",
+      "modalidad": "fixtures_no_ejecutados",
+      "pruebas": {
+        "pasan": 0,
+        "fallan": 0
+      },
+      "motivo": "El servicio de subagentes rechazó el inicio por límite de uso; reintento indicado a las 19:16 de Costa Rica. No se compraron créditos ni se cambió de modelo."
+    },
+    {
+      "id": "05-tilopay-retorno",
+      "commitInicial": "7c78422",
+      "estado": "bloqueado_cuota_del_servicio",
+      "pagoConfirmado": null,
+      "duracionAgenteSegundos": null,
+      "herramienta": "Codex, subagente independiente sin historial del autor",
+      "modelo": "Heredado de la sesión; identificador no expuesto",
+      "modalidad": "fixtures_no_ejecutados",
+      "pruebas": {
+        "pasan": 0,
+        "fallan": 0
+      },
+      "motivo": "El servicio de subagentes rechazó el inicio por límite de uso; reintento indicado a las 19:16 de Costa Rica. No se compraron créditos ni se cambió de modelo."
+    }
+  ],
+  "pagoscrCommit": "b8870334bd318d30765a5b8008b9c71fa2447cef",
+  "resumen": {
+    "tareasPrevistas": 5,
+    "tareasAprobadas": 3,
+    "cobrosDemoConfirmados": 3,
+    "bloqueadasPorCuota": 2,
+    "pruebasDeEvaluacionAprobadas": 17,
+    "pasarelasRealesUsadas": false
+  },
+  "autorizacionRegistradaEl": "2026-11-20T23:19:51.559Z"
+}

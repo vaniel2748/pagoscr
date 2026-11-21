@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout demo · Kit Builder</title>
+  <main>
+    <h1>Checkout demo</h1>
+    <p>La confirmación de prueba la simula el servidor. No se cobra una tarjeta.</p>
+    <form id="checkout">
+      <label>Producto <select name="productoId"><option value="kit-builder">Kit Builder</option></select></label>
+      <button>Crear cobro demo</button>
+    </form>
+    <pre id="estado" aria-live="polite">Selecciona el producto para comenzar.</pre>
+  </main>
+  <script type="module">
+    const form = document.querySelector('#checkout');
+    const estado = document.querySelector('#estado');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const boton = form.querySelector('button');
+      boton.disabled = true;
+      try {
+        const respuesta = await fetch('/api/ordenes', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ productoId: new FormData(form).get('productoId') }),
+        });
+        const orden = await respuesta.json();
+        if (!respuesta.ok) throw new Error(orden.mensaje);
+        estado.textContent = JSON.stringify(orden, null, 2);
+        for (let intento = 0; intento < 10; intento++) {
+          await new Promise((resolve) => setTimeout(resolve, 250));
+          const consulta = await fetch(`/api/ordenes/${orden.id}`);
+          const guardada = await consulta.json();
+          if (!consulta.ok) throw new Error(guardada.mensaje);
+          estado.textContent = JSON.stringify(guardada, null, 2);
+          if (guardada.estado === 'succeeded') return;
+        }
+        estado.textContent += '\nSigue pendiente. Consulta esta misma orden; no repitas el cobro.';
+      } catch (error) {
+        estado.textContent = error.message + '\nSi la respuesta de creación fue incierta, revisa el servidor antes de reintentar.';
+      }
+      // Un envío por carga evita reintentos ciegos después de una respuesta incierta.
+    });
+  </script>
+</html>

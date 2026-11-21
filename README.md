@@ -1,5 +1,7 @@
 # PagosCR
 
+[![CI](https://github.com/vaniel2748/pagoscr/actions/workflows/ci.yml/badge.svg)](https://github.com/vaniel2748/pagoscr/actions/workflows/ci.yml)
+
 Agrega cobros de prueba en Costa Rica y compara costos de pasarelas con fuente y
 fecha. Un paquete TypeScript, cuatro herramientas MCP y un demo sin credenciales.
 
@@ -81,12 +83,13 @@ local y registra `pagoscr@pagoscr-local` en la configuración de usuario del cli
 Reinicia la sesión para cargar las herramientas. Empieza en modo demo. Para
 revisar los comandos sin ejecutar ninguno, agrega `--dry-run`.
 
-Los comandos corresponden a Codex 0.169.0-alpha.11.1 (`plugin add`) y Claude Code
-2.1.150 (`plugin install`), disponibles en el entorno de desarrollo. Se probaron
-los dos manifiestos y el servidor empaquetado por stdio en una copia aislada sin
-node_modules. **La instalación en la configuración personal no se ha ejecutado**;
-un agente requiere autorización antes de hacerla. No hay paquete npm ni catálogo
-público publicados.
+Los comandos se probaron realmente el 20 de noviembre de 2026, con autorización,
+en Codex 0.169.0-alpha.11.1 (`plugin add`) y Claude Code 2.1.150 (`plugin install`).
+Ambos clientes registran el plugin habilitado en configuración de usuario. Los
+procesos MCP de sus copias instaladas exponen cuatro herramientas y completan
+diagnóstico, cobro demo, confirmación y repetición sin credenciales. Reinicia la
+sesión del cliente para cargarlo. No hay paquete npm publicado; el instalador usa
+el catálogo local generado desde este checkout público.
 
 `npm run build` genera `build/marketplace/` con ambos catálogos y un plugin que
 incluye runtime, dependencias JS compiladas, skill, tarifas y licencias. No copies
@@ -210,12 +213,14 @@ en 127.0.0.1. El diseño se comprobó en escritorio y móvil. Consulta
 
 ## Evaluación del agente
 
-Hay [cinco tareas fijas](docs/evaluacion.md) y un preparador de repositorios limpios
-sin red ni credenciales: `npm run evaluacion:preparar`. La ejecución por agentes
-independientes sigue pendiente de autorización; **no hay aún una tasa de éxito
-del agente**. Las 244 pruebas de código y el inicio rápido no se presentan como
-cinco integraciones autónomas completadas. ONVO/Tilopay de esa evaluación usarán
-fixtures, separados de la única E2E ONVO real autorizada ya aprobada.
+La [evaluación independiente](docs/evaluacion.md) dio **3/5 tareas completas y tres
+cobros demo confirmados**. Dos casos (ONVO/Tilopay con fixtures) fueron bloqueados
+por cuota del servicio antes de ejecutar; no se cuentan como éxitos. Las tres
+soluciones no requirieron correcciones del autor y sus 17 pruebas se reproducen
+con `npm run evaluacion:reproducir`, también incluido en el CI. Hay código original,
+hashes, tiempos y límites en el registro. Esa reproducción no es una nueva sesión
+de agente ni una E2E de pasarela. El preparador de futuras apps limpias continúa
+disponible con `npm run evaluacion:preparar`.
 
 ## Verificación y procedencia
 
@@ -228,16 +233,18 @@ npm run hooks:install
 ```
 
 El mismo control corre antes de cada commit y en GitHub Actions: formato, tipos,
-pruebas sin red, Secretlint, control de prefijos de llaves, compilación, validación
+pruebas sin pasarelas externas, Secretlint, control de prefijos de llaves, compilación, validación
 de tarifas, inicio rápido por stdio (`quickstart.sh --check`, reutilizando el
-paquete que el CI ya compiló) y recorrido de ambos plugins desde una copia aislada.
+paquete que el CI ya compiló), recorrido de ambos plugins desde una copia aislada
+y las 17 pruebas conservadas de la evaluación independiente.
 
 Hay **244 pruebas sin pasarelas externas** y una prueba de API ONVO autorizada aprobada. Demo,
 ONVO y Tilopay pasan la misma batería de 17 casos (51 de contrato). En Tilopay se
 prueba el retorno documentado con consult, no su webhook privado. La
 [skill de agentes](skill/SKILL.md), los paquetes para ambos clientes y la plantilla
-están incluidos. GitHub, npm y despliegue todavía no se han autorizado:
-los controles están en verde localmente, y el CI remoto aún no se ha ejecutado.
+están incluidos. El [repositorio público](https://github.com/vaniel2748/pagoscr) y
+su CI ya están disponibles; la insignia muestra el estado del workflow. npm y
+despliegue no se han realizado y requieren autorización específica.
 
 `prior-work/` conserva tres archivos importados sin cambios desde RestaurantPay;
 no se compilan ni se distribuyen en el paquete. Consulta

@@ -1,0 +1,14 @@
+{
+  "name": "evaluacion-01-demo-crc",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test",
+    "demo": "node demo.mjs"
+  },
+  "dependencies": {
+    "pagoscr": "file:./vendor/pagoscr"
+  }
+}
