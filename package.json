@@ -43,7 +43,7 @@
     ".env.example"
   ],
   "scripts": {
-    "build": "tsup && node scripts/preparar-plugins.mjs",
+    "build": "tsup && node scripts/preparar-plugins.mjs && node scripts/preparar-plugin-npm.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",

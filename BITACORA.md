@@ -280,3 +280,10 @@
 - El manifiesto incorpora repositorio, incidencias y página del proyecto; lockfile actualizado sin red ni cambios de dependencias. Mantiene versión 0.1.0 y private:true.
 - Pruebas: ejecutable convierte 20000.00 a 2000000 y rechaza 0.001; tipos y compilación correctos. El hook verifica los 314 casos locales y 45 reproducciones.
 - Continúan el plugin remoto y las pruebas del tarball; publicar npm todavía requiere el sí separado de Vaniel.
+
+## 2026-11-21 01:26 · Catálogos remotos y lanzadores npm
+
+- Codex añadió un generador del plugin GitHub: catálogos en ambas rutas oficiales, skill y MCP/conversor con pagoscr@0.1.0 exacto; conserva el artefacto local existente.
+- El generador reutiliza las fuentes versionadas y las reglas de formato. No añade runtime compilado al plugin GitHub ni depende de rutas del checkout al ejecutarse.
+- Pruebas: manifiesto y catálogo aprobados por Claude Code --strict con configuración temporal; formato correcto. Primer tarball inspeccionado: 115 archivos, sin entornos ni prior-work.
+- Vaniel guardó el secreto externo y confirmó conexión correcta con ONVO. Se solicitó otro pago test para recibir el webhook; la prueba del paquete sigue sin publicación.
