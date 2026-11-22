@@ -372,3 +372,9 @@
 - Eleven v4 generó el guion completo en una toma con Mateo, voz del catálogo en español latinoamericano. Codex resincronizó la animación, los montos y los subtítulos.
 - MP4 verificado en 1080p y 30 fps, 1:19, 23 subtítulos y mezcla de −16,11 LUFS y −1,85 dBTP. HyperFrames pasó sin errores ni advertencias.
 - ENTREGA.md enlaza la quinta edición y el proyecto editable local.
+
+## 2026-11-21 18:30 · Video con la música elegida
+
+- Vaniel eligió la opción B, _Cherry on Top_, de Michael Ramir C. Codex la mezcló con la locución de Mateo y ajustó el fundido de salida.
+- MP4 verificado en 1080p a 30 fps, 1:19, con 23 subtítulos y mezcla de −16,16 LUFS y −1,98 dBTP. La imagen y los subtítulos se comprobaron contra la versión anterior.
+- HyperFrames pasó sin errores ni advertencias. ENTREGA.md enlaza la sexta edición, el proyecto editable y la fuente de la música.
