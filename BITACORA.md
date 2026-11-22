@@ -385,3 +385,10 @@
 - Se generó la apertura con Mateo y se unió a la demostración en una pausa. Codex verificó el timbre y la coincidencia del texto con los subtítulos.
 - MP4 comprobado en 1080p a 30 fps, 1:41 y 28 subtítulos, con Cherry on Top y mezcla de −16,18 LUFS y −1,70 dBTP. HyperFrames pasó sin errores ni advertencias.
 - ENTREGA.md enlaza la séptima edición y su proyecto editable.
+
+## 2026-11-21 19:04 · Ficha lista para el envío
+
+- Qué hizo Codex: actualizó la ficha con la explicación en palabras sencillas y eligió tres capturas de Nota que muestran la portada, la comparación y el pago confirmado.
+- Qué decidió Vaniel: aprobó el video v7 para la entrega. Quedan la consulta de tarifas del domingo y el envío desde su cuenta de Dojo.
+- Pruebas: enlaces locales, MP4 en 1080p y capturas comprobados. Repositorio y npm público verificados, con el CI público en verde.
+- Commits: `ccc921e` es la referencia del CI público y `dc60b19` registra la edición v7.
