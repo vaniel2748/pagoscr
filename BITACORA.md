@@ -378,3 +378,10 @@
 - Vaniel eligió la opción B, _Cherry on Top_, de Michael Ramir C. Codex la mezcló con la locución de Mateo y ajustó el fundido de salida.
 - MP4 verificado en 1080p a 30 fps, 1:19, con 23 subtítulos y mezcla de −16,16 LUFS y −1,98 dBTP. La imagen y los subtítulos se comprobaron contra la versión anterior.
 - HyperFrames pasó sin errores ni advertencias. ENTREGA.md enlaza la sexta edición, el proyecto editable y la fuente de la música.
+
+## 2026-11-21 18:53 · Introducción del video en palabras sencillas
+
+- Vaniel eligió la explicación del chat para el inicio. Codex incorporó la tienda de ₡20 000 y animó los tres pasos al ritmo de la locución.
+- Se generó la apertura con Mateo y se unió a la demostración en una pausa. Codex verificó el timbre y la coincidencia del texto con los subtítulos.
+- MP4 comprobado en 1080p a 30 fps, 1:41 y 28 subtítulos, con Cherry on Top y mezcla de −16,18 LUFS y −1,70 dBTP. HyperFrames pasó sin errores ni advertencias.
+- ENTREGA.md enlaza la séptima edición y su proyecto editable.
