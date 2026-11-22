@@ -11,8 +11,8 @@ Ejemplo con tarjeta y un tipo de cambio elegido de **₡500 por US$1**:
 
 | Pasarela | Costo base por venta | Fuente                                    | Verificado |
 | -------- | -------------------: | ----------------------------------------- | ---------- |
-| ONVO     |                 ₡955 | [Tarifas](https://onvopay.com/pricing)    | 2026-11-11 |
-| Tilopay  |               ₡1 025 | [Tarifas](https://tilopay.com/en/tarifas) | 2026-11-20 |
+| ONVO     |                 ₡955 | [Tarifas](https://onvopay.com/pricing)    | 2026-11-22 |
+| Tilopay  |               ₡1 025 | [Tarifas](https://tilopay.com/en/tarifas) | 2026-11-22 |
 
 Usá tu propio tipo de cambio; mensualidad/liquidación van aparte y las tarifas no verificadas requieren revisión. [Detalle y fuentes](docs/tarifas.md).
 

@@ -113,16 +113,15 @@ describe('comparador de tarifas', () => {
     expect(row.advertencias.join(' ')).toContain('liquidación');
   });
 
-  it('incluye fuente, fechas y la revisión indirecta de ONVO', () => {
+  it('incluye la fuente y las fechas de verificación de ONVO', () => {
     const row = compararPasarelas({
       monto: 20000,
       moneda: 'USD',
       metodo: 'tarjeta',
     }).resultados[0]!;
     expect(row.fuente).toBe('https://onvopay.com/pricing');
-    expect(row.verificadoEl).toBe('2026-11-11');
-    expect(row.revisadoEl).toBe('2026-11-20');
-    expect(row.advertencias.join(' ')).toContain('403');
+    expect(row.verificadoEl).toBe('2026-11-22');
+    expect(row.revisadoEl).toBe('2026-11-22');
   });
 
   it('redondea mitades y aplica mínimos con aritmética entera', () => {

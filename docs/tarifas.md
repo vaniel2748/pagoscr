@@ -48,19 +48,22 @@ inicio rápido se compara USD sin convertir moneda ni suponer un cambio.
 
 ## Qué fuentes respaldan las filas
 
-| Fila                              | Fuente y estado al 20 de noviembre de 2026                                                                                                                                                                                                                      |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ONVO tarjeta: 3,9 % + US$0,35     | [Precio oficial](https://onvopay.com/pricing). Última verificación directa aportada por Vaniel: 2026-11-11. El acceso automatizado directo devuelve 403; la página oficial indexada coincidió el 20. No se actualizó la fecha directa como si se hubiera leído. |
-| ONVO SINPE: 1,5 %                 | Misma fuente/fechas. El precio publicado indica US$3 por liquidación, mostrado aparte.                                                                                                                                                                          |
-| Tilopay tarjeta: 4,25 % + US$0,35 | [Tarifario oficial](https://tilopay.com/en/tarifas), verificado directamente 2026-11-20.                                                                                                                                                                        |
-| Tilopay SINPE: 2 % + US$0,35      | Misma fuente/fecha. Otros cargos no publicados permanecen sin confirmar.                                                                                                                                                                                        |
-| Tilopay + afiliación BAC          | [Oferta oficial](https://tilopay.com/bac). Publica 1 % más costos BAC. Mínimo US$0,30 y tarifa bancaria sin confirmar: verificado=false, requiere cotización, sin total.                                                                                        |
-| BAC directo                       | El tarifario histórico que daba US$45/mes y US$200 de afiliación corresponde a Honduras. La URL primaria exacta está en el JSON. La fila se conserva como antecedente con país HN, verificado=false y estado no_aplicable para Costa Rica.                      |
+| Fila                                | Fuente y estado al 22 de noviembre de 2026                                                                                                                                                                                                 |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ONVO tarjeta · 3,9 % + US$0,35      | Vaniel confirmó la tarifa el 22 con una captura de la página oficial de Costa Rica. [Precios de ONVO](https://onvopay.com/pricing).                                                                                                        |
+| ONVO SINPE Móvil · 1,5 %            | Confirmado en la misma captura.                                                                                                                                                                                                            |
+| Tilopay tarjeta · 4,25 % + US$0,35  | Consulta directa del 22. [Tarifario oficial](https://tilopay.com/en/tarifas).                                                                                                                                                              |
+| Tilopay SINPE Móvil · 2 % + US$0,35 | Misma fuente y fecha. La tarifa de liquidación queda sin confirmar.                                                                                                                                                                        |
+| Tilopay + afiliación BAC            | Consulta directa del 22. Publica 1 % más los costos de BAC. El mínimo previo de US$0,30 y la comisión bancaria quedan por confirmar. [Oferta oficial](https://tilopay.com/bac).                                                            |
+| BAC directo                         | El tarifario histórico que daba US$45/mes y US$200 de afiliación corresponde a Honduras. La URL primaria exacta está en el JSON. La fila se conserva como antecedente con país HN, verificado=false y estado no_aplicable para Costa Rica. |
 
-`verificadoEl` registra la verificación de la cifra, `revisadoEl` el intento más
-reciente y `modalidadVerificacion` cómo se accedió. Las filas históricas conservan
-su fecha de investigación sin presentarla como verificación afirmativa. Las
-advertencias exponen esas diferencias al usuario.
+Los US$3 por liquidación de ONVO se muestran aparte. El listado oficial indexado
+y los términos publicados coinciden en ese cargo. [Términos de ONVO](https://onvopay.com/CR/documents/terminos_y_condiciones.pdf).
+
+`verificadoEl` registra la verificación de la tarifa por transacción,
+`revisadoEl` la consulta más reciente y `modalidadVerificacion` cómo se obtuvo la
+evidencia. Las filas históricas conservan la fecha de su investigación y muestran
+las condiciones pendientes.
 
 ## Actualizar sin perder trazabilidad
 
@@ -73,5 +76,4 @@ qué falta. No conviertas números de un país en cotizaciones para otro.
 Ejecuta `npm run build && npm run tarifas:check` y las pruebas de calculadora.
 El CI rechaza filas sin URL HTTPS/fecha válida, unidades no enteras, identificadores
 duplicados y filas no verificadas sin advertencia. Registra fuente y cambio en
-BITACORA.md. Antes del cierre del hackathon hay que volver a consultar las fuentes;
-la revisión del día 20 no se declara como revisión del domingo 22.
+BITACORA.md.

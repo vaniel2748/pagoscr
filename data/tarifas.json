@@ -13,12 +13,11 @@
     "requiereCotizacion": false,
     "verificado": true,
     "fuente": "https://onvopay.com/pricing",
-    "verificadoEl": "2026-11-11",
-    "revisadoEl": "2026-11-20",
-    "modalidadVerificacion": "indice_oficial",
+    "verificadoEl": "2026-11-22",
+    "revisadoEl": "2026-11-22",
+    "modalidadVerificacion": "directa",
     "advertencias": [
-      "ONVO cobra US$3 por liquidación; este cargo no se suma a cada transacción.",
-      "Acceso directo a precios bloqueado con 403. La fuente oficial indexada coincide; se conserva la última verificación directa declarada del 11 de noviembre."
+      "ONVO cobra US$3 por liquidación. El comparador muestra ese cargo aparte."
     ]
   },
   {
@@ -35,8 +34,8 @@
     "requiereCotizacion": false,
     "verificado": true,
     "fuente": "https://tilopay.com/en/tarifas",
-    "verificadoEl": "2026-11-20",
-    "revisadoEl": "2026-11-20",
+    "verificadoEl": "2026-11-22",
+    "revisadoEl": "2026-11-22",
     "modalidadVerificacion": "directa",
     "advertencias": [
       "La página no publica una tarifa de liquidación; el precio final depende del modelo de integración y las condiciones del comercio."
@@ -56,13 +55,12 @@
     "requiereCotizacion": false,
     "verificado": true,
     "fuente": "https://onvopay.com/pricing",
-    "verificadoEl": "2026-11-11",
-    "revisadoEl": "2026-11-20",
-    "modalidadVerificacion": "indice_oficial",
+    "verificadoEl": "2026-11-22",
+    "revisadoEl": "2026-11-22",
+    "modalidadVerificacion": "directa",
     "advertencias": [
-      "ONVO cobra US$3 por liquidación; este cargo no se suma a cada transacción.",
-      "SINPE Móvil es distinto de SINPE bancario y tiene una tarifa diferente.",
-      "Acceso directo a precios bloqueado con 403. La fuente oficial indexada coincide; se conserva la última verificación directa declarada del 11 de noviembre."
+      "ONVO cobra US$3 por liquidación. El comparador muestra ese cargo aparte.",
+      "SINPE Móvil es distinto de SINPE bancario y tiene una tarifa diferente."
     ]
   },
   {
@@ -79,8 +77,8 @@
     "requiereCotizacion": false,
     "verificado": true,
     "fuente": "https://tilopay.com/en/tarifas",
-    "verificadoEl": "2026-11-20",
-    "revisadoEl": "2026-11-20",
+    "verificadoEl": "2026-11-22",
+    "revisadoEl": "2026-11-22",
     "modalidadVerificacion": "directa",
     "advertencias": [
       "La página no publica una tarifa de liquidación; el precio final depende del modelo de integración y las condiciones del comercio."
@@ -101,7 +99,7 @@
     "verificado": false,
     "fuente": "https://tilopay.com/bac",
     "verificadoEl": "2026-10-13",
-    "revisadoEl": "2026-11-20",
+    "revisadoEl": "2026-11-22",
     "modalidadVerificacion": "referencia_previa",
     "advertencias": [
       "La fuente oficial publica 1% más los costos de BAC; falta la tarifa bancaria negociada.",

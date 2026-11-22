@@ -392,3 +392,9 @@
 - Qué decidió Vaniel: aprobó el video v7 para la entrega. Quedan la consulta de tarifas del domingo y el envío desde su cuenta de Dojo.
 - Pruebas: enlaces locales, MP4 en 1080p y capturas comprobados. Repositorio y npm público verificados, con el CI público en verde.
 - Commits: `ccc921e` es la referencia del CI público y `dc60b19` registra la edición v7.
+
+## 2026-11-22 12:50 · Verificación de tarifas para la entrega
+
+- Qué hizo Codex: releyó las tarifas de Costa Rica en Tilopay y su oferta con BAC. La consulta de precios de ONVO devolvió 403. El índice oficial y los términos de ONVO coincidieron en US$3 por liquidación.
+- Qué confirmó Vaniel: la captura del 22 muestra tarjeta al 3,9 % + US$0,35 y SINPE Móvil al 1,5 %. Se registró la fecha en ambas pasarelas y se cerró el control en la ficha.
+- Pruebas: el comparador conserva ₡955 y ₡1 025 como comisiones base del ejemplo de ₡20 000 con ₡500 por dólar. El cargo por liquidación se muestra aparte.
