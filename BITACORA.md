@@ -365,3 +365,10 @@
 - Codex ajustó el ritmo y volvió a sincronizar el motion, los montos, la música y los subtítulos. La comprobación de la toma se hizo con transcripción y análisis acústico local.
 - MP4 comprobado en 1080p a 30 fps, 1:20, 23 subtítulos y mezcla de −16 LUFS y −2,41 dBTP. HyperFrames pasó sin errores ni advertencias.
 - ENTREGA.md apunta a la cuarta edición y al proyecto editable local.
+
+## 2026-11-21 18:14 · Video narrado con ElevenLabs
+
+- Vaniel pidió otra locución con ElevenLabs. Codex añadió el marketplace oficial, instaló el plugin y verificó la conexión.
+- Eleven v4 generó el guion completo en una toma con Mateo, voz del catálogo en español latinoamericano. Codex resincronizó la animación, los montos y los subtítulos.
+- MP4 verificado en 1080p y 30 fps, 1:19, 23 subtítulos y mezcla de −16,11 LUFS y −1,85 dBTP. HyperFrames pasó sin errores ni advertencias.
+- ENTREGA.md enlaza la quinta edición y el proyecto editable local.
